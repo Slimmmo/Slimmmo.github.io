@@ -25,7 +25,7 @@
       </ul>
       <br>
       <div>
-        <label><input type="number" class="form-control" data-ng-model="ref.numAngels" required></input> # Angels</label>
+        <label><input type="number" class="form-control" data-ng-model="ref.viewNumAngels" data-ng-blur="updateAngels()" step="0.001" required></input> <input type="text" class="form-control" style="width: 300px;" data-ng-model="ref.illions" typeahead="ill for ill in illionsArray | filter:$viewValue | limitTo:8" placeholder="*illions" data-ng-blur="updateAngels()"></input> # Angels</label>
         <label class="checkbox"><input type="checkbox" class="form-control" data-ng-model="raw"></input> Raw Values</label>
       </div>
       <br>

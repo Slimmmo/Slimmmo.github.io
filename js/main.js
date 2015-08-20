@@ -51,6 +51,7 @@ advApp.controller('advController', ['$document', '$filter', '$scope', function($
   $scope.clearAfter = [false, false];
   $scope.earth = {};
   $scope.fillBefore = [false, false];
+  $scope.illionsArray = illionsArr.slice(1);
   $scope.moon = {};
   $scope.raw = false;
   $scope.ref = $scope.earth;
@@ -557,6 +558,19 @@ advApp.controller('advController', ['$document', '$filter', '$scope', function($
     return tuple[tuple.length - 1];
   };
 
+  $scope.updateAngels = function() {
+    if ($scope.ref.illions === '') {
+      $scope.ref.numAngels = $scope.ref.viewNumAngels;
+    } else {
+      $scope.ref.illions = $scope.ref.illions.trim();
+      $scope.ref.illions = $scope.ref.illions.charAt(0).toUpperCase() + $scope.ref.illions.slice(1).toLowerCase();
+      var index = $scope.illionsArray.indexOf(' ' + $scope.ref.illions);
+      if (index !== -1) {
+        $scope.ref.numAngels = $scope.ref.viewNumAngels * Math.pow(10, 6 + (index * 3));
+      }
+    }
+  };
+
   function updateRecString(loc) {
     if (loc.rec[0] === 'level') {
       loc.recommendation = 'Buy ' + loc.recTable[0][0] + ' to level ' + loc.rec[2] + '.';
@@ -573,7 +587,8 @@ advApp.controller('advController', ['$document', '$filter', '$scope', function($
     $scope.earth.basePower = [1.07, 1.15, 1.14, 1.13, 1.12, 1.11, 1.1, 1.09, 1.08, 1.07];
     $scope.earth.baseProfit = [1, 60, 540, 4320, 51840, 622080, 7464960, 89579520, 1074954240, 29668737024];
     $scope.earth.baseSpeed = [0.5, 3, 6, 12, 24, 96, 384, 1536, 6144, 36864];
-    $scope.earth.investments = [ // should be only 5 numbers w last being % of total income
+    $scope.earth.illions = '';
+    $scope.earth.investments = [
       ['Lemon', 1, 0, 0, 0, 0],
       ['Newspaper', 0, 0, 0, 0, 0],
       ['Carwash', 0, 0, 0, 0, 0],
@@ -593,11 +608,13 @@ advApp.controller('advController', ['$document', '$filter', '$scope', function($
     $scope.earth.totalMoneyPerSecond = 0;
     $scope.earth.upgradeCosts = [[0, 0, 0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0, 0, 0]];
     $scope.earth.unlocks = [];
+    $scope.earth.viewNumAngels = 0;
     $scope.moon.angelEffectiveness = 0.02;
     $scope.moon.baseCost = [4.762, 105, 2929, 42525, 493025, 18753525, 393824025, 8270000000, 173676000000, 1000000000000];
     $scope.moon.basePower = [1.05, 1.21, 1.07, 1.19, 1.09, 1.15, 1.13, 1.17, 1.11, 1.5];
     $scope.moon.baseProfit = [1, 21, 2000, 376, 99000, 1980000, 33000000, 1152000000, 11067000000, 332640000000];
     $scope.moon.baseSpeed = [0.5, 3, 71.43, 188, 2200, 11000, 55000, 385000, 770000, 3850000];
+    $scope.moon.illions = '';
     $scope.moon.investments = [
       ['Moon Shoe', 1, 0, 0, 0, 0],
       ['Gravity Booth', 0, 0, 0, 0, 0],
@@ -618,6 +635,7 @@ advApp.controller('advController', ['$document', '$filter', '$scope', function($
     $scope.moon.totalMoneyPerSecond = 0;
     $scope.moon.upgradeCosts = [[0, 0, 0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0, 0, 0]];
     $scope.moon.unlocks = [];
+    $scope.moon.viewNumAngels = 0;
   };
 
   function loadUnlocks() { // TODO MOON[10] i.e. all to level 25 etc, angelUpgrades
