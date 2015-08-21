@@ -20,5 +20,3 @@ Please let me know if:
 - Add a way to compare strategies.
 - Implement Simulate function from dev.
 - Add a way to change number of steps in the Simulate function.
-- Add ability to type in angel numbers (7.02 Quintillion, etc).
-- Add ability to re-order tables by clicking on table head.

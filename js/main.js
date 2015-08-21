@@ -49,12 +49,15 @@ advApp.filter('num', function() {
 advApp.controller('advController', ['$document', '$filter', '$scope', function($document, $filter, $scope) {
   $scope.accOpen = [false, false, false, false];
   $scope.clearAfter = [false, false];
+  $scope.compare = false;
   $scope.earth = {};
   $scope.fillBefore = [false, false];
   $scope.illionsArray = illionsArr.slice(1);
   $scope.moon = {};
   $scope.raw = false;
   $scope.ref = $scope.earth;
+  $scope.reverse = true;
+  $scope.sortIndex = 2;
 
   angular.element(document).ready(function() {
     var fileInput = document.getElementById('fileInput');
@@ -77,6 +80,7 @@ advApp.controller('advController', ['$document', '$filter', '$scope', function($
             }
           }
           $scope[loadArr[k]].numAngels = obj[loadArr[k]].numAngels;
+          $scope[loadArr[k]].viewNumAngels = $scope[loadArr[k]].numAngels;
           for (i = 0; i < obj[loadArr[k]].upgradeIndexUpTo; i++) {
             $scope[loadArr[k]].cashUpgrades[i][$scope[loadArr[k]].cashUpgrades[i].length - 1] = true;
           }
@@ -183,7 +187,7 @@ advApp.controller('advController', ['$document', '$filter', '$scope', function($
           }
         } else if (applyRow === 11) {
           loc.angelEffectiveness += row[i][1] / 100;
-        } else {
+        } else if (row[i][0] < 30 || row[i][0] > 39) {
           throw 'Tuple not dealt with: ' + row;
         }
       }
@@ -192,13 +196,20 @@ advApp.controller('advController', ['$document', '$filter', '$scope', function($
 
   function calcUnlockCost(loc, index, fromLevel, numLevels) {
     var retVal = 1,
-    i = 1,
+    i = 1, j = 0,
     managerDiscount = 1;
     for (; i < numLevels; i++) {
       retVal += Math.pow(loc.basePower[index], i);
     };
     if (index === 0) {
       fromLevel -= 1;
+    }
+    for (i = 0; i < loc.angelUpgrades.length; i++) {
+      if (tupleIsActive(loc.angelUpgrades[i])) {
+        if (loc.angelUpgrades[i][1][0] === (30 + index)) {
+          fromLevel -= loc.angelUpgrades[i][1][1];
+        }
+      }
     }
     for (i = 0; i < loc.managerUpgrades[index].length; i++) {
       if (tupleIsActive(loc.managerUpgrades[index][i])) {
@@ -310,7 +321,9 @@ advApp.controller('advController', ['$document', '$filter', '$scope', function($
     }
     loc.recTable.push(['All', highestSharedLevel, (tempPlanet.totalMoneyPerSecond - loc.totalMoneyPerSecond) / (tempUnlock / loc.totalMoneyPerSecond), tempUnlock, tempUnlock / loc.totalMoneyPerSecond, tempPlanet.totalMoneyPerSecond - loc.totalMoneyPerSecond, (tempPlanet.totalMoneyPerSecond - loc.totalMoneyPerSecond) * 100 / loc.totalMoneyPerSecond, null]);
     loc.rec = maxObj;
-    loc.recTable = $filter('orderBy')(loc.recTable, indexOrder, true);
+    $scope.reverse = true;
+    $scope.sortIndex = 2;
+    loc.recTable = $filter('orderBy')(loc.recTable, indexOrder, $scope.reverse);
     updateRecString(loc);
   };
 
@@ -394,6 +407,20 @@ advApp.controller('advController', ['$document', '$filter', '$scope', function($
         loc.cashUpgrades[i][loc.cashUpgrades[i].length - 1] = false;
       }
     }
+  };
+
+  $scope.clickSort = function(loc, index) {
+    if (index === $scope.sortIndex) {
+      $scope.reverse = !$scope.reverse;
+    } else {
+      $scope.sortIndex = index;
+      if (index === 2 || index >= 5) {
+        $scope.reverse = true;
+      } else {
+        $scope.reverse = false;
+      }
+    }
+    loc.recTable = $filter('orderBy')(loc.recTable, indexOrder, $scope.reverse);
   };
 
   function deepCopy(input) {
@@ -512,6 +539,8 @@ advApp.controller('advController', ['$document', '$filter', '$scope', function($
         k += 'All' + (j && ' Speed ' || ' Profit ') + num;
       } else if (i === 11) {
         k += 'Angel Investor ' + num;
+      } else if (tuple[l][0] >= 30 && tuple[l][0] <= 39) {
+        k += '+' + tuple[l][1] + ' ' + loc.investments[tuple[l][0] - 30][0];
       }
     }
     return k;
@@ -529,7 +558,11 @@ advApp.controller('advController', ['$document', '$filter', '$scope', function($
   };
 
   function indexOrder(input) {
-    return input[2];
+    return input[$scope.sortIndex];
+  };
+
+  $scope.isCompare = function() {
+    return $scope.compare;
   };
 
   $scope.isEarth = function() {
@@ -539,12 +572,14 @@ advApp.controller('advController', ['$document', '$filter', '$scope', function($
   $scope.setEarth = function() {
     $scope.clearAfter = [false, false];
     $scope.fillBefore = [false, false];
+    $scope.compare = false;
     $scope.ref = $scope.earth;
   };
 
   $scope.setMoon = function() {
     $scope.clearAfter = [false, false];
     $scope.fillBefore = [false, false];
+    $scope.compare = false;
     $scope.ref = $scope.moon;
   };
 

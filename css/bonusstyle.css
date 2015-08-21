@@ -1,0 +1,19 @@
+h1 {
+  display:inline;
+}
+
+li {
+  cursor: pointer;
+}
+
+thead th {
+  background-color: #eee;
+}
+
+.clickable {
+  cursor: pointer;
+}
+
+.illions {
+  width: 300px;
+}
