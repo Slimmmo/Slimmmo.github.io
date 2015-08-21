@@ -19,11 +19,13 @@
       <div>
         Load a saved state: <input type="file" id="fileInput"><button type="button" class="btn btn-primary pull-right" data-ng-click="export()">Save State</button>
       </div>
+      <br>
+      <ul class="nav nav-tabs nav-justified">
+        <li role="presentation" data-ng-class="{active: !isCompare() && isEarth()}"><a data-ng-click="setEarth()">Earth</a></li>
+        <li role="presentation" data-ng-class="{active: !isCompare() && !isEarth()}"><a data-ng-click="setMoon()">Moon</a></li>
+      </ul>
+      <br>
       <div data-ng-show="!isCompare()">
-        <ul class="nav nav-tabs nav-justified">
-          <li role="presentation" data-ng-class="{active: !isCompare() && isEarth()}"><a data-ng-click="setEarth()">Earth</a></li>
-          <li role="presentation" data-ng-class="{active: !isCompare() && !isEarth()}"><a data-ng-click="setMoon()">Moon</a></li>
-        </ul>
         <div>
           <label><input type="number" class="form-control" data-ng-model="ref.viewNumAngels" data-ng-blur="updateAngels()" step="0.001" required></input> <input type="text" class="form-control illions" data-ng-model="ref.illions" typeahead="ill for ill in illionsArray | filter:$viewValue | limitTo:8" placeholder="*illions" data-ng-blur="updateAngels()"></input> # Angels</label>
           <label class="checkbox"><input type="checkbox" class="form-control" data-ng-model="raw"></input> Raw Values</label>
@@ -39,6 +41,7 @@
                 <th>Cycle Time</th>
                 <th>$ / Second</th>
                 <th>% of total $ / Second</th>
+                <th>Apply</th>
               </tr>
             </thead>
             <tbody>
@@ -53,7 +56,6 @@
             </tbody>
           </table>
         </div>
-        <br>
         <div>
           <accordion close-others="false">
             <accordion-group is-open="accOpen[0]">
@@ -137,7 +139,6 @@
             </accordion-group>
           </accordion>
         </div>
-        <br>
         <h2>Total $ / second : {{ref.totalMoneyPerSecond | number}} ({{ref.totalMoneyPerSecond | num}})</h2>
         <h2>Total $ / minute : {{ref.totalMoneyPerSecond * 60 | number}} ({{ref.totalMoneyPerSecond * 60 | num}})</h2>
         <button type="button" class="btn btn-primary" data-ng-click="calc(ref)">Calculate</button>
