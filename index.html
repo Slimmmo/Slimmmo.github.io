@@ -122,8 +122,9 @@
                 <thead>
                   <tr>
                     <th>Business</th>
-                    <th>10% off</th>
-                    <th>99.999% off</th>
+                    <th data-ng-show="isEarth()">10% off</th>
+                    <th data-ng-show="isEarth()">99.999% off</th>
+                    <th data-ng-show="!isEarth()">25% off</th>
                   </tr>
                 </thead>
                 <tbody>

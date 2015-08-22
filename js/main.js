@@ -98,7 +98,7 @@ advApp.controller('advController', ['$document', '$filter', '$scope', function($
           }
         }
         $scope.calc($scope.earth);
-        //$scope.calc($scope.moon);
+        $scope.calc($scope.moon);
         $scope.$digest();
       }
       reader.readAsText(file);
@@ -122,7 +122,7 @@ advApp.controller('advController', ['$document', '$filter', '$scope', function($
     $scope.calc(loc);
   };
 
-  $scope.applyRow = function(loc, row) { // TODO manager
+  $scope.applyRow = function(loc, row) {
     var name = row[0].split(' '),
     i = 0, j = false;
     if (name.length >= 3 && (name[name.length - 2] === 'Profit' || name[name.length - 2] === 'Speed' || name[name.length - 2] === 'Investor')) {
@@ -138,7 +138,7 @@ advApp.controller('advController', ['$document', '$filter', '$scope', function($
       }
     } else {
       for (; i < loc.investments.length; i++) {
-        if (loc.investments[i][0] === name[0]) {
+        if (loc.investments[i][0] === name[0] || (name.length > 1 && loc.investments[i][0] === name[0] + ' ' + name[1])) {
           loc.investments[i][1] = row[1];
           break;
         }
@@ -162,7 +162,7 @@ advApp.controller('advController', ['$document', '$filter', '$scope', function($
             if (row[i][1] !== 2) {
               throw 'Not double speed rate, error? ' + row;
             }
-            if (applyRow === 0) {
+            if (applyRow === 0 && loc.name === 'earth') {
               loc.investments[applyRow][3] *= loc.baseSpeed[0];
             } else {
               loc.investments[applyRow][3] /= 2;
@@ -178,7 +178,7 @@ advApp.controller('advController', ['$document', '$filter', '$scope', function($
               throw 'Not double speed rate, error? ' + row;
             }
             for (j = 0; j < loc.investments.length; j++) {
-              if (j === 0) {
+              if (j === 0 && loc.name === 'earth') {
                 loc.investments[j][3] *= loc.baseSpeed[0];
               } else {
                 loc.investments[j][3] /= 2;
@@ -213,10 +213,14 @@ advApp.controller('advController', ['$document', '$filter', '$scope', function($
     }
     for (i = 0; i < loc.managerUpgrades[index].length; i++) {
       if (tupleIsActive(loc.managerUpgrades[index][i])) {
-        if (i === 0) {
-          managerDiscount = 0.9;
+        if (loc.name === 'earth') {
+          if (i === 0) {
+            managerDiscount = 0.9;
+          } else {
+            managerDiscount = 0.00001;
+          }
         } else {
-          managerDiscount = 0.00001;
+          managerDiscount = 0.75;
         }
       }
     }
@@ -584,8 +588,10 @@ advApp.controller('advController', ['$document', '$filter', '$scope', function($
   };
 
   $scope.toggleManagers = function(row, index) {
-    if (row[index][1] === true) {
-      row[(index + 1) % 2][1] = false;
+    if ($scope.isEarth()) {
+      if (row[index][1] === true) {
+        row[(index + 1) % 2][1] = false;
+      }
     }
   };
 
@@ -647,8 +653,8 @@ advApp.controller('advController', ['$document', '$filter', '$scope', function($
     $scope.moon.angelEffectiveness = 0.02;
     $scope.moon.baseCost = [4.762, 105, 2929, 42525, 493025, 18753525, 393824025, 8270000000, 173676000000, 1000000000000];
     $scope.moon.basePower = [1.05, 1.21, 1.07, 1.19, 1.09, 1.15, 1.13, 1.17, 1.11, 1.5];
-    $scope.moon.baseProfit = [1, 21, 2000, 376, 99000, 1980000, 33000000, 1152000000, 11067000000, 332640000000];
-    $scope.moon.baseSpeed = [0.5, 3, 71.43, 188, 2200, 11000, 55000, 385000, 770000, 3850000];
+    $scope.moon.baseProfit = [1, 21, 2001, 376, 98820, 1976000, 32940000, 1152000000, 11067000000, 332035000000];
+    $scope.moon.baseSpeed = [2, 7, 28, 2, 45, 180, 600, 3000, 14400, 86400];
     $scope.moon.illions = '';
     $scope.moon.investments = [
       ['Moon Shoe', 1, 0, 0, 0, 0],
@@ -673,7 +679,7 @@ advApp.controller('advController', ['$document', '$filter', '$scope', function($
     $scope.moon.viewNumAngels = 0;
   };
 
-  function loadUnlocks() { // TODO MOON[10] i.e. all to level 25 etc, angelUpgrades
+  function loadUnlocks() {
     $scope.earth.unlocks = [];
     for (var i = 0; i < 11; i++) {
       $scope.earth.unlocks.push([]);
@@ -706,10 +712,10 @@ advApp.controller('advController', ['$document', '$filter', '$scope', function($
     $scope.moon.unlocks[7] = [[80, [14, 8]],[160, [14, 8]],[240, [14, 8]],[320, [14, 8]],[480, [14, 8]],[640, [14, 8]],[800, [14, 8]],[960, [14, 8]],[1200, [14, 8]],[1440, [14, 8]],[1680, [14, 8]],[1920, [14, 8]],[2160, [14, 8]],[2300, [14, 8]],[2540, [14, 8]],[2780, [14, 8]],[3000, [14, 8]]];
     $scope.moon.unlocks[8] = [[25, [16, 2]],[50, [16, 2]],[75, [16, 2]],[100, [16, 2]],[150, [16, 2]],[200, [16, 2]],[250, [16, 2]],[300, [16, 2]],[350, [16, 2]],[400, [16, 2]],[450, [16, 2]],[500, [16, 2]],[600, [16, 2]],[700, [16, 2]],[800, [16, 2]],[900, [16, 2]],[1000, [16, 2]],[1200, [16, 2]],[1400, [16, 2]],[1600, [16, 2]],[1800, [16, 2]],[2000, [16, 2]],[2300, [16, 2]],[2600, [16, 2]],[2900, [16, 2]],[3200, [16, 2]],[3500, [16, 2]],[3800, [16, 2]],[4100, [16, 2]]];
     $scope.moon.unlocks[9] = [[5, [21, 2]],[25, [21, 2]],[50, [18, 75]],[100, [18, 75], [21, 2]],[200, [18, 75], [21, 2]],[300, [18, 75], [21, 2]],[400, [18, 75], [21, 2]],[500, [18, 75], [21, 2]],[600, [18, 75], [21, 2]],[700, [18, 75], [21, 2]],[800, [18, 75], [21, 2]],[900, [18, 75], [21, 2]],[1000, [18, 75], [21, 2]],[1111, [18, 75], [21, 2]]];
-    $scope.moon.unlocks[10] = [];
+    $scope.moon.unlocks[10] = [[5, [21, 2]], [25, [21, 2]], [100, [21, 2]], [200, [21, 2]], [300, [21, 2]], [400, [21, 2]], [500, [21, 2]], [600, [21, 2]], [700, [21, 2]], [800, [21, 2]], [900, [21, 2]], [1000, [21, 2]], [1111, [21, 2]]];
     $scope.moon.cashUpgrades = [[332500, [0, 2], false], [665000, [2, 2], false], [1330000, [4, 2], false], [6500000, [6, 2], false], [13300000, [8, 2], false], [33250000, [10, 2], false], [1.665e+9, [12, 2], false], [133e+9, [14, 2], false], [665e+9, [16, 2], false], [3.3e+12, [18, 2], false], [10e+12, [20, 3], false], [30e+12, [0, 3], false], [70e+12, [2, 3], false], [150e+12, [4, 3], false], [266e+12, [10, 3], false], [275e+12, [6, 3], false], [433e+12, [8, 3], false], [665e+12, [12, 3], false], [931e+12, [14, 3], false], [2e+15, [16, 3], false], [3e+15, [18, 3], false], [7e+15, [20, 3], false], [13e+15, [22, 1], false], [26e+21, [0, 3], false], [67e+21, [2, 3], false], [93e+21, [4, 3], false], [133e+21, [6, 3], false], [266e+21, [8, 3], false], [465e+21, [10, 3], false], [665e+21, [12, 3], false], [997e+21, [14, 3], false], [2e+24, [16, 3], false], [3e+24, [18, 3], false], [10e+24, [20, 3], false], [20e+24, [22, 1], false], [5e+30, [0, 3], false], [10e+30, [2, 3], false], [20e+30, [4, 3], false], [40e+30, [6, 3], false], [160e+30, [8, 3], false], [280e+30, [10, 3], false], [500e+30, [12, 3], false], [690e+30, [14, 3], false], [725e+30, [16, 3], false], [833e+30, [18, 3], false], [975e+30, [20, 3], false], [4e+33, [22, 1], false], [9e+33, [0, 3], false], [20e+33, [2, 3], false], [100e+33, [4, 3], false], [200e+33, [6, 3], false], [421e+33, [8, 3], false], [665e+33, [10, 3], false], [825e+33, [12, 3], false], [5e+36, [14, 3], false], [25e+36, [16, 3], false], [50e+36, [18, 3], false], [100e+36, [20, 3], false], [75e+39, [0, 5], false], [210e+39, [2, 5], false], [353e+39, [4, 5], false], [635e+39, [6, 5], false], [900e+39, [8, 5], false], [9e+42, [10, 5], false], [22e+42, [12, 5], false], [60e+42, [14, 5], false], [132e+42, [16, 5], false], [367e+42, [18, 5], false], [1e+45, [20, 5], false], [1e+54, [22, 3], false], [6e+54, [2, 3], false], [18e+54, [0, 3], false], [79e+54, [4, 3], false], [110e+54, [6, 3], false], [220e+54, [8, 3], false], [399e+54, [10, 3], false], [666e+54, [12, 3], false], [911e+54, [14, 3], false], [4e+60, [16, 3], false], [25e+60, [18, 3], false], [112e+60, [20, 3], false], [200e+60, [0, 3], false], [356e+60, [2, 3], false], [518e+60, [4, 3], false], [766e+60, [6, 3], false], [3e+69, [8, 3], false], [6e+69, [10, 3], false], [12e+69, [12, 3], false], [50e+69, [14, 3], false], [212e+69, [16, 3], false], [367e+69, [18, 3], false], [1e+72, [20, 3], false], [25e+75, [0, 3], false], [60e+75, [2, 3], false], [177e+75, [4, 3], false], [239e+75, [6, 3], false], [432e+75, [8, 3], false], [801e+75, [10, 3], false], [2e+78, [12, 3], false], [8e+78, [14, 3], false], [32e+78, [16, 3], false]];
-    $scope.moon.angelUpgrades = [];
-    $scope.moon.managerUpgrades = [];
+    $scope.moon.angelUpgrades = [[11000, [20, 3], false],[222000, [0, 3], false],[3e+6, [2, 3], false],[4e+6, [4, 3], false],[55e+6, [6, 3], false],[666e+6, [8, 3], false],[7e+9, [10, 3], false],[88e+9, [12, 3], false],[999e+9, [14, 3], false],[1e+12, [16, 3], false],[11e+12, [18, 3], false],[123e+12, [20, 3], false],[50e+18, [31, 10], false],[50e+18, [33, 10], false],[50e+18, [35, 10], false],[50e+18, [37, 10], false],[50e+18, [39, 10], false],[1e+21, [0, 3], false],[9e+21, [2, 3], false],[27e+21, [4, 3], false],[99e+21, [6, 3], false],[180e+21, [8, 3], false],[222e+21, [10, 3], false],[343e+21, [12, 3], false],[477e+21, [14, 3], false],[569e+21, [16, 3], false],[789e+21, [18, 3], false],[1e+24, [20, 3], false],[25e+27, [31, 10], false],[25e+27, [33, 10], false],[25e+27, [35, 10], false],[25e+27, [37, 10], false],[25e+27, [39, 10], false],[1e+30, [0, 2], false],[14e+30, [2, 2], false],[55e+30, [4, 2], false],[100e+30, [6, 2], false],[189e+30, [8, 2], false],[267e+30, [10, 2], false],[404e+30, [12, 2], false],[691e+30, [14, 2], false],[777e+30, [16, 2], false],[910e+30, [18, 2], false],[2e+33, [20, 3], false],[100e+33, [31, 10], false],[100e+33, [33, 10], false],[100e+33, [35, 10], false],[100e+33, [37, 10], false],[100e+33, [39, 10], false],[5e+36, [0, 3], false],[19e+36, [2, 3], false],[88e+36, [4, 3], false],[144e+36, [6, 3], false],[201e+36, [8, 3], false],[333e+36, [10, 3], false],[400e+36, [12, 3], false],[588e+36, [14, 3], false],[701e+36, [16, 3], false],[911e+36, [18, 3], false],[50e+39, [20, 3], false],[5e+42, [31, 10], false],[5e+42, [33, 10], false],[5e+42, [35, 10], false],[5e+42, [37, 10], false],[5e+42, [39, 10], false],[3e+45, [0, 5], false],[6e+45, [2, 5], false],[12e+45, [4, 5], false],[24e+45, [6, 5], false],[48e+45, [8, 5], false],[96e+45, [10, 5], false],[192e+45, [12, 5], false],[384e+45, [14, 5], false],[768e+45, [16, 5], false],[14e+48, [18, 5], false],[300e+51, [20, 9], false],[5e+54, [30, 50], false],[5e+54, [31, 50], false],[5e+54, [32, 50], false],[5e+54, [33, 50], false],[5e+54, [34, 50], false],[5e+54, [35, 50], false],[5e+54, [36, 50], false],[5e+54, [37, 50], false],[5e+54, [38, 50], false],[5e+54, [39, 50], false],[100e+54, [0, 3], false],[200e+54, [2, 3], false],[300e+54, [4, 3], false],[400e+54, [6, 3], false],[500e+54, [8, 3], false],[600e+54, [10, 3], false],[700e+54, [12, 3], false],[800e+54, [14, 3], false],[900e+54, [16, 3], false],[1e+57, [18, 3], false],[316e+57, [20, 3], false],[100e+63, [30, 75], false],[100e+63, [31, 75], false],[100e+63, [32, 75], false],[100e+63, [33, 75], false],[100e+63, [34, 75], false],[100e+63, [35, 75], false],[100e+63, [36, 75], false],[100e+63, [37, 75], false],[100e+63, [38, 75], false],[100e+63, [39, 75], false],[1e+69, [0, 3], false],[2e+69, [2, 3], false],[4e+69, [4, 3], false],[8e+69, [6, 3], false],[16e+69, [8, 3], false],[32e+69, [10, 3], false],[64e+69, [12, 3], false],[128e+69, [14, 3], false],[256e+69, [16, 3], false],[512e+69, [18, 3], false],[1e+72, [20, 3], false],[5e+75, [31, 50], false],[5e+75, [33, 50], false],[5e+75, [34, 100], false],[5e+75, [36, 100], false],[5e+75, [39, 25], false],[100e+75, [0, 7], false],[200e+75, [2, 7], false],[400e+75, [4, 7], false],[800e+75, [6, 7], false],[16e+78, [8, 7], false],[32e+78, [10, 7], false],[64e+78, [12, 7], false],[128e+78, [14, 7], false],[256e+78, [16, 7], false],[512e+78, [18, 7], false],[1e+81, [20, 7], false],[100e+84, [33, 100], false],[200e+84, [34, 200], false],[300e+84, [36, 300], false],[1e+87, [0, 2], false],[9e+87, [2, 2], false],[18e+87, [4, 2], false],[27e+87, [6, 2], false],[36e+87, [8, 2], false],[45e+87, [10, 2], false],[54e+87, [12, 2], false],[63e+87, [14, 2], false],[72e+87, [16, 2], false],[81e+87, [18, 2], false],[1e+90, [20, 5], false]];
+    $scope.moon.managerUpgrades = [[[10e+99, false]],[[10e+99, false]],[[10e+99, false]],[[10e+99, false]],[[10e+99, false]],[[10e+99, false]],[[10e+99, false]],[[10e+99, false]],[[10e+99, false]],[[10e+99, false]]];
   };
 
   loadDefaults();

@@ -10,7 +10,6 @@ Please let me know if:
 
 ### Notes:
 - Remember to manually check number of angels after each angel purchase. It's not intuitive yet.
-- Moon calculations don't work because I don't have have the unlocks table for all businesses. Will be fixed when I make it to the moon (~30th August).
 
 ### To Do:
 - Implement cycle time increments instead of averages to make the saving time calculations more accurate.
