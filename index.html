@@ -19,20 +19,17 @@
       <div>
         Load a saved state: <input type="file" id="fileInput"><button type="button" class="btn btn-primary pull-right" data-ng-click="export()">Save State</button>
       </div>
-      <br>
       <ul class="nav nav-tabs nav-justified">
         <li role="presentation" data-ng-class="{active: !isCompare() && isEarth()}"><a data-ng-click="setEarth()">Earth</a></li>
         <li role="presentation" data-ng-class="{active: !isCompare() && !isEarth()}"><a data-ng-click="setMoon()">Moon</a></li>
       </ul>
-      <br>
       <div data-ng-show="!isCompare()">
         <div>
           <label><input type="number" class="form-control" data-ng-model="ref.viewNumAngels" data-ng-blur="updateAngels()" step="0.001" required></input> <input type="text" class="form-control illions" data-ng-model="ref.illions" typeahead="ill for ill in illionsArray | filter:$viewValue | limitTo:8" placeholder="*illions" data-ng-blur="updateAngels()"></input> # Angels</label>
           <label class="checkbox"><input type="checkbox" class="form-control" data-ng-model="raw"></input> Raw Values</label>
         </div>
-        <br>
         <div>
-          <table class="table table-striped table-hover table-bordered">
+          <table class="table table-striped table-hover table-bordered space_top">
             <thead>
               <tr>
                 <th>Type</th>
@@ -104,14 +101,14 @@
             </accordion-group>
             <accordion-group is-open="accOpen[2]">
               <accordion-heading>
-                Angel Upgrades<span class="pull-right fa" ng-class="{'fa-chevron-down': accOpen[2], 'fa-chevron-right': !accOpen[2]}"></span>
+                Angel Upgrades<i data-ng-show="ref.angelExclamation" class="fa fa-exclamation"></i><span class="pull-right fa" ng-class="{'fa-chevron-down': accOpen[2], 'fa-chevron-right': !accOpen[2]}"></span>
               </accordion-heading>
               <div class="well">
                 <input type="checkbox" class="form-control col-xs-offset-3" data-ng-model="fillBefore[1]"> Buy all before (inclusive)</input>
                 <input type="checkbox" class="form-control col-xs-offset-3" data-ng-model="clearAfter[1]"> Clear all after (inclusive)</input>
               </div>
               <div class="col-xs-4" data-ng-repeat="aupg in ref.angelUpgrades track by $index">
-                <input type="checkbox" class="form-control" data-ng-model="aupg[2]" data-ng-change="checkAngel(ref, $index)"> {{getNamedType(ref, aupg)}} ({{aupg[0] | num:raw}} AI)</input>
+                <input type="checkbox" class="form-control" data-ng-model="aupg[3]" data-ng-change="checkAngel(ref, $index)"> {{getNamedType(ref, aupg)}} ({{aupg[0] | num:raw}} AI)<i data-ng-show="aupg[2]" class="fa fa-exclamation"></i></input>
               </div>
             </accordion-group>
             <accordion-group is-open="accOpen[3]">
@@ -131,7 +128,7 @@
                   <tr data-ng-repeat="mupg in ref.managerUpgrades track by $index">
                     <td>{{ref.investments[$index][0]}}</td>
                     <td data-ng-repeat="mtup in mupg track by $index">
-                      <input type="checkbox" data-ng-model="mtup[1]" data-ng-change="toggleManagers(mupg, $index)">{{$index == 0 ? ' $' : ' '}}{{mtup[0] | num:raw}}{{$index == 1 ? ' AI' : ''}}
+                      <input type="checkbox" data-ng-model="mtup[1]" data-ng-change="toggleManagers(mupg, $index)">{{$index == 1 ? ' $' : ' '}}{{mtup[0] | num:raw}}{{$index == 0 ? ' AI' : ''}}
                     </td>
                   </tr>
                 </tbody>
@@ -142,15 +139,11 @@
         <h2>Total $ / second : {{ref.totalMoneyPerSecond | number}} ({{ref.totalMoneyPerSecond | num}})</h2>
         <h2>Total $ / minute : {{ref.totalMoneyPerSecond * 60 | number}} ({{ref.totalMoneyPerSecond * 60 | num}})</h2>
         <button type="button" class="btn btn-primary" data-ng-click="calc(ref)">Calculate</button>
-        <br>
         <div data-ng-show="ref.recTable.length">
           <h2>Recommendation: {{ref.recommendation}}</h2>
           <button type="button" class="btn btn-primary" data-ng-click="apply(ref)">Apply Recommendation</button>
-          <br>
-          <br>
           <label class="checkbox"><input type="checkbox" class="form-control" data-ng-model="raw"></input> Raw Values</label>
-          <br>
-          <table class="table table-striped table-hover table-bordered">
+          <table class="table table-striped table-hover table-bordered space_top">
             <thead>
               <tr>
                 <th>Upgrade</th>
@@ -194,7 +187,8 @@
         </div>
         <h3>* Upgrade Score is calculated as (Increase in $ / Second of upgrade) / (Cost in Time of upgrade)</h3>
       </div>
-      <h4>Found an error? Want to request a feature? You can do so <a href="https://github.com/Slimmmo/Slimmmo.github.io">here</a>.</h4>
+      <hr>
+      <h4 class="pull-right">Found an error? Want to request a feature? You can do so <a href="https://github.com/Slimmmo/Slimmmo.github.io">here</a>.</h4>
     </div>
   </body>
  </html>
