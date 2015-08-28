@@ -94,8 +94,12 @@ advApp.controller('advController', ['$document', '$filter', '$scope', function($
             $scope[loadArr[k]].angelUpgrades[obj[loadArr[k]].angelUpgradeIndexBonus[i]][$scope[loadArr[k]].angelUpgrades[obj[loadArr[k]].angelUpgradeIndexBonus[i]].length - 1] = true;
           }
           for (i = 0; i < obj[loadArr[k]].managersBought.length; i++) {
-            $scope[loadArr[k]].managerUpgrades[Math.floor(i / 2)][i % 2] = true;
+            $scope[loadArr[k]].managerUpgrades[Math.floor(obj[loadArr[k]].managersBought[i] / 2)][obj[loadArr[k]].managersBought[i] % 2][1] = true;
           }
+          $scope[loadArr[k]].triples = obj[loadArr[k]].triples;
+          $scope[loadArr[k]].flux = obj[loadArr[k]].flux;
+          $scope[loadArr[k]].bonusAngelEffectiveness = obj[loadArr[k]].bonusAngelEffectiveness;
+          $scope[loadArr[k]].bonusMultiplier = obj[loadArr[k]].bonusMultiplier;
         }
         $scope.calc($scope.earth);
         $scope.calc($scope.moon);
@@ -514,6 +518,7 @@ advApp.controller('advController', ['$document', '$filter', '$scope', function($
         break;
       }
     }
+    first = true;
     string += i + ',\r\n  "angelUpgradeIndexBonus": [';
     for (; i < loc.angelUpgrades.length; i++) {
       if (loc.angelUpgrades[i][loc.angelUpgrades[i].length - 1] === true) {
@@ -526,10 +531,10 @@ advApp.controller('advController', ['$document', '$filter', '$scope', function($
         string += '    ' + i;
       }
     }
+    first = true;
     string += '\r\n  ],\r\n  "managersBought": [';
-    first = false;
     for (i = 0; i < loc.managerUpgrades.length; i++) {
-      for (j = 0; j < 2; j++) {
+      for (j = 0; j < loc.managerUpgrades[i].length; j++) {
         if (loc.managerUpgrades[i][j][1] === true) {
           if (first !== true) {
             string += ',\r\n'
@@ -541,7 +546,7 @@ advApp.controller('advController', ['$document', '$filter', '$scope', function($
         }
       }
     }
-    string += '\r\n  ]\r\n}';
+    string += '\r\n  ],\r\n  "triples": ' + loc.triples + ',\r\n  "flux": ' + loc.flux + ',\r\n  "bonusAngelEffectiveness": ' + loc.bonusAngelEffectiveness + ',\r\n  "bonusMultiplier": ' + loc.bonusMultiplier + '\r\n}';
     return string;
   };
 
