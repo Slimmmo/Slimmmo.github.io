@@ -47,7 +47,7 @@ advApp.filter('num', function() {
 });
 
 advApp.controller('advController', ['$document', '$filter', '$scope', function($document, $filter, $scope) {
-  $scope.accOpen = [false, false, false, false, false];
+  $scope.accOpen = [false, false, false, false, false, false];
   $scope.clearAfter = [false, false];
   $scope.compare = false;
   $scope.earth = {};
@@ -360,6 +360,9 @@ advApp.controller('advController', ['$document', '$filter', '$scope', function($
         highestSharedLevel = loc.investments[i][1];
       }
       loc.investments[i][2] = loc.investments[i][1] * loc.baseProfit[i] * Math.pow(3, loc.triples);
+      if (loc.bonusMultiplier > 0) {
+        loc.investments[i][2] *= loc.bonusMultiplier;
+      }
       loc.investments[i][3] = loc.baseSpeed[i];
       if (loc.flux > 0) {
         loc.investments[i][3] /= (1 + loc.flux * 1.21);
@@ -390,6 +393,9 @@ advApp.controller('advController', ['$document', '$filter', '$scope', function($
     while (highestSharedLevel >= loc.unlocks[10][j][0]) {
       applyTuple(loc, loc.unlocks[10][j]);
       j++;
+    }
+    if (loc.bonusAngelEffectiveness > 0) {
+      loc.angelEffectiveness += loc.bonusAngelEffectiveness / 100;
     }
     for (i = 0; i < loc.investments.length; i++) {
       loc.investments[i][2] *= (1 + (loc.angelEffectiveness * loc.numAngels));
@@ -656,6 +662,8 @@ advApp.controller('advController', ['$document', '$filter', '$scope', function($
     $scope.earth.basePower = [1.07, 1.15, 1.14, 1.13, 1.12, 1.11, 1.1, 1.09, 1.08, 1.07];
     $scope.earth.baseProfit = [1, 60, 540, 4320, 51840, 622080, 7464960, 89579520, 1074954240, 29668737024];
     $scope.earth.baseSpeed = [0.5, 3, 6, 12, 24, 96, 384, 1536, 6144, 36864];
+    $scope.earth.bonusAngelEffectiveness = 0;
+    $scope.earth.bonusMultiplier = 0;
     $scope.earth.flux = 0;
     $scope.earth.illions = '';
     $scope.earth.investments = [
@@ -686,6 +694,8 @@ advApp.controller('advController', ['$document', '$filter', '$scope', function($
     $scope.moon.basePower = [1.05, 1.21, 1.07, 1.19, 1.09, 1.15, 1.13, 1.17, 1.11, 1.5];
     $scope.moon.baseProfit = [1, 21, 2001, 376, 98820, 1976400, 32940000, 1152900000, 11067840000, 332035000000];
     $scope.moon.baseSpeed = [2, 7, 28, 2, 45, 180, 600, 3000, 14400, 86400];
+    $scope.moon.bonusAngelEffectiveness = 0;
+    $scope.moon.bonusMultiplier = 0;
     $scope.moon.flux = 0;
     $scope.moon.illions = '';
     $scope.moon.investments = [
