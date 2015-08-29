@@ -363,7 +363,10 @@ advApp.controller('advController', ['$document', '$filter', '$scope', function($
       if (loc.investments[i][1] < highestSharedLevel) {
         highestSharedLevel = loc.investments[i][1];
       }
-      loc.investments[i][2] = loc.investments[i][1] * loc.baseProfit[i] * Math.pow(3, loc.triples);
+      loc.investments[i][2] = loc.investments[i][1] * loc.baseProfit[i];
+      if (loc.triples > 0) {
+        loc.investments[i][2] *= (3 * loc.triples);
+      }
       if (loc.bonusMultiplier > 0) {
         loc.investments[i][2] *= loc.bonusMultiplier;
       }
