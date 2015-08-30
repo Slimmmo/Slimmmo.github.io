@@ -205,7 +205,7 @@ advApp.controller('advController', ['$document', '$filter', '$scope', function($
     for (; i < numLevels; i++) {
       retVal += Math.pow(loc.basePower[index], i);
     };
-    if (index === 0) {
+    if (index === 0 && $scope.isEarth()) {
       fromLevel -= 1;
     }
     for (i = 0; i < loc.angelUpgrades.length; i++) {
@@ -698,7 +698,7 @@ advApp.controller('advController', ['$document', '$filter', '$scope', function($
     $scope.earth.viewNumAngels = 0;
     $scope.moon.angelEffectiveness = 0.02;
     $scope.moon.angelExclamation = false;
-    $scope.moon.baseCost = [4.762, 105, 2929, 42525, 493025, 18753525, 393824025, 8270000000, 173676000000, 1000000000000];
+    $scope.moon.baseCost = [5, 105, 2929, 42525, 493025, 18753525, 393824025, 8270000000, 173676000000, 1000000000000];
     $scope.moon.basePower = [1.05, 1.21, 1.07, 1.19, 1.09, 1.15, 1.13, 1.17, 1.11, 1.5];
     $scope.moon.baseProfit = [1, 21, 2001, 376, 98820, 1976400, 32940000, 1152900000, 11067840000, 332035000000];
     $scope.moon.baseSpeed = [2, 7, 28, 2, 45, 180, 600, 3000, 14400, 86400];
