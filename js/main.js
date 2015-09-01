@@ -166,11 +166,7 @@ advApp.controller('advController', ['$document', '$filter', '$scope', function($
             if (row[i][1] !== 2) {
               throw 'Not double speed rate, error? ' + row;
             }
-            if (applyRow === 0 && loc.name === 'earth') {
-              loc.investments[applyRow][3] *= loc.baseSpeed[0];
-            } else {
-              loc.investments[applyRow][3] /= 2;
-            }
+            loc.investments[applyRow][3] /= 2;
           }
         } else if (applyRow === 10) {
           if (applyType === 0) {
@@ -182,11 +178,7 @@ advApp.controller('advController', ['$document', '$filter', '$scope', function($
               throw 'Not double speed rate, error? ' + row;
             }
             for (j = 0; j < loc.investments.length; j++) {
-              if (j === 0 && loc.name === 'earth') {
-                loc.investments[j][3] *= loc.baseSpeed[0];
-              } else {
-                loc.investments[j][3] /= 2;
-              }
+              loc.investments[j][3] /= 2;
             }
           }
         } else if (applyRow === 11) {
