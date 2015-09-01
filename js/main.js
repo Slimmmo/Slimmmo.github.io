@@ -669,7 +669,7 @@ advApp.controller('advController', ['$document', '$filter', '$scope', function($
     $scope.earth.baseCost = [4, 60, 720, 8640, 103680, 1244160, 14929920, 179159040, 2149908480, 25798901760];
     $scope.earth.basePower = [1.07, 1.15, 1.14, 1.13, 1.12, 1.11, 1.1, 1.09, 1.08, 1.07];
     $scope.earth.baseProfit = [1, 60, 540, 4320, 51840, 622080, 7464960, 89579520, 1074954240, 29668737024];
-    $scope.earth.baseSpeed = [0.5, 3, 6, 12, 24, 96, 384, 1536, 6144, 36864];
+    $scope.earth.baseSpeed = [0.6, 3, 6, 12, 24, 96, 384, 1536, 6144, 36864];
     $scope.earth.bonusAngelEffectiveness = 0;
     $scope.earth.bonusMultiplier = 0;
     $scope.earth.flux = 0;
