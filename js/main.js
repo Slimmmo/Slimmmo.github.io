@@ -273,14 +273,22 @@ advApp.controller('advController', ['$document', '$filter', '$scope', function($
   function calcRecommendations(loc) {
     var i = 0, j = 0, k = 0,
     highestSharedLevel = loc.investments[0][1],
-    inc = [1, 10, 1],
+    inc = [],
     tempPlanet = JSON.parse(JSON.stringify(loc)),
     max = 0,
     maxObj = [0, 0],
     tempUnlock = null;
     loc.recTable = [];
+    if (!loc.noSingles) {
+      inc.push(1)
+    }
+    if (!loc.noTens) {
+      inc.push(10)
+    }
+    inc.push(100);
+    inc.push(1);
     for (; i < loc.investments.length; i++) {
-      inc[2] = getDifferenceNBonus(loc, i, 1);
+      inc[inc.length - 1] = getDifferenceNBonus(loc, i, 1);
       if (i === 1) {
         inc.push(getDifferenceNBonus(loc, i, 2));
         inc.push(getDifferenceNBonus(loc, i, 3));
@@ -680,6 +688,8 @@ advApp.controller('advController', ['$document', '$filter', '$scope', function($
       ['Oil', 0, 0, 0, 0, 0]
     ];
     $scope.earth.name = 'earth';
+    $scope.earth.noSingles = false;
+    $scope.earth.noTens = false;
     $scope.earth.numAngels = 0;
     $scope.earth.rec = null;
     $scope.earth.recTable = [];
@@ -712,6 +722,8 @@ advApp.controller('advController', ['$document', '$filter', '$scope', function($
       ['Giant Laser', 0, 0, 0, 0, 0]
     ];
     $scope.moon.name = 'moon';
+    $scope.moon.noSingles = false;
+    $scope.moon.noTens = false;
     $scope.moon.numAngels = 0;
     $scope.moon.rec = null;
     $scope.moon.recTable = null;
