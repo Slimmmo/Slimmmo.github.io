@@ -158,6 +158,8 @@
         <h2>Total $ / second : {{ref.totalMoneyPerSecond | number}} ({{ref.totalMoneyPerSecond | num}})</h2>
         <h2>Total $ / minute : {{ref.totalMoneyPerSecond * 60 | number}} ({{ref.totalMoneyPerSecond * 60 | num}})</h2>
         <button type="button" class="btn btn-primary" data-ng-click="calc(ref)">Calculate</button>
+        <input type="checkbox" class="form-control" data-ng-model="ref.noSingles"></input> Don't show +1 upgrades</label>
+        <input type="checkbox" class="form-control" data-ng-model="ref.noTens"></input> Don't show +10 upgrades</label>
         <div data-ng-show="ref.recTable.length">
           <h2>Recommendation: {{ref.recommendation}}</h2>
           <button type="button" class="btn btn-primary" data-ng-click="apply(ref)">Apply Recommendation</button>
