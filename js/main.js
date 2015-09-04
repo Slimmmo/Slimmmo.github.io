@@ -265,6 +265,8 @@ advApp.controller('advController', ['$document', '$filter', '$scope', function($
         if (tempPlanet.totalMoneyPerSecond > loc.totalMoneyPerSecond) {
           loc.angelUpgrades[i][loc.angelUpgrades[i].length - 2] = true;
           loc.angelExclamation = true;
+        } else {
+          loc.angelUpgrades[i][loc.angelUpgrades[i].length - 2] = false;
         }
       }
     }
@@ -612,7 +614,15 @@ advApp.controller('advController', ['$document', '$filter', '$scope', function($
   };
 
   $scope.isEarth = function() {
-    return $scope.ref == $scope.earth;
+    return $scope.ref === $scope.earth;
+  };
+
+  $scope.isMars = function() {
+    return false;
+  };
+
+  $scope.isMoon = function() {
+    return $scope.ref === $scope.moon;
   };
 
   $scope.setEarth = function() {
