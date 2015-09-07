@@ -374,7 +374,7 @@ advApp.controller('advController', ['$document', '$filter', '$scope', function($
       }
       loc.investments[i][3] = loc.investments[i][1] * loc.baseProfit[i];
       if (loc.triples > 0) {
-        loc.investments[i][3] *= (3 * loc.triples);
+        loc.investments[i][3] *= (3 * loc.triples) + 1;
       }
       if (loc.bonusMultiplier > 0) {
         loc.investments[i][3] *= loc.bonusMultiplier;
