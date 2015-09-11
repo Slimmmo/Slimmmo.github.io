@@ -303,6 +303,7 @@ advApp.controller('advController', ['$document', '$filter', '$scope', function($
       } else if (i === 2 && $scope.isEarth()) {
         inc.pop();
         inc.pop();
+        inc[inc.length - 1] = getDifferenceNBonus(loc, i, 1);
       }
       for (j = 0; j < inc.length; j++) {
         tempPlanet.investments = deepCopy(loc.investments);
