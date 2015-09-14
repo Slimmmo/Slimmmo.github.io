@@ -303,6 +303,7 @@ advApp.controller('advController', ['$document', '$filter', '$scope', function($
       } else if (i === 2 && $scope.isEarth()) {
         inc.pop();
         inc.pop();
+        inc[inc.length - 1] = getDifferenceNBonus(loc, i, 1);
       }
       for (j = 0; j < inc.length; j++) {
         tempPlanet.investments = deepCopy(loc.investments);
@@ -313,7 +314,7 @@ advApp.controller('advController', ['$document', '$filter', '$scope', function($
           max = (tempPlanet.totalMoneyPerSecond - loc.totalMoneyPerSecond) / (tempUnlock / loc.totalMoneyPerSecond);
           maxObj = ['level', i, tempPlanet.investments[i][1]];
         }
-        loc.recTable.push([loc.investments[i][0], tempPlanet.investments[i][1], (tempPlanet.totalMoneyPerSecond - loc.totalMoneyPerSecond) / (tempUnlock / loc.totalMoneyPerSecond), tempUnlock, tempUnlock / loc.totalMoneyPerSecond, tempPlanet.totalMoneyPerSecond - loc.totalMoneyPerSecond, (tempPlanet.totalMoneyPerSecond - loc.totalMoneyPerSecond) * 100 / loc.totalMoneyPerSecond, null]);
+        loc.recTable.push([loc.investments[i][0], tempPlanet.investments[i][1], 1000000000000000000000 * (tempPlanet.totalMoneyPerSecond - loc.totalMoneyPerSecond) / (tempPlanet.totalMoneyPerSecond * (tempUnlock / loc.totalMoneyPerSecond) ), tempUnlock, tempUnlock / loc.totalMoneyPerSecond, tempPlanet.totalMoneyPerSecond - loc.totalMoneyPerSecond, (tempPlanet.totalMoneyPerSecond - loc.totalMoneyPerSecond) * 100 / loc.totalMoneyPerSecond, null]);
       }
     }
     j = -1;
@@ -328,7 +329,7 @@ advApp.controller('advController', ['$document', '$filter', '$scope', function($
         max = (tempPlanet.totalMoneyPerSecond - loc.totalMoneyPerSecond) / (loc.cashUpgrades[j][0] / loc.totalMoneyPerSecond);
         maxObj = ['upgrade', j];
       }
-      loc.recTable.push([$scope.getNamedType(loc, loc.cashUpgrades[j]), null, (tempPlanet.totalMoneyPerSecond - loc.totalMoneyPerSecond) / (loc.cashUpgrades[j][0] / loc.totalMoneyPerSecond), loc.cashUpgrades[j][0], loc.cashUpgrades[j][0] / loc.totalMoneyPerSecond, tempPlanet.totalMoneyPerSecond - loc.totalMoneyPerSecond, (tempPlanet.totalMoneyPerSecond - loc.totalMoneyPerSecond) * 100 / loc.totalMoneyPerSecond, j]);
+      loc.recTable.push([$scope.getNamedType(loc, loc.cashUpgrades[j]), null, 1000000000000000000000 * (tempPlanet.totalMoneyPerSecond - loc.totalMoneyPerSecond) / (tempPlanet.totalMoneyPerSecond * (loc.cashUpgrades[j][0] / loc.totalMoneyPerSecond) ), loc.cashUpgrades[j][0], loc.cashUpgrades[j][0] / loc.totalMoneyPerSecond, tempPlanet.totalMoneyPerSecond - loc.totalMoneyPerSecond, (tempPlanet.totalMoneyPerSecond - loc.totalMoneyPerSecond) * 100 / loc.totalMoneyPerSecond, j]);
     }
     tempUnlock = 0;
     tempPlanet.investments = deepCopy(loc.investments);
@@ -355,7 +356,7 @@ advApp.controller('advController', ['$document', '$filter', '$scope', function($
       max = (tempPlanet.totalMoneyPerSecond - loc.totalMoneyPerSecond) / (tempUnlock / loc.totalMoneyPerSecond);
       maxObj = ['all', highestSharedLevel];
     }
-    loc.recTable.push(['All', highestSharedLevel, (tempPlanet.totalMoneyPerSecond - loc.totalMoneyPerSecond) / (tempUnlock / loc.totalMoneyPerSecond), tempUnlock, tempUnlock / loc.totalMoneyPerSecond, tempPlanet.totalMoneyPerSecond - loc.totalMoneyPerSecond, (tempPlanet.totalMoneyPerSecond - loc.totalMoneyPerSecond) * 100 / loc.totalMoneyPerSecond, null]);
+    loc.recTable.push(['All', highestSharedLevel, 1000000000000000000000 * (tempPlanet.totalMoneyPerSecond - loc.totalMoneyPerSecond) / (tempPlanet.totalMoneyPerSecond * (tempUnlock / loc.totalMoneyPerSecond) ), tempUnlock, tempUnlock / loc.totalMoneyPerSecond, tempPlanet.totalMoneyPerSecond - loc.totalMoneyPerSecond, (tempPlanet.totalMoneyPerSecond - loc.totalMoneyPerSecond) * 100 / loc.totalMoneyPerSecond, null]);
     loc.rec = maxObj;
     $scope.reverse = true;
     $scope.sortIndex = 2;
