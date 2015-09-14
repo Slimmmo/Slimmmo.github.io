@@ -296,13 +296,15 @@ advApp.controller('advController', ['$document', '$filter', '$scope', function($
     inc.push(100);
     inc.push(1);
     for (; i < loc.investments.length; i++) {
-      inc[inc.length - 1] = getDifferenceNBonus(loc, i, 1);
       if (i === 1 && $scope.isEarth()) {
+        inc[inc.length - 1] = getDifferenceNBonus(loc, i, 1);
         inc.push(getDifferenceNBonus(loc, i, 2));
         inc.push(getDifferenceNBonus(loc, i, 3));
       } else if (i === 2 && $scope.isEarth()) {
         inc.pop();
         inc.pop();
+        inc[inc.length - 1] = getDifferenceNBonus(loc, i, 1);
+      } else {
         inc[inc.length - 1] = getDifferenceNBonus(loc, i, 1);
       }
       for (j = 0; j < inc.length; j++) {
