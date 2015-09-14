@@ -32,11 +32,23 @@ function numFilter(input, raw) {
 
 advApp.filter('time', function() {
   return function(input, raw) {
-    var m = input / 60,
-    out = numFilter(input, raw) + ' s';
-    if (!raw && m >= 1) {
-      out += ' (' + numFilter(m, false) + ' m)';
+    input = Math.floor(input);
+    var s = ("00" + input % 60).slice(-2);
+    var m = ("00" + Math.floor(input / 60) % 60).slice(-2);
+    var h = ("00" + Math.floor(input / 3600) % 24).slice(-2);
+    var d = Math.floor(input / 86400);
+    var out = "";
+    if (!raw && d >= 1) {
+      out += numFilter(d, false) + ' d';
+      if (!raw && d < 100) {
+        out += ', '
+      }
+
     }
+    if (!raw && d < 100) {
+      out += h + ":" + m + ":" + s;
+    }
+
     return out;
   };
 });
