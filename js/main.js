@@ -614,7 +614,9 @@ advApp.controller('advController', ['$document', '$filter', '$scope', function($
     }
     for (i = 0; i < loc.managerUpgrades.length; i++) {
       loc.managerUpgrades[i][0][loc.managerUpgrades[i][0].length - 1] = false;
-      loc.managerUpgrades[i][1][loc.managerUpgrades[i][1].length - 1] = false;
+      if (angular.isDefined(loc.managerUpgrades[i][1])) {
+        loc.managerUpgrades[i][1][loc.managerUpgrades[i][1].length - 1] = false;
+      }
     }
     loc.angelEffectiveness = 0.02;
     loc.angelExclamation = false;
