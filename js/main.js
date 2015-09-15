@@ -7,7 +7,9 @@ function numFilter(input, raw) {
   var out = "",
   mCount = 0,
   e = 6;
-  if (input !== null) {
+  if (input === Infinity) {
+    return "Infinity";
+  } else if (input !== null) {
     if (!raw) {
       while (input >= Number('1e+' + e)) {
         e += 3;
@@ -32,24 +34,28 @@ function numFilter(input, raw) {
 
 advApp.filter('time', function() {
   return function(input, raw) {
-    input = Math.floor(input);
-    var s = ("00" + input % 60).slice(-2);
-    var m = ("00" + Math.floor(input / 60) % 60).slice(-2);
-    var h = ("00" + Math.floor(input / 3600) % 24).slice(-2);
-    var d = Math.floor(input / 86400);
-    var out = "";
-    if (!raw && d >= 1) {
-      out += numFilter(d, false) + ' d';
-      if (!raw && d < 100) {
-        out += ', '
+    if (input === Infinity){
+      return "———";
+    } else {
+      input = Math.floor(input);
+      var s = ("00" + input % 60).slice(-2);
+      var m = ("00" + Math.floor(input / 60) % 60).slice(-2);
+      var h = ("00" + Math.floor(input / 3600) % 24).slice(-2);
+      var d = Math.floor(input / 86400);
+      var out = "";
+      if (!raw && d >= 1) {
+        out += numFilter(d, false) + ' d';
+        if (!raw && d < 100) {
+          out += ', '
+        }
+  
       }
-
+      if (!raw && d < 100) {
+        out += h + ":" + m + ":" + s;
+      }
+  
+      return out;
     }
-    if (!raw && d < 100) {
-      out += h + ":" + m + ":" + s;
-    }
-
-    return out;
   };
 });
 
