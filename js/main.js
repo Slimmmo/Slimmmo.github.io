@@ -88,6 +88,7 @@ advApp.controller('advController', ['$document', '$filter', '$scope', function($
       reader.onload = function(e) {
         obj = JSON.parse(e.target.result);
         for (k in loadArr) {
+          $scope.fullyResetPlanet($scope[loadArr[k]]);
           for (i in obj[loadArr[k]].levels) {
             if (obj[loadArr[k]].levels.hasOwnProperty(i)) {
               for (j = 0; j < $scope[loadArr[k]].investments.length; j++) {
@@ -602,7 +603,43 @@ advApp.controller('advController', ['$document', '$filter', '$scope', function($
     string += '\r\n  ]\r\n}';
     return string;
   };
-
+  
+  $scope.fullyResetPlanet = function(loc) {
+    var i = 0;
+    for (; i < loc.cashUpgrades.length; i++) {
+      loc.cashUpgrades[i][loc.cashUpgrades[i].length - 1] = false;
+    }
+    for (i = 0; i < loc.angelUpgrades.length; i++) {
+      loc.angelUpgrades[i][loc.angelUpgrades[i].length - 1] = false;
+    }
+    for (i = 0; i < loc.managerUpgrades.length; i++) {
+      loc.managerUpgrades[i][0][loc.managerUpgrades[i][0].length - 1] = false;
+      loc.managerUpgrades[i][1][loc.managerUpgrades[i][1].length - 1] = false;
+    }
+    loc.angelEffectiveness = 0.02;
+    loc.angelExclamation = false;
+    loc.bonusAngelEffectiveness = 0;
+    loc.bonusMultiplier = 0;
+    loc.flux = 0;
+    loc.illions = '';
+    for (i = 0; i < loc.investments.length; i++) {
+      if (i === 1) {
+        loc.investments[i][1] = 1;
+      } else {
+        loc.investments[i][1] = 0;
+      }
+      loc.investments[i][2] = false;
+    }
+    loc.numAngels = 0;
+    loc.rec = null;
+    loc.recTable = [];
+    loc.recommendation = '';
+    loc.totalMoneyPerSecond = 0;
+    loc.triples = 0;
+    loc.upgradeCosts = [[0, 0, 0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0, 0, 0]];
+    loc.viewNumAngels = 0;
+  };
+  
   function getDifferenceNBonus(loc, index, n) {
     var i = 0,
     retVal = null;
