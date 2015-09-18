@@ -445,7 +445,7 @@ advApp.controller('advController', ['$document', '$filter', '$scope', function($
       }
     }
     j = 0;
-    while (highestSharedLevel >= loc.unlocks[10][j][0]) {
+    while (j < loc.unlocks[10].length && highestSharedLevel >= loc.unlocks[10][j][0]) {
       applyTuple(loc, loc.unlocks[10][j]);
       j++;
     }
