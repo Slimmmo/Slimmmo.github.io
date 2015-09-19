@@ -319,6 +319,9 @@ advApp.controller('advController', ['$document', '$filter', '$scope', function($
     }
     inc.push(100);
     for (; i < loc.investments.length; i++) {
+      while (inc.length > 3 - (loc.noSingles ? 1 : 0) - (loc.noTens ? 1 : 0)) {
+        inc.pop();
+      }
       if (i === 1 && $scope.isEarth()) {
         for (j = 1; j < 4; j++) {
           k = getDifferenceNBonus(loc, i, j);
@@ -327,9 +330,6 @@ advApp.controller('advController', ['$document', '$filter', '$scope', function($
           }
         }
       } else {
-        while (inc.length > 3 - (loc.noSingles ? 1 : 0) - (loc.noTens ? 1 : 0)) {
-          inc.pop();
-        }
         k = getDifferenceNBonus(loc, i, 1);
         if (k !== null) {
           inc.push(k);
