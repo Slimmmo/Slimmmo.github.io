@@ -120,7 +120,7 @@
                 <input type="checkbox" class="form-control col-xs-offset-3" data-ng-model="clearAfter[1]"> Clear all after (inclusive)</input>
               </div>
               <div class="col-xs-4" data-ng-repeat="aupg in ref.angelUpgrades track by $index">
-                <input type="checkbox" class="form-control" data-ng-model="aupg[3]" data-ng-change="checkAngel(ref, $index)"> {{getNamedType(ref, aupg)}} ({{aupg[0] | num:raw}} AI)<i data-ng-show="aupg[2]" title="aupg[2]" class="fa fa-exclamation"></i></input>
+                <input type="checkbox" class="form-control" data-ng-model="aupg[3]" data-ng-change="checkAngel(ref, $index)"> {{getNamedType(ref, aupg)}} ({{aupg[0] | num:raw}} AI)<i data-ng-show="aupg[2]" title="{{aupg[2]}}" class="fa fa-exclamation"></i></input>
               </div>
             </accordion-group>
             <accordion-group is-open="accOpen[3]">
