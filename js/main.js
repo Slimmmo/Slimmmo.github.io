@@ -66,11 +66,9 @@ advApp.filter('num', function() {
 });
 
 advApp.filter('percentage', function() {
-  return function(input, max) {
-    if (isNaN(input)) {
-      return input;
-    }
-    return Math.floor((input * 100) / max) + '%';
+  return function(input) {
+    if (isNaN(input)) return input;
+    return Math.floor(input * 1000) / 10 + '%';
   };
 });
 
