@@ -65,6 +65,13 @@ advApp.filter('num', function() {
   };
 });
 
+advApp.filter('percentage', function() {
+  return function(input) {
+    if (isNaN(input)) return input;
+    return Math.floor(input * 1000) / 10 + '%';
+  };
+});
+
 advApp.controller('advController', ['$document', '$filter', '$scope', function($document, $filter, $scope) {
   $scope.accOpen = [false, false, false, false, false, false];
   $scope.clearAfter = [false, false];
@@ -291,8 +298,11 @@ advApp.controller('advController', ['$document', '$filter', '$scope', function($
         tempPlanet.numAngels -= loc.angelUpgrades[i][0];
         tempPlanet.angelUpgrades[i][tempPlanet.angelUpgrades[i].length - 1] = true;
         calcState(tempPlanet);
-        if (tempPlanet.totalMoneyPerSecond > loc.totalMoneyPerSecond) {
-          loc.angelUpgrades[i][loc.angelUpgrades[i].length - 2] = true;
+
+        var delta = tempPlanet.totalMoneyPerSecond - loc.totalMoneyPerSecond;
+        var percent = delta / loc.totalMoneyPerSecond;
+        if (delta > 0) {
+          loc.angelUpgrades[i][loc.angelUpgrades[i].length - 2] = percent;
           loc.angelExclamation = true;
         } else {
           loc.angelUpgrades[i][loc.angelUpgrades[i].length - 2] = false;
