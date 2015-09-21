@@ -37,6 +37,7 @@
         <div>
           <label><input type="number" class="form-control" min="0" data-ng-model="ref.viewNumAngels" data-ng-blur="updateAngels()" step="0.001" required></input> <input type="text" class="form-control illions" data-ng-model="ref.illions" typeahead="ill for ill in illionsArray | filter:$viewValue | limitTo:8" placeholder="*illions" data-ng-blur="updateAngels()"></input> # Angels</label>
           <label class="checkbox"><input type="checkbox" class="form-control" data-ng-model="raw"></input> Raw Values</label>
+          <button type="button" class="btn btn-primary" data-ng-click="fullyResetPlanet(ref)">Reset Planet</button>
         </div>
         <div>
           <table class="table table-striped table-hover table-bordered space_top">
@@ -223,4 +224,4 @@
       <h4 class="pull-right">Found an error? Want to request a feature? You can do so on <a href="https://www.reddit.com/r/AdventureCapitalist/comments/3ik18l/another_calculator/">Reddit</a> or <a href="https://github.com/Slimmmo/Slimmmo.github.io">Github</a>.</h4>
     </div>
   </body>
- </html>
+</html>

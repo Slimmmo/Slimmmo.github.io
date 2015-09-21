@@ -298,7 +298,6 @@ advApp.controller('advController', ['$document', '$filter', '$scope', function($
         tempPlanet.numAngels -= loc.angelUpgrades[i][0];
         tempPlanet.angelUpgrades[i][tempPlanet.angelUpgrades[i].length - 1] = true;
         calcState(tempPlanet);
-
         var delta = tempPlanet.totalMoneyPerSecond - loc.totalMoneyPerSecond;
         var percent = delta / loc.totalMoneyPerSecond;
         if (delta > 0) {
@@ -645,7 +644,7 @@ advApp.controller('advController', ['$document', '$filter', '$scope', function($
     loc.flux = 0;
     loc.illions = '';
     for (i = 0; i < loc.investments.length; i++) {
-      if (i === 1) {
+      if (i === 0) {
         loc.investments[i][1] = 1;
       } else {
         loc.investments[i][1] = 0;
@@ -660,8 +659,9 @@ advApp.controller('advController', ['$document', '$filter', '$scope', function($
     loc.triples = 0;
     loc.upgradeCosts = [[0, 0, 0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0, 0, 0]];
     loc.viewNumAngels = 0;
+    $scope.calc(loc);
   };
-  
+
   function getDifferenceNBonus(loc, index, n) {
     var i = 0,
     retVal = null;
