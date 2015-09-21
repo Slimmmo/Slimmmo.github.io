@@ -134,7 +134,7 @@
                     <th>Business</th>
                     <th data-ng-show="isEarth()">10% off</th>
                     <th data-ng-show="isEarth()">99.999% off</th>
-                    <th data-ng-show="!isEarth()">25% off</th>
+                    <th data-ng-show="isMoon()">25% off</th>
                   </tr>
                 </thead>
                 <tbody>
@@ -152,7 +152,7 @@
                 Gold Upgrades<span class="pull-right fa" ng-class="{'fa-chevron-down': accOpen[4], 'fa-chevron-right': !accOpen[4]}"></span>
               </accordion-heading>
               <label class="col-xs-6"><input type="number" class="form-control" min="0" data-ng-model="ref.triples"> # 3x Multipliers</label>
-              <label data-ng-if="!isEarth()"><input type="number" class="form-control" min="0" data-ng-model="ref.flux"> # Flux Capitalors</label>
+              <label data-ng-if="isMoon()"><input type="number" class="form-control" min="0" data-ng-model="ref.flux"> # Flux Capitalors</label>
             </accordion-group>
             <accordion-group is-open="accOpen[5]">
               <accordion-heading>
