@@ -48,12 +48,10 @@ advApp.filter('time', function() {
         if (!raw && d < 100) {
           out += ', '
         }
-  
       }
       if (!raw && d < 100) {
         out += h + ":" + m + ":" + s;
       }
-  
       return out;
     }
   };
@@ -448,7 +446,7 @@ advApp.controller('advController', ['$document', '$filter', '$scope', function($
     }
     for (i = 0; i < loc.investments.length; i++) {
       j = 0;
-      while (loc.investments[i][1] >= loc.unlocks[i][j][0]) {
+      while (j < loc.unlocks[i].length && loc.investments[i][1] >= loc.unlocks[i][j][0]) {
         applyTuple(loc, loc.unlocks[i][j]);
         j++;
       }
@@ -941,7 +939,6 @@ advApp.controller('advController', ['$document', '$filter', '$scope', function($
     $scope.mars.angelUpgrades = [];
     $scope.mars.managerUpgrades = [];*/
   };
-
   loadDefaults();
   loadUnlocks();
 }]);
