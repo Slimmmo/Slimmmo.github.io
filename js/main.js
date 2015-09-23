@@ -76,6 +76,8 @@ advApp.controller('advController', ['$document', '$filter', '$scope', function($
   $scope.compare = false;
   $scope.earth = {};
   $scope.fillBefore = [false, false];
+  $scope.filterOpen = false;
+  $scope.filterTime = {'days': null, 'hours': null, 'minutes': null};
   $scope.illionsArray = illionsArr.slice(1);
   $scope.moon = {};
   $scope.raw = false;
@@ -315,16 +317,17 @@ advApp.controller('advController', ['$document', '$filter', '$scope', function($
     tempPlanet = JSON.parse(JSON.stringify(loc)),
     max = 0,
     maxObj = [0, 0],
-    tempUnlock = null,
+    tempUnlock = null, tempUnlockTime = null,
     upgradeScore = 0;
     loc.recTable = [];
     if (!loc.noSingles) {
-      inc.push(1)
+      inc.push(1);
     }
     if (!loc.noTens) {
-      inc.push(10)
+      inc.push(10);
     }
     inc.push(100);
+    $scope.updateFilterTime(loc);
     for (; i < loc.investments.length; i++) {
       while (inc.length > 3 - (loc.noSingles ? 1 : 0) - (loc.noTens ? 1 : 0)) {
         inc.pop();
@@ -347,12 +350,15 @@ advApp.controller('advController', ['$document', '$filter', '$scope', function($
         tempPlanet.investments[i][1] += inc[j];
         calcState(tempPlanet);
         tempUnlock = calcUnlockCost(loc, i, loc.investments[i][1], inc[j]);
-        upgradeScore = 1000000000000000000000 * (tempPlanet.totalMoneyPerSecond - loc.totalMoneyPerSecond) / (tempPlanet.totalMoneyPerSecond * (tempUnlock / loc.totalMoneyPerSecond) );
-        if (upgradeScore > max) {
-          max = upgradeScore;
-          maxObj = ['level', i, tempPlanet.investments[i][1]];
+        tempUnlockTime = tempUnlock / loc.totalMoneyPerSecond;
+        if (loc.filterTime === null || loc.filterTime > tempUnlockTime) {
+          upgradeScore = calcUpgradeScore(tempPlanet, loc, tempUnlockTime);
+          if (upgradeScore > max) {
+            max = upgradeScore;
+            maxObj = ['level', i, tempPlanet.investments[i][1]];
+          }
+          loc.recTable.push([loc.investments[i][0], tempPlanet.investments[i][1], upgradeScore, tempUnlock, tempUnlockTime, tempPlanet.totalMoneyPerSecond - loc.totalMoneyPerSecond, (tempPlanet.totalMoneyPerSecond - loc.totalMoneyPerSecond) * 100 / loc.totalMoneyPerSecond, null]);
         }
-        loc.recTable.push([loc.investments[i][0], tempPlanet.investments[i][1], upgradeScore, tempUnlock, tempUnlock / loc.totalMoneyPerSecond, tempPlanet.totalMoneyPerSecond - loc.totalMoneyPerSecond, (tempPlanet.totalMoneyPerSecond - loc.totalMoneyPerSecond) * 100 / loc.totalMoneyPerSecond, null]);
       }
     }
     j = -1;
@@ -364,12 +370,15 @@ advApp.controller('advController', ['$document', '$filter', '$scope', function($
       if (j !== null) {
         tempPlanet.cashUpgrades[j][tempPlanet.cashUpgrades[j].length - 1] = true;
         calcState(tempPlanet);
-        upgradeScore = 1000000000000000000000 * (tempPlanet.totalMoneyPerSecond - loc.totalMoneyPerSecond) / (tempPlanet.totalMoneyPerSecond * (loc.cashUpgrades[j][0] / loc.totalMoneyPerSecond) );
-        if (upgradeScore > max) {
-          max = upgradeScore;
-          maxObj = ['upgrade', j];
+        tempUnlockTime = loc.cashUpgrades[j][0] / loc.totalMoneyPerSecond;
+        if (loc.filterTime === null || loc.filterTime > tempUnlockTime) {
+          upgradeScore = calcUpgradeScore(tempPlanet, loc, tempUnlockTime);
+          if (upgradeScore > max) {
+            max = upgradeScore;
+            maxObj = ['upgrade', j];
+          }
+          loc.recTable.push([$scope.getNamedType(loc, loc.cashUpgrades[j]), null, upgradeScore, loc.cashUpgrades[j][0], tempUnlockTime, tempPlanet.totalMoneyPerSecond - loc.totalMoneyPerSecond, (tempPlanet.totalMoneyPerSecond - loc.totalMoneyPerSecond) * 100 / loc.totalMoneyPerSecond, j]);
         }
-        loc.recTable.push([$scope.getNamedType(loc, loc.cashUpgrades[j]), null, upgradeScore, loc.cashUpgrades[j][0], loc.cashUpgrades[j][0] / loc.totalMoneyPerSecond, tempPlanet.totalMoneyPerSecond - loc.totalMoneyPerSecond, (tempPlanet.totalMoneyPerSecond - loc.totalMoneyPerSecond) * 100 / loc.totalMoneyPerSecond, j]);
       }
     }
     tempUnlock = 0;
@@ -393,12 +402,15 @@ advApp.controller('advController', ['$document', '$filter', '$scope', function($
       }
     }
     calcState(tempPlanet);
-    upgradeScore = 1000000000000000000000 * (tempPlanet.totalMoneyPerSecond - loc.totalMoneyPerSecond) / (tempPlanet.totalMoneyPerSecond * (tempUnlock / loc.totalMoneyPerSecond) );
-    if (upgradeScore > max) {
-      max = upgradeScore;
-      maxObj = ['all', highestSharedLevel];
+    tempUnlockTime = tempUnlock / loc.totalMoneyPerSecond;
+    if (loc.filterTime === null || loc.filterTime > tempUnlockTime) {
+      upgradeScore = calcUpgradeScore(tempPlanet, loc, tempUnlockTime);
+      if (upgradeScore > max) {
+        max = upgradeScore;
+        maxObj = ['all', highestSharedLevel];
+      }
+      loc.recTable.push(['All', highestSharedLevel, upgradeScore, tempUnlock, tempUnlock / loc.totalMoneyPerSecond, tempPlanet.totalMoneyPerSecond - loc.totalMoneyPerSecond, (tempPlanet.totalMoneyPerSecond - loc.totalMoneyPerSecond) * 100 / loc.totalMoneyPerSecond, null]);
     }
-    loc.recTable.push(['All', highestSharedLevel, upgradeScore, tempUnlock, tempUnlock / loc.totalMoneyPerSecond, tempPlanet.totalMoneyPerSecond - loc.totalMoneyPerSecond, (tempPlanet.totalMoneyPerSecond - loc.totalMoneyPerSecond) * 100 / loc.totalMoneyPerSecond, null]);
     loc.rec = maxObj;
     $scope.reverse = true;
     $scope.sortIndex = 2;
@@ -475,6 +487,21 @@ advApp.controller('advController', ['$document', '$filter', '$scope', function($
     }
   };
 
+  function calcUpgradeScore(planet, loc, unlockCost) {
+    var overflowPotential = planet.totalMoneyPerSecond * unlockCost,
+    divNum = 0,
+    retVal = planet.totalMoneyPerSecond - loc.totalMoneyPerSecond;
+    while (!isFinite(overflowPotential)) {
+      divNum += 100;
+      overflowPotential = planet.totalMoneyPerSecond * (unlockCost / Number('1e+' + divNum));
+    }
+    retVal *= 1000000000000000000000 / overflowPotential;
+    if (divNum !== 0) {
+      retVal *= Number('1e+' + divNum);
+    }
+    return retVal;
+  };
+
   $scope.checkAngel = function(loc, index) {
     var i = 0;
     loc.angelUpgrades[index][loc.angelUpgrades[index].length - 2] = false;
@@ -518,6 +545,30 @@ advApp.controller('advController', ['$document', '$filter', '$scope', function($
       }
     }
     loc.recTable = $filter('orderBy')(loc.recTable, indexOrder, $scope.reverse);
+  };
+
+  $scope.decrementDays = function(loc) {
+    if ($scope.filterTime.days !== null) {
+      if ($scope.filterTime.days > 0) {
+        $scope.filterTime.days--;
+      }
+    }
+  };
+
+  $scope.decrementHours = function(loc) {
+    if ($scope.filterTime.hours !== null) {
+      if ($scope.filterTime.hours > 0) {
+        $scope.filterTime.hours--;
+      }
+    }
+  };
+
+  $scope.decrementMinutes = function(loc) {
+    if ($scope.filterTime.minutes !== null) {
+      if ($scope.filterTime.minutes > 0) {
+        $scope.filterTime.minutes--;
+      }
+    }
   };
 
   function deepCopy(input) {
@@ -709,6 +760,31 @@ advApp.controller('advController', ['$document', '$filter', '$scope', function($
     return index;
   };
 
+  $scope.incrementDays = function(loc) {
+    if ($scope.filterTime.days !== null) {
+      $scope.filterTime.days++;
+    } else {
+      $scope.filterTime.days = 1;
+    }
+  };
+
+  $scope.incrementHours = function(loc) {
+    if ($scope.filterTime.hours !== null) {
+      $scope.filterTime.hours++;
+    } else {
+      $scope.filterTime.hours = 1;
+    }
+  };
+
+  $scope.incrementMinutes = function(loc) {
+    if ($scope.filterTime.minutes !== null) {
+      console.log(typeof $scope.filterTime.minutes);
+      $scope.filterTime.minutes++;
+    } else {
+      $scope.filterTime.minutes = 1;
+    }
+  };
+
   function indexOrder(input) {
     return input[$scope.sortIndex];
   };
@@ -768,6 +844,17 @@ advApp.controller('advController', ['$document', '$filter', '$scope', function($
     }
   };
 
+  $scope.updateFilterTime = function(loc) {
+    if ($scope.filterTime.days === null && $scope.filterTime.hours === null && $scope.filterTime.minutes === null) {
+      loc.filterTime = null;
+    } else {
+      loc.filterTime = ($scope.filterTime.days !== null ? $scope.filterTime.days * 86400 : 0) + ($scope.filterTime.hours !== null ? $scope.filterTime.hours * 3600 : 0) + ($scope.filterTime.minutes !== null ? $scope.filterTime.minutes * 60 : 0)
+      if (loc.filterTime === 0) {
+        loc.filterTime = null;
+      }
+    }
+  };
+
   function updateRecString(loc) {
     if (loc.rec[0] === 'level') {
       loc.recommendation = 'Buy ' + loc.recTable[0][0] + ' to level ' + loc.rec[2] + '.';
@@ -787,6 +874,7 @@ advApp.controller('advController', ['$document', '$filter', '$scope', function($
     $scope.earth.baseSpeed = [0.6, 3, 6, 12, 24, 96, 384, 1536, 6144, 36864];
     $scope.earth.bonusAngelEffectiveness = 0;
     $scope.earth.bonusMultiplier = 0;
+    $scope.earth.filterTime = null;
     $scope.earth.flux = 0;
     $scope.earth.illions = '';
     $scope.earth.investments = [
@@ -821,6 +909,7 @@ advApp.controller('advController', ['$document', '$filter', '$scope', function($
     $scope.moon.baseSpeed = [2, 7, 28, 2, 45, 180, 600, 3000, 14400, 86400];
     $scope.moon.bonusAngelEffectiveness = 0;
     $scope.moon.bonusMultiplier = 0;
+    $scope.moon.filterTime = null;
     $scope.moon.flux = 0;
     $scope.moon.illions = '';
     $scope.moon.investments = [
@@ -855,6 +944,7 @@ advApp.controller('advController', ['$document', '$filter', '$scope', function($
     $scope.mars.baseSpeed = [];
     $scope.mars.bonusAngelEffectiveness = 0;
     $scope.mars.bonusMultiplier = 0;
+    $scope.mars.filterTime = null;
     $scope.mars.flux = 0;
     $scope.mars.illions = '';
     $scope.mars.investments = [

@@ -169,9 +169,50 @@
         </div>
         <h2>Total $ / second : {{ref.totalMoneyPerSecond | number}} ({{ref.totalMoneyPerSecond | num}})</h2>
         <h2>Total $ / minute : {{ref.totalMoneyPerSecond * 60 | number}} ({{ref.totalMoneyPerSecond * 60 | num}})</h2>
+        <accordion>
+          <accordion-group is-open="filterOpen">
+            <accordion-heading>
+              Filter recommendations
+            </accordion-heading>
+            <input type="checkbox" class="form-control" data-ng-model="ref.noSingles"></input> Don't show +1 upgrades</label>
+            <input type="checkbox" class="form-control" data-ng-model="ref.noTens"></input> Don't show +10 upgrades</label>
+            <br>
+            <br>
+            <div>
+              Don't show upgrades that take longer than (Days : Hours : Minutes)
+            </div>
+            <table>
+              <tr class="text-center">
+                <td><a ng-click="incrementDays(ref)" class="btn btn-link"><span class="fa fa-chevron-up"></span></a></td>
+                <td>&nbsp;</td>
+                <td><a ng-click="incrementHours(ref)" class="btn btn-link"><span class="fa fa-chevron-up"></span></a></td>
+                <td>&nbsp;</td>
+                <td><a ng-click="incrementMinutes(ref)" class="btn btn-link"><span class="fa fa-chevron-up"></span></a></td>
+              </tr>
+              <tr>
+                <td class="form-group">
+                  <input style="width:50px;" data-ng-model="filterTime.days" class="form-control text-center" type="text" pattern="[0-9]*" placeholder="d">
+                </td>
+                <td>:</td>
+                <td class="form-group">
+                  <input style="width:50px;" data-ng-model="filterTime.hours" class="form-control text-center" type="text" pattern="[0-9]*" placeholder="h">
+                </td>
+                <td>:</td>
+                <td class="form-group">
+                  <input style="width:50px;" data-ng-model="filterTime.minutes" class="form-control text-center" type="text" pattern="[0-9]*" placeholder="m">
+                </td>
+              </tr>
+              <tr class="text-center">
+                <td><a ng-click="decrementDays(ref)" class="btn btn-link"><span class="fa fa-chevron-down"></span></a></td>
+                <td>&nbsp;</td>
+                <td><a ng-click="decrementHours(ref)" class="btn btn-link"><span class="fa fa-chevron-down"></span></a></td>
+                <td>&nbsp;</td>
+                <td><a ng-click="decrementMinutes(ref)" class="btn btn-link"><span class="fa fa-chevron-down"></span></a></td>
+              </tr>
+            </table>
+          </accordion-group>
+        </accordion>
         <button type="button" class="btn btn-primary" data-ng-click="calc(ref)">Calculate</button>
-        <input type="checkbox" class="form-control" data-ng-model="ref.noSingles"></input> Don't show +1 upgrades</label>
-        <input type="checkbox" class="form-control" data-ng-model="ref.noTens"></input> Don't show +10 upgrades</label>
         <div data-ng-show="ref.recTable.length">
           <h2>Recommendation: {{ref.recommendation}}</h2>
           <button type="button" class="btn btn-primary" data-ng-click="apply(ref)">Apply Recommendation</button>
@@ -205,7 +246,7 @@
               </tr>
             </thead>
             <tbody>
-              <tr data-ng-repeat="rec in ref.recTable track by $index" data-ng-hide="$last">
+              <tr data-ng-repeat="rec in ref.recTable track by $index">
                 <td>{{rec[0]}}</td>
                 <td>{{rec[1] | num:raw}}</td>
                 <td>{{rec[2] | num:raw}}</td>
