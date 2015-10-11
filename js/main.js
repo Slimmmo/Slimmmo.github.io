@@ -190,6 +190,7 @@ advApp.controller('advController', ['$document', '$filter', '$scope', function($
     applyType = -1;
     for (; i < row.length; i++) {
       if (typeof row[i] === 'object') {
+        console.log(row + '     |     ' + i);
         applyRow = Math.floor(row[i][0] / 2);
         applyType = row[i][0] % 2;
         if (applyRow < 10) {
