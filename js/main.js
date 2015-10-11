@@ -190,7 +190,6 @@ advApp.controller('advController', ['$document', '$filter', '$scope', function($
     applyType = -1;
     for (; i < row.length; i++) {
       if (typeof row[i] === 'object') {
-        console.log(row + '     |     ' + i);
         applyRow = Math.floor(row[i][0] / 2);
         applyType = row[i][0] % 2;
         if (applyRow < 10) {
@@ -302,11 +301,12 @@ advApp.controller('advController', ['$document', '$filter', '$scope', function($
         var delta = tempPlanet.totalMoneyPerSecond - loc.totalMoneyPerSecond;
         var percent = delta / loc.totalMoneyPerSecond;
         if (delta > 0) {
+          console.log(tempPlanet.totalMoneyPerSecond + '   -   ' + loc.totalMoneyPerSecond);
+          console.log(delta);
           console.log(i + ' PERCENT ' + percent);
           loc.angelUpgrades[i][loc.angelUpgrades[i].length - 2] = percent;
           loc.angelExclamation = true;
         } else {
-          console.log(i + ' worse')
           loc.angelUpgrades[i][loc.angelUpgrades[i].length - 2] = false;
         }
       }
