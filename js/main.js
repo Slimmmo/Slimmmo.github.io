@@ -302,9 +302,11 @@ advApp.controller('advController', ['$document', '$filter', '$scope', function($
         var delta = tempPlanet.totalMoneyPerSecond - loc.totalMoneyPerSecond;
         var percent = delta / loc.totalMoneyPerSecond;
         if (delta > 0) {
+          console.log(i + ' PERCENT ' + percent);
           loc.angelUpgrades[i][loc.angelUpgrades[i].length - 2] = percent;
           loc.angelExclamation = true;
         } else {
+          console.log(i + ' worse')
           loc.angelUpgrades[i][loc.angelUpgrades[i].length - 2] = false;
         }
       }
