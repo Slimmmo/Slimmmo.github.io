@@ -781,7 +781,6 @@ advApp.controller('advController', ['$document', '$filter', '$scope', function($
 
   $scope.incrementMinutes = function(loc) {
     if ($scope.filterTime.minutes !== null) {
-      console.log(typeof $scope.filterTime.minutes);
       $scope.filterTime.minutes++;
     } else {
       $scope.filterTime.minutes = 1;

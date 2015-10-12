@@ -35,7 +35,7 @@
       </ul>
       <div data-ng-show="!isCompare()">
         <div>
-          <label><input type="number" class="form-control" min="0" data-ng-model="ref.viewNumAngels" data-ng-blur="updateAngels()" step="0.001" required></input> <input type="text" class="form-control illions" data-ng-model="ref.illions" typeahead="ill for ill in illionsArray | filter:$viewValue | limitTo:8" placeholder="*illions" data-ng-blur="updateAngels()"></input> # Angels</label>
+          <input type="number" class="form-control" min="0" data-ng-model="ref.viewNumAngels" data-ng-blur="updateAngels()" step="0.001" required></input> <input type="text" class="form-control illions" data-ng-model="ref.illions" typeahead="ill for ill in illionsArray | filter:$viewValue | limitTo:8" placeholder="*illions" data-ng-blur="updateAngels()"></input><label> # Angels</label>
           <label class="checkbox"><input type="checkbox" class="form-control" data-ng-model="raw"></input> Raw Values</label>
           <button type="button" class="btn btn-primary" data-ng-click="fullyResetPlanet(ref)">Reset Planet</button>
         </div>
