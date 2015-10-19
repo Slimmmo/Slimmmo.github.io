@@ -284,7 +284,7 @@ advApp.controller('advController', ['$document', '$filter', '$scope', function($
 
   $scope.calc = function(loc) {
     calcState(loc);
-    calcAngels(loc);
+    //calcAngels(loc);
     calcRecommendations(loc);
   };
 
