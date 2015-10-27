@@ -365,7 +365,7 @@ advApp.controller('advController', ['$document', '$filter', '$scope', function($
       }
     }
     j = -1;
-    for (i = 0; i < 11; i++) {
+    for (i = 0; i < 22; i++) {
       tempPlanet.investments = deepCopy(loc.investments);
       tempPlanet.angelEffectiveness = loc.angelEffectiveness;
       tempPlanet.cashUpgrades = deepCopy(loc.cashUpgrades);
@@ -382,6 +382,8 @@ advApp.controller('advController', ['$document', '$filter', '$scope', function($
           }
           loc.recTable.push([$scope.getNamedType(loc, loc.cashUpgrades[j]), null, upgradeScore, loc.cashUpgrades[j][0], tempUnlockTime, tempPlanet.totalMoneyPerSecond - loc.totalMoneyPerSecond, (tempPlanet.totalMoneyPerSecond - loc.totalMoneyPerSecond) * 100 / loc.totalMoneyPerSecond, j]);
         }
+      } else {
+        break;
       }
     }
     tempUnlock = 0;
