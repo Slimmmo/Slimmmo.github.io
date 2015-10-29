@@ -241,16 +241,18 @@ advApp.controller('advController', ['$document', '$filter', '$scope', function($
         }
       }
     }
-    for (i = 0; i < loc.managerUpgrades[index].length; i++) {
-      if (tupleIsActive(loc.managerUpgrades[index][i])) {
-        if (loc.name === 'earth') {
-          if (i === 0) {
-            managerDiscount = 0.9;
+    if (loc.managerUpgrades.length !== 0) {
+      for (i = 0; i < loc.managerUpgrades[index].length; i++) {
+        if (tupleIsActive(loc.managerUpgrades[index][i])) {
+          if (loc.name === 'earth') {
+            if (i === 0) {
+              managerDiscount = 0.9;
+            } else {
+              managerDiscount = 0.00001;
+            }
           } else {
-            managerDiscount = 0.00001;
+            managerDiscount = 0.75;
           }
-        } else {
-          managerDiscount = 0.75;
         }
       }
     }
