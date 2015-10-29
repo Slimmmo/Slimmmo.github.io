@@ -78,6 +78,7 @@ advApp.controller('advController', ['$document', '$filter', '$scope', function($
   $scope.fillBefore = [false, false];
   $scope.filterOpen = false;
   $scope.filterTime = {'days': null, 'hours': null, 'minutes': null};
+  $scope.halloween = {};
   $scope.illionsArray = illionsArr.slice(1);
   $scope.moon = {};
   $scope.raw = false;
