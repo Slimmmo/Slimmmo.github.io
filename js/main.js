@@ -1000,7 +1000,7 @@ advApp.controller('advController', ['$document', '$filter', '$scope', function($
       ['Texas Raisins', 1, false, 0, 0, 0, 0],
       ['Dandy Candy', 0, false, 0, 0, 0, 0],
       ['Ice Screams', 0, false, 0, 0, 0, 0],
-      ['Snack O'Lanterns, 0, false, 0, 0, 0, 0],
+      ['Snack O\'Lanterns', 0, false, 0, 0, 0, 0],
       ['Shredded Treat', 0, false, 0, 0, 0, 0],
       ['Creepy Dollies', 0, false, 0, 0, 0, 0],
       ['Korn Maizes', 0, false, 0, 0, 0, 0],
