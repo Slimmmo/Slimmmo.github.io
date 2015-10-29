@@ -942,26 +942,25 @@ advApp.controller('advController', ['$document', '$filter', '$scope', function($
     $scope.moon.viewNumAngels = 0;
     /*$scope.mars.angelEffectiveness = 0.02;
     $scope.mars.angelExclamation = false;
-    $scope.mars.baseCost = [];
-    $scope.mars.basePower = [];
-    $scope.mars.baseProfit = [];
-    $scope.mars.baseSpeed = [];
+    $scope.mars.baseCost = [0.05, 1, 1234, 23e+6, 49e+9, 77e+12, 5e+15, 1e+18, 13e+24];
+    $scope.mars.basePower = [1.01, 1.03, 1.05, 1.07, 1.11, 1.04, 1.07, 1.09, 1.25];
+    $scope.mars.baseProfit = [0.11, 1, 4321, 4007310, 518783295, 500634321, 7543177325, 69263532485, 99760273916482500];
+    $scope.mars.baseSpeed = [0.5, 3, 9, 32, 64, 4, 18, 42, 43200];
     $scope.mars.bonusAngelEffectiveness = 0;
     $scope.mars.bonusMultiplier = 0;
     $scope.mars.filterTime = null;
     $scope.mars.flux = 0;
     $scope.mars.illions = '';
     $scope.mars.investments = [
-      ['', 1, false, 0, 0, 0, 0],
-      ['', 0, false, 0, 0, 0, 0],
-      ['', 0, false, 0, 0, 0, 0],
-      ['', 0, false, 0, 0, 0, 0],
-      ['', 0, false, 0, 0, 0, 0],
-      ['', 0, false, 0, 0, 0, 0],
-      ['', 0, false, 0, 0, 0, 0],
-      ['', 0, false, 0, 0, 0, 0],
-      ['', 0, false, 0, 0, 0, 0],
-      ['', 0, false, 0, 0, 0, 0]
+      ['Red Dirt', 1, false, 0, 0, 0, 0],
+      ['Marsies', 0, false, 0, 0, 0, 0],
+      ['Men', 0, false, 0, 0, 0, 0],
+      ['Buggles', 0, false, 0, 0, 0, 0],
+      ['Heck Portal', 0, false, 0, 0, 0, 0],
+      ['Ambassadors', 0, false, 0, 0, 0, 0],
+      ['Brain-cation', 0, false, 0, 0, 0, 0],
+      ['LIFE Pod', 0, false, 0, 0, 0, 0],
+      ['Terrorformer', 0, false, 0, 0, 0, 0]
     ];
     $scope.mars.name = 'mars';
     $scope.mars.noSingles = false;
