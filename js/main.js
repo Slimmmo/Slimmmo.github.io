@@ -600,7 +600,7 @@ advApp.controller('advController', ['$document', '$filter', '$scope', function($
     //obj.mars = $scope.mars;
     obj.halloween = $scope.halloween;
     //var blob = new Blob(['{' + formatState($scope.earth) + ',\r\n' + formatState($scope.moon) + '}'], {type: "application/json"});
-    var blob = new Blob[JSON.stringify(obj)];
+    var blob = new Blob[JSON.stringify(obj), {type: "application/json"}];
     var title = "AdvCapCalc.json";
     if (window.navigator.msSaveOrOpenBlob) {
       navigator.msSaveBlob(blob, title);
