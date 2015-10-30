@@ -92,10 +92,10 @@ advApp.controller('advController', ['$document', '$filter', '$scope', function($
       var file = fileInput.files[0],
       reader = new FileReader(),
       i = 0, j = 0, k = 0, obj = null,
-      loadArr = ['earth', 'moon'];
+      loadArr = ['earth', 'moon', 'halloween'];
       reader.onload = function(e) {
         obj = JSON.parse(e.target.result);
-        /*for (k in loadArr) {
+        for (k in loadArr) {
           $scope.fullyResetPlanet($scope[loadArr[k]]);
           for (i in obj[loadArr[k]].levels) {
             if (obj[loadArr[k]].levels.hasOwnProperty(i)) {
@@ -136,13 +136,8 @@ advApp.controller('advController', ['$document', '$filter', '$scope', function($
         }
         $scope.calc($scope.earth);
         $scope.calc($scope.moon);
-        //$scope.calc($scope.mars);*/
-        for (var key in obj) {
-          if (obj.hasOwnProperty(key)) {
-            $scope[key] = obj[key];
-            $scope.calc($scope[key]);
-          }
-        }
+        //$scope.calc($scope.mars);
+        $scope.calc($scope.halloween);
         $scope.$digest();
       }
       reader.readAsText(file);
@@ -594,13 +589,7 @@ advApp.controller('advController', ['$document', '$filter', '$scope', function($
   }
 
   $scope.export = function() {
-    var obj = {};
-    obj.earth = $scope.earth;
-    obj.moon = $scope.moon;
-    //obj.mars = $scope.mars;
-    obj.halloween = $scope.halloween;
-    //var blob = new Blob(['{' + formatState($scope.earth) + ',\r\n' + formatState($scope.moon) + '}'], {type: "application/json"});
-    var blob = new Blob([JSON.stringify(obj)], {type: "application/json"});
+    var blob = new Blob(['{' + formatState($scope.earth) + ',\r\n' + formatState($scope.moon) + '}'], {type: "application/json"});
     var title = "AdvCapCalc.json";
     if (window.navigator.msSaveOrOpenBlob) {
       navigator.msSaveBlob(blob, title);
