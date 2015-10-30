@@ -139,7 +139,7 @@ advApp.controller('advController', ['$document', '$filter', '$scope', function($
         //$scope.calc($scope.mars);*/
         for (var key in obj) {
           if (obj.hasOwnProperty(key)) {
-            $scope[key] = obj[key];
+            $scope[key] = JSON.parse(obj[key]);
             $scope.calc($scope[key]);
           }
         }
