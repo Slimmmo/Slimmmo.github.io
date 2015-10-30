@@ -96,48 +96,47 @@ advApp.controller('advController', ['$document', '$filter', '$scope', function($
       reader.onload = function(e) {
         obj = JSON.parse(e.target.result);
         for (k in loadArr) {
-          $scope.fullyResetPlanet($scope[loadArr[k]]);
-          for (i in obj[loadArr[k]].levels) {
-            if (obj[loadArr[k]].levels.hasOwnProperty(i)) {
-              for (j = 0; j < $scope[loadArr[k]].investments.length; j++) {
-                if ($scope[loadArr[k]].investments[j][0] === i) {
-                  $scope[loadArr[k]].investments[j][1] = obj[loadArr[k]].levels[i];
-                  break;
+          if (obj.hasOwnProperty(loadArr[k])) {
+            $scope.fullyResetPlanet($scope[loadArr[k]]);
+            for (i in obj[loadArr[k]].levels) {
+              if (obj[loadArr[k]].levels.hasOwnProperty(i)) {
+                for (j = 0; j < $scope[loadArr[k]].investments.length; j++) {
+                  if ($scope[loadArr[k]].investments[j][0] === i) {
+                    $scope[loadArr[k]].investments[j][1] = obj[loadArr[k]].levels[i];
+                    break;
+                  }
                 }
               }
             }
-          }
-          $scope[loadArr[k]].numAngels = obj[loadArr[k]].numAngels;
-          $scope[loadArr[k]].viewNumAngels = $scope[loadArr[k]].numAngels;
-          for (i = 0; i < obj[loadArr[k]].upgradeIndexUpTo; i++) {
-            $scope[loadArr[k]].cashUpgrades[i][$scope[loadArr[k]].cashUpgrades[i].length - 1] = true;
-          }
-          for (i = 0; i < obj[loadArr[k]].angelUpgradeIndexUpTo; i++) {
-            $scope[loadArr[k]].angelUpgrades[i][$scope[loadArr[k]].angelUpgrades[i].length - 1] = true;
-          }
-          for (i = 0; i < obj[loadArr[k]].upgradeIndexBonus.length; i++) {
-            $scope[loadArr[k]].cashUpgrades[obj[loadArr[k]].upgradeIndexBonus[i]][$scope[loadArr[k]].cashUpgrades[obj[loadArr[k]].upgradeIndexBonus[i]].length - 1] = true;
-          }
-          for (i = 0; i < obj[loadArr[k]].angelUpgradeIndexBonus.length; i++) {
-            $scope[loadArr[k]].angelUpgrades[obj[loadArr[k]].angelUpgradeIndexBonus[i]][$scope[loadArr[k]].angelUpgrades[obj[loadArr[k]].angelUpgradeIndexBonus[i]].length - 1] = true;
-          }
-          for (i = 0; i < obj[loadArr[k]].managersBought.length; i++) {
-            $scope[loadArr[k]].managerUpgrades[Math.floor(obj[loadArr[k]].managersBought[i] / 2)][obj[loadArr[k]].managersBought[i] % 2][1] = true;
-          }
-          $scope[loadArr[k]].triples = obj[loadArr[k]].triples;
-          $scope[loadArr[k]].flux = obj[loadArr[k]].flux;
-          $scope[loadArr[k]].bonusAngelEffectiveness = obj[loadArr[k]].bonusAngelEffectiveness;
-          $scope[loadArr[k]].bonusMultiplier = obj[loadArr[k]].bonusMultiplier;
-          if (angular.isDefined(obj[loadArr[k]].megaTicket)) {
-            for (i = 0; i < obj[loadArr[k]].megaTicket.length; i++) {
-              $scope[loadArr[k]].investments[obj[loadArr[k]].megaTicket[i]][2] = true;
+            $scope[loadArr[k]].numAngels = obj[loadArr[k]].numAngels;
+            $scope[loadArr[k]].viewNumAngels = $scope[loadArr[k]].numAngels;
+            for (i = 0; i < obj[loadArr[k]].upgradeIndexUpTo; i++) {
+              $scope[loadArr[k]].cashUpgrades[i][$scope[loadArr[k]].cashUpgrades[i].length - 1] = true;
+            }
+            for (i = 0; i < obj[loadArr[k]].angelUpgradeIndexUpTo; i++) {
+              $scope[loadArr[k]].angelUpgrades[i][$scope[loadArr[k]].angelUpgrades[i].length - 1] = true;
+            }
+            for (i = 0; i < obj[loadArr[k]].upgradeIndexBonus.length; i++) {
+              $scope[loadArr[k]].cashUpgrades[obj[loadArr[k]].upgradeIndexBonus[i]][$scope[loadArr[k]].cashUpgrades[obj[loadArr[k]].upgradeIndexBonus[i]].length - 1] = true;
+            }
+            for (i = 0; i < obj[loadArr[k]].angelUpgradeIndexBonus.length; i++) {
+              $scope[loadArr[k]].angelUpgrades[obj[loadArr[k]].angelUpgradeIndexBonus[i]][$scope[loadArr[k]].angelUpgrades[obj[loadArr[k]].angelUpgradeIndexBonus[i]].length - 1] = true;
+            }
+            for (i = 0; i < obj[loadArr[k]].managersBought.length; i++) {
+              $scope[loadArr[k]].managerUpgrades[Math.floor(obj[loadArr[k]].managersBought[i] / 2)][obj[loadArr[k]].managersBought[i] % 2][1] = true;
+            }
+            $scope[loadArr[k]].triples = obj[loadArr[k]].triples;
+            $scope[loadArr[k]].flux = obj[loadArr[k]].flux;
+            $scope[loadArr[k]].bonusAngelEffectiveness = obj[loadArr[k]].bonusAngelEffectiveness;
+            $scope[loadArr[k]].bonusMultiplier = obj[loadArr[k]].bonusMultiplier;
+            if (angular.isDefined(obj[loadArr[k]].megaTicket)) {
+              for (i = 0; i < obj[loadArr[k]].megaTicket.length; i++) {
+                $scope[loadArr[k]].investments[obj[loadArr[k]].megaTicket[i]][2] = true;
+              }
             }
           }
+          $scope.calc($scope[loadArr[k]]);
         }
-        $scope.calc($scope.earth);
-        $scope.calc($scope.moon);
-        //$scope.calc($scope.mars);
-        $scope.calc($scope.halloween);
         $scope.$digest();
       }
       reader.readAsText(file);
