@@ -248,7 +248,7 @@ advApp.controller('advController', ['$document', '$filter', '$scope', function($
             if (i === 0) {
               managerDiscount = 0.9;
             } else {
-              managerDiscount = 0.00001;
+              managerDiscount *= 0.00001;
             }
           } else {
             managerDiscount = 0.75;
