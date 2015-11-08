@@ -34,8 +34,10 @@ function numFilter(input, raw) {
 
 advApp.filter('time', function() {
   return function(input, raw) {
-    if (input === Infinity){
+    if (input === Infinity) {
       return "———";
+    } else if (raw) {
+      var out = numFilter(input, raw) + ' s';
     } else {
       input = Math.floor(input);
       var s = ("00" + input % 60).slice(-2);
@@ -43,13 +45,13 @@ advApp.filter('time', function() {
       var h = ("00" + Math.floor(input / 3600) % 24).slice(-2);
       var d = Math.floor(input / 86400);
       var out = "";
-      if (!raw && d >= 1) {
+      if (d >= 1) {
         out += numFilter(d, false) + ' d';
-        if (!raw && d < 100) {
+        if (d < 100) {
           out += ', '
         }
       }
-      if (!raw && d < 100) {
+      if (d < 100) {
         out += h + ":" + m + ":" + s;
       }
       return out;
@@ -80,6 +82,7 @@ advApp.controller('advController', ['$document', '$filter', '$scope', function($
   $scope.filterTime = {'days': null, 'hours': null, 'minutes': null};
   $scope.halloween = {};
   $scope.illionsArray = illionsArr.slice(1);
+  $scope.mars = {};
   $scope.moon = {};
   $scope.raw = false;
   $scope.ref = $scope.earth;
@@ -92,7 +95,7 @@ advApp.controller('advController', ['$document', '$filter', '$scope', function($
       var file = fileInput.files[0],
       reader = new FileReader(),
       i = 0, j = 0, k = 0, obj = null,
-      loadArr = ['earth', 'moon', 'halloween'];
+      loadArr = ['earth', 'moon', 'halloween', 'mars'];
       reader.onload = function(e) {
         obj = JSON.parse(e.target.result);
         for (k in loadArr) {
@@ -193,7 +196,7 @@ advApp.controller('advController', ['$document', '$filter', '$scope', function($
       if (typeof row[i] === 'object') {
         applyRow = Math.floor(row[i][0] / 2);
         applyType = row[i][0] % 2;
-        if (applyRow < 10) {
+        if (applyRow < loc.investments.length) {
           if (applyType === 0) {
             loc.investments[applyRow][3] *= row[i][1];
           } else {
@@ -202,7 +205,7 @@ advApp.controller('advController', ['$document', '$filter', '$scope', function($
             }
             loc.investments[applyRow][4] /= 2;
           }
-        } else if (applyRow === 10) {
+        } else if (applyRow === loc.investments.length) {
           if (applyType === 0) {
             for (j = 0; j < loc.investments.length; j++) {
               loc.investments[j][3] *= row[i][1];
@@ -215,9 +218,9 @@ advApp.controller('advController', ['$document', '$filter', '$scope', function($
               loc.investments[j][4] /= 2;
             }
           }
-        } else if (applyRow === 11) {
+        } else if (applyRow === loc.investments.length + 1) {
           loc.angelEffectiveness += row[i][1] / 100;
-        } else if (row[i][0] < 30 || row[i][0] > 39) {
+        } else if (row[i][0] < 30 || row[i][0] > 29 + loc.investments.length) {
           throw 'Tuple not dealt with: ' + row;
         }
       }
@@ -270,13 +273,13 @@ advApp.controller('advController', ['$document', '$filter', '$scope', function($
       }
     }
     i = 0;
-    while (i < loc.unlocks[10].length && lowestLevel >= loc.unlocks[10][i][0]) {
+    while (i < loc.unlocks[loc.investments.length].length && lowestLevel >= loc.unlocks[loc.investments.length][i][0]) {
       i++;
     }
-    if (i !== loc.unlocks[10].length) {
+    if (i !== loc.unlocks[loc.investments.length].length) {
       for (; j < loc.investments.length; j++) {
-        if (loc.investments[j][1] < loc.unlocks[10][i][0]) {
-          retVal += calcUnlockCost(loc, j, loc.investments[j][1], loc.unlocks[10][i][0] - loc.investments[j][1]);
+        if (loc.investments[j][1] < loc.unlocks[loc.investments.length][i][0]) {
+          retVal += calcUnlockCost(loc, j, loc.investments[j][1], loc.unlocks[loc.investments.length][i][0] - loc.investments[j][1]);
         }
       }
     } else {
@@ -304,9 +307,6 @@ advApp.controller('advController', ['$document', '$filter', '$scope', function($
         var delta = tempPlanet.totalMoneyPerSecond - loc.totalMoneyPerSecond;
         var percent = delta / loc.totalMoneyPerSecond;
         if (delta > 0) {
-          console.log(tempPlanet.totalMoneyPerSecond + '   -   ' + loc.totalMoneyPerSecond);
-          console.log(delta);
-          console.log(i + ' PERCENT ' + percent);
           loc.angelUpgrades[i][loc.angelUpgrades[i].length - 2] = percent;
           loc.angelExclamation = true;
         } else {
@@ -397,9 +397,9 @@ advApp.controller('advController', ['$document', '$filter', '$scope', function($
         highestSharedLevel = loc.investments[i][1];
       }
     }
-    for (i = 0; i < loc.unlocks[10].length; i++) {
-      if (loc.unlocks[10][i][0] > highestSharedLevel) {
-        highestSharedLevel = loc.unlocks[10][i][0];
+    for (i = 0; i < loc.unlocks[loc.investments.length].length; i++) {
+      if (loc.unlocks[loc.investments.length][i][0] > highestSharedLevel) {
+        highestSharedLevel = loc.unlocks[loc.investments.length][i][0];
         break;
       }
     }
@@ -472,8 +472,8 @@ advApp.controller('advController', ['$document', '$filter', '$scope', function($
       }
     }
     j = 0;
-    while (j < loc.unlocks[10].length && highestSharedLevel >= loc.unlocks[10][j][0]) {
-      applyTuple(loc, loc.unlocks[10][j]);
+    while (j < loc.unlocks[loc.investments.length].length && highestSharedLevel >= loc.unlocks[loc.investments.length][j][0]) {
+      applyTuple(loc, loc.unlocks[loc.investments.length][j]);
       j++;
     }
     if (loc.bonusAngelEffectiveness > 0) {
@@ -588,7 +588,7 @@ advApp.controller('advController', ['$document', '$filter', '$scope', function($
   }
 
   $scope.export = function() {
-    var blob = new Blob(['{' + formatState($scope.earth) + ',\r\n' + formatState($scope.moon) + ',\r\n' + formatState($scope.halloween) + '}'], {type: "application/json"});
+    var blob = new Blob(['{' + formatState($scope.earth) + ',\r\n' + formatState($scope.moon) + ',\r\n' + formatState($scope.halloween) + ',\r\n' + formatState($scope.mars) + '}'], {type: "application/json"});
     var title = "AdvCapCalc.json";
     if (window.navigator.msSaveOrOpenBlob) {
       navigator.msSaveBlob(blob, title);
@@ -743,13 +743,13 @@ advApp.controller('advController', ['$document', '$filter', '$scope', function($
         if (l !== 1) {
           k += ', ';
         }
-        if (i < 10) {
+        if (i < loc.investments.length) {
           k += loc.investments[i][0] + (j && ' Speed ' || ' Profit ') + num;
-        } else if (i === 10) {
+        } else if (i === loc.investments.length) {
           k += 'All' + (j && ' Speed ' || ' Profit ') + num;
-        } else if (i === 11) {
+        } else if (i === loc.investments.length + 1) {
           k += 'Angel Investor ' + num;
-        } else if (tuple[l][0] >= 30 && tuple[l][0] <= 39) {
+        } else if (tuple[l][0] >= 30 && tuple[l][0] <= 29 + loc.investments.length) {
           k += '+' + tuple[l][1] + ' ' + loc.investments[tuple[l][0] - 30][0];
         }
       }
@@ -803,13 +803,13 @@ advApp.controller('advController', ['$document', '$filter', '$scope', function($
   $scope.isEarth = function() {
     return $scope.ref === $scope.earth;
   };
-  
+
   $scope.isHalloween = function() {
     return $scope.ref === $scope.halloween;
   };
 
   $scope.isMars = function() {
-    return false;
+    return $scope.ref === $scope.mars;
   };
 
   $scope.isMoon = function() {
@@ -822,13 +822,20 @@ advApp.controller('advController', ['$document', '$filter', '$scope', function($
     $scope.compare = false;
     $scope.ref = $scope.earth;
   };
-  
+
   $scope.setHalloween = function() {
     $scope.clearAfter = [false, false];
     $scope.fillBefore = [false, false];
     $scope.compare = false;
     $scope.ref = $scope.halloween;
-  }
+  };
+
+  $scope.setMars = function() {
+    $scope.clearAfter = [false, false];
+    $scope.fillBefore = [false, false];
+    $scope.compare = false;
+    $scope.ref = $scope.mars;
+  };
 
   $scope.setMoon = function() {
     $scope.clearAfter = [false, false];
@@ -954,11 +961,11 @@ advApp.controller('advController', ['$document', '$filter', '$scope', function($
     $scope.moon.upgradeCosts = [[0, 0, 0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0, 0, 0]];
     $scope.moon.unlocks = [];
     $scope.moon.viewNumAngels = 0;
-    /*$scope.mars.angelEffectiveness = 0.02;
+    $scope.mars.angelEffectiveness = 0.02;
     $scope.mars.angelExclamation = false;
     $scope.mars.baseCost = [0.05, 1, 1234, 23e+6, 49e+9, 77e+12, 5e+15, 1e+18, 13e+24];
     $scope.mars.basePower = [1.01, 1.03, 1.05, 1.07, 1.11, 1.04, 1.07, 1.09, 1.25];
-    $scope.mars.baseProfit = [0.11, 1, 4321, 4007310, 518783295, 500634321, 7543177325, 69263532485, 99760273916482500];
+    $scope.mars.baseProfit = [0.011, 1, 4321, 4007310, 518783295, 500634321, 7543177325, 69263532485, 99760273916482500];
     $scope.mars.baseSpeed = [0.5, 3, 9, 32, 64, 4, 18, 42, 43200];
     $scope.mars.bonusAngelEffectiveness = 0;
     $scope.mars.bonusMultiplier = 0;
@@ -985,9 +992,9 @@ advApp.controller('advController', ['$document', '$filter', '$scope', function($
     $scope.mars.recommendation = '';
     $scope.mars.totalMoneyPerSecond = 0;
     $scope.mars.triples = 0;
-    $scope.mars.upgradeCosts = [[0, 0, 0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0, 0, 0]];
+    $scope.mars.upgradeCosts = [[0, 0, 0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0, 0, 0]];
     $scope.mars.unlocks = [];
-    $scope.mars.viewNumAngels = 0;*/
+    $scope.mars.viewNumAngels = 0;
     $scope.halloween.angelEffectiveness = 0.02;
     $scope.halloween.angelExclamation = false;
     $scope.halloween.baseCost = [6, 71, 640, 20680, 344160, 1492920, 89133040, 149084800, 5758901760, 66666666666];
@@ -1030,7 +1037,7 @@ advApp.controller('advController', ['$document', '$filter', '$scope', function($
     for (var i = 0; i < 11; i++) {
       $scope.earth.unlocks.push([]);
     }
-    $scope.earth.unlocks[0] = [[25, [1, 2]],[50, [1, 2]],[100, [1, 2]],[200, [1, 2]],[300, [1, 2]],[400, [1, 2]],[500, [0, 4]],[600, [0, 4]],[700, [0, 4]],[800, [0, 4]],[900, [0, 4]],[1000, [0, 5]],[1100, [0, 4]],[1200, [0, 4]],[1300, [0, 4]],[1400, [0, 4]],[1500, [0, 4]],[1600, [0, 4]],[1700, [0, 4]],[1800, [0, 4]],[1900, [0, 4]],[2000, [0, 5]],[2250, [0, 2]],[2500, [0, 2]],[2750, [0, 2]],[3000, [0, 5]],[3250, [0, 2]],[3500, [0, 2]],[3750, [0, 2]],[4000, [0, 5]],[4250, [0, 2]],[4500, [0, 2]],[4750, [0, 2]],[5000, [0, 5]],[5250, [0, 3]],[5500, [0, 3]],[5750, [0, 3]],[6000, [0, 5]],[6250, [0, 3]],[6500, [0, 3]],[6750, [0, 3]],[7000, [0, 5]],[7000, [0, 3]],[7250, [0, 3]],[7500, [0, 3]],[7777, [0, 3]],[8000, [0, 3]],[8200, [0, 3]],[8400, [0, 3]],[8600, [0, 3]],[8800, [0, 3]],[9000, [0, 3]],[9100, [0, 3]],[9200, [0, 3]],[9300, [0, 3]],[9400, [0, 3]],[9500, [0, 3]],[9600, [0, 3]],[9700, [0, 3]],[9800, [0, 3]],[9999, 0, 1.9999],[10000, [0, 5]]];
+    $scope.earth.unlocks[0] = [[25, [1, 2]],[50, [1, 2]],[100, [1, 2]],[200, [1, 2]],[300, [1, 2]],[400, [1, 2]],[500, [0, 4]],[600, [0, 4]],[700, [0, 4]],[800, [0, 4]],[900, [0, 4]],[1000, [0, 5]],[1100, [0, 4]],[1200, [0, 4]],[1300, [0, 4]],[1400, [0, 4]],[1500, [0, 4]],[1600, [0, 4]],[1700, [0, 4]],[1800, [0, 4]],[1900, [0, 4]],[2000, [0, 5]],[2250, [0, 2]],[2500, [0, 2]],[2750, [0, 2]],[3000, [0, 5]],[3250, [0, 2]],[3500, [0, 2]],[3750, [0, 2]],[4000, [0, 5]],[4250, [0, 2]],[4500, [0, 2]],[4750, [0, 2]],[5000, [0, 5]],[5250, [0, 3]],[5500, [0, 3]],[5750, [0, 3]],[6000, [0, 5]],[6250, [0, 3]],[6500, [0, 3]],[6750, [0, 3]],[7000, [0, 5]],[7000, [0, 3]],[7250, [0, 3]],[7500, [0, 3]],[7777, [0, 3]],[8000, [0, 3]],[8200, [0, 3]],[8400, [0, 3]],[8600, [0, 3]],[8800, [0, 3]],[9000, [0, 3]],[9100, [0, 3]],[9200, [0, 3]],[9300, [0, 3]],[9400, [0, 3]],[9500, [0, 3]],[9600, [0, 3]],[9700, [0, 3]],[9800, [0, 3]],[9999, [0, 1.9999]],[10000, [0, 5]]];
     $scope.earth.unlocks[1] = [[25, [3, 2]],[50, [3, 2]],[100, [3, 2]],[125, [0, 2]],[150, [4, 2]],[175, [6, 2]],[200, [3, 2]],[225, [8, 2]],[250, [0, 3]],[275, [4, 3]],[300, [3, 2]],[325, [6, 3]],[350, [8, 3]],[375, [0, 4]],[400, [3, 2]],[425, [4, 4]],[450, [6, 4]],[475, [8, 4]],[500, [10, 11]],[525, [0, 5]],[550, [4, 5]],[575, [6, 5]],[600, [12, 11]],[625, [8, 5]],[650, [0, 6]],[675, [4, 6]],[700, [14, 11]],[725, [6, 6]],[750, [8, 6]],[775, [0, 3]],[800, [16, 11]],[825, [4, 7]],[850, [6, 7]],[875, [8, 7]],[900, [18, 11]],[925, [10, 7]],[950, [12, 7]],[975, [14, 7]],[1000, [2, 7777777]],[1025, [16, 7]],[1050, [18, 7]],[1075, [4, 8]],[1100, [6, 8]],[1125, [8, 8]],[1150, [10, 8]],[1175, [12, 8]],[1200, [14, 8]],[1225, [16, 8]],[1250, [18, 8]],[1300, [2, 7777]],[1350, [0, 9]],[1400, [4, 9]],[1450, [6, 9]],[1500, [8, 9]],[1550, [10, 9]],[1600, [12, 9]],[1650, [14, 9]],[1700, [16, 9]],[1750, [18, 9]],[1800, [10, 10]],[1850, [12, 10]],[1900, [14, 10]],[1950, [16, 10]],[2000, [2, 7777]],[2100, [4, 15]],[2200, [6, 15]],[2300, [8, 15]],[2400, [10, 15]],[2500, [2, 777]],[2600, [14, 15]],[2700, [16, 15]],[2800, [18, 15]],[2900, [0, 15]],[3000, [2, 777]],[3100, [4, 20]],[3200, [12, 20]],[3300, [16, 20]],[3400, [18, 20]],[3500, [2, 777]],[3600, [12, 25]],[3700, [14, 25]],[3800, [16, 25]],[3900, [18, 25]],[4000, [2, 30]],[4100, [0, 30]],[4200, [4, 30]],[4300, [6, 30]],[4400, [8, 30]],[4500, [10, 30]],[4600, [12, 30]],[4700, [14, 30]],[4800, [16, 30]],[4900, [18, 30]],[5000, [2, 50]],[5100, [2, 50]],[5200, [2, 50]],[5300, [2, 50]],[5400, [2, 50]]];
     $scope.earth.unlocks[2] = [[25, [5, 2]],[50, [5, 2]],[100, [5, 2]],[200, [5, 2]],[300, [5, 2]],[400, [5, 2]],[500, [4, 2]],[600, [4, 2]],[700, [4, 2]],[800, [4, 2]],[900, [4, 2]],[1000, [4, 3]],[1100, [4, 2]],[1200, [4, 2]],[1300, [4, 2]],[1400, [4, 2]],[1500, [4, 2]],[1600, [4, 2]],[1700, [4, 2]],[1800, [4, 2]],[1900, [4, 2]],[2000, [4, 5]],[2100, [4, 3]],[2200, [4, 3]],[2300, [4, 3]],[2400, [4, 3]],[2500, [4, 3]],[2600, [4, 3]],[2700, [4, 3]],[2800, [4, 3]],[2900, [4, 3]],[3000, [4, 3]],[3100, [4, 3]],[3200, [4, 3]],[3300, [4, 3]],[3400, [4, 3]],[3500, [4, 3]],[3600, [4, 3]],[3700, [4, 3]],[3800, [4, 3]],[3900, [4, 3]],[4000, [4, 5]],[4100, [4, 3]],[4200, [4, 3]],[4300, [4, 3]],[4400, [4, 3]],[4500, [4, 3]],[4600, [4, 3]],[4700, [4, 3]],[4800, [4, 3]],[4900, [4, 3]],[5000, [4, 5]],[5250, [4, 3]],[5500, [4, 3]]];
     $scope.earth.unlocks[3] = [[25, [7, 2]],[50, [7, 2]],[100, [7, 2]],[200, [7, 2]],[300, [7, 2]],[400, [7, 2]],[500, [6, 2]],[600, [6, 2]],[700, [6, 2]],[800, [6, 2]],[900, [6, 2]],[1000, [6, 3]],[1100, [6, 2]],[1200, [6, 2]],[1300, [6, 2]],[1400, [6, 2]],[1500, [6, 2]],[1600, [6, 2]],[1700, [6, 2]],[1800, [6, 2]],[1900, [6, 2]],[2000, [6, 5]],[2100, [6, 3]],[2200, [6, 3]],[2300, [6, 3]],[2400, [6, 3]],[2500, [6, 3]],[2600, [6, 3]],[2700, [6, 3]],[2800, [6, 3]],[2900, [6, 3]],[3000, [6, 3]],[3100, [6, 3]],[3200, [6, 3]],[3300, [6, 3]],[3400, [6, 3]],[3500, [6, 3]],[3600, [6, 3]],[3700, [6, 3]],[3800, [6, 5]],[3900, [6, 3]],[4000, [6, 5]],[4100, [6, 3]],[4200, [6, 3]],[4300, [6, 3]],[4400, [6, 3]],[4500, [6, 3]],[4600, [6, 3]],[4700, [6, 3]],[4800, [6, 3]],[4900, [6, 3]],[5000, [6, 5]],[5250, [6, 3]],[5500, [6, 3]],[5750, [6, 3]]];
@@ -1062,7 +1069,7 @@ advApp.controller('advController', ['$document', '$filter', '$scope', function($
     $scope.moon.cashUpgrades = [[332500, [0, 3], false],[665000, [2, 3], false],[1330000, [4, 3], false],[6650000, [6, 3], false],[13.3e+6, [8, 3], false],[33.25e+6, [10, 3], false],[1.665e+9, [12, 3], false],[133e+9, [14, 3], false],[665e+9, [16, 3], false],[3.3e+12, [18, 3], false],[10e+12, [20, 9], false],[30e+12, [0, 3], false],[70e+12, [2, 3], false],[150e+12, [4, 3], false],[275e+12, [6, 3], false],[266e+12, [10, 3], false],[433e+12, [8, 3], false],[665e+12, [12, 3], false],[931e+12, [14, 3], false],[2e+15, [16, 3], false],[3e+15, [18, 3], false],[7e+15, [20, 9], false],[13e+15, [22, 1], false],[500e+18, [20, 9], false],[26e+21, [0, 3], false],[67e+21, [2, 3], false],[93e+21, [4, 3], false],[133e+21, [6, 3], false],[266e+21, [8, 3], false],[465e+21, [10, 3], false],[665e+21, [12, 3], false],[997e+21, [14, 3], false],[2e+24, [16, 3], false],[3e+24, [18, 3], false],[10e+24, [20, 9], false],[20e+24, [22, 1], false],[5e+30, [0, 3], false],[10e+30, [2, 3], false],[20e+30, [4, 3], false],[40e+30, [6, 3], false],[160e+30, [8, 3], false],[280e+30, [10, 3], false],[500e+30, [12, 3], false],[690e+30, [14, 3], false],[725e+30, [16, 3], false],[833e+30, [18, 3], false],[975e+30, [20, 9], false],[4e+33, [22, 1], false],[9e+33, [0, 3], false],[20e+33, [2, 3], false],[100e+33, [4, 3], false],[200e+33, [6, 3], false],[421e+33, [8, 3], false],[655e+33, [10, 3], false],[825e+33, [12, 3], false],[5e+36, [14, 3], false],[25e+36, [16, 3], false],[50e+36, [18, 3], false],[100e+36, [20, 9], false],[75e+39, [0, 5], false],[210e+39, [2, 5], false],[353e+39, [4, 5], false],[635e+39, [6, 5], false],[900e+39, [8, 5], false],[9e+42, [10, 5], false],[22e+42, [12, 5], false],[60e+42, [14, 5], false],[132e+42, [16, 5], false],[367e+42, [18, 5], false],[1e+45, [20, 9], false],[1e+51, [20, 9], false],[1e+54, [22, 3], false],[18e+54, [0, 3], false],[6e+54, [2, 3], false],[79e+54, [4, 3], false],[110e+54, [6, 3], false],[220e+54, [8, 3], false],[399e+54, [10, 3], false],[666e+54, [12, 3], false],[911e+54, [14, 3], false],[4e+60, [16, 3], false],[25e+60, [18, 3], false],[112e+60, [20, 9], false],[200e+60, [0, 3], false],[356e+60, [2, 3], false],[518e+60, [4, 3], false],[766e+60, [6, 3], false],[3e+69, [8, 3], false],[6e+69, [10, 3], false],[12e+69, [12, 3], false],[50e+69, [14, 3], false],[212e+69, [16, 3], false],[367e+69, [18, 3], false],[1e+72, [20, 9], false],[25e+75, [0, 3], false],[60e+75, [2, 3], false],[177e+75, [4, 3], false],[239e+75, [6, 3], false],[432e+75, [8, 3], false],[801e+75, [10, 3], false],[2e+78, [12, 3], false],[8e+78, [14, 3], false],[22e+78, [16, 3], false],[59e+78, [18, 3], false],[444e+78, [20, 9], false],[3e+81, [22, 3], false],[12e+84, [0, 3], false],[24e+84, [2, 3], false],[48e+84, [4, 3], false],[96e+84, [6, 3], false],[192e+84, [8, 3], false],[384e+84, [10, 3], false],[968e+84, [12, 3], false],[15e+87, [14, 3], false],[35e+87, [16, 3], false],[100e+87, [18, 3], false],[1e+90, [20, 9], false],[100e+90, [0, 5], false],[200e+90, [2, 5], false],[300e+90, [4, 5], false],[400e+90, [6, 5], false],[500e+90, [8, 5], false],[600e+90, [10, 5], false],[700e+90, [12, 5], false],[800e+90, [14, 5], false],[900e+90, [16, 5], false],[999e+90, [18, 5], false],[5e+93, [20, 9], false],[10e+93, [0, 3], false],[20e+93, [2, 3], false],[55e+93, [4, 3], false],[90e+93, [6, 3], false],[180e+93, [8, 3], false],[400e+93, [10, 3], false],[750e+93, [12, 3], false],[2e+96, [14, 3], false],[4e+96, [16, 3], false],[14e+96, [18, 3], false],[50e+96, [20, 9], false],[400e+96, [0, 3], false],[700e+96, [2, 3], false],[1e+99, [4, 3], false],[3e+99, [6, 3], false],[19e+99, [8, 3], false],[55e+99, [10, 3], false],[123e+99, [12, 3], false],[200e+99, [14, 3], false],[600e+99, [16, 3], false],[888e+99, [18, 3], false],[1e+102, [20, 9], false],[5e+102, [0, 3], false],[25e+102, [2, 3], false],[125e+102, [4, 3], false],[625e+102, [6, 3], false],[3e+105, [8, 3], false],[5e+105, [10, 3], false],[65e+105, [12, 3], false],[246e+105, [14, 3], false],[500e+105, [16, 3], false],[808e+105, [18, 3], false],[1e+108, [20, 9], false],[2e+108, [0, 3], false],[4e+108, [2, 3], false],[8e+108, [4, 3], false],[16e+108, [6, 3], false],[32e+108, [8, 3], false],[64e+108, [10, 3], false],[128e+108, [12, 3], false],[256e+108, [14, 3], false],[512e+108, [16, 3], false],[1e+111, [18, 3], false],[100e+111, [20, 9], false],[125e+111, [0, 3], false],[150e+111, [2, 3], false],[175e+111, [4, 3], false],[200e+111, [6, 3], false],[225e+111, [8, 3], false],[250e+111, [10, 3], false],[275e+111, [12, 3], false],[300e+111, [14, 3], false],[350e+111, [16, 3], false],[400e+111, [18, 3], false],[500e+111, [20, 9], false],[1e+114, [0, 11], false],[10e+114, [2, 11], false],[100e+114, [4, 11], false],[1e+117, [6, 11], false],[10e+117, [8, 11], false],[100e+117, [10, 11], false],[1e+120, [12, 11], false],[10e+120, [14, 11], false],[100e+120, [16, 11], false],[1e+123, [18, 11], false],[10e+123, [20, 15], false],[1e+126, [0, 3], false],[7e+126, [2, 3], false],[29e+126, [4, 3], false],[66e+126, [6, 3], false],[129e+126, [8, 3], false],[233e+126, [10, 3], false],[555e+126, [12, 3], false],[900e+126, [14, 3], false],[3e+129, [16, 3], false],[20e+129, [18, 3], false],[111e+129, [20, 9], false],[1e+135, [20, 9], false],[1e+138, [0, 3], false],[2e+138, [2, 3], false],[3e+138, [4, 3], false],[4e+138, [6, 3], false],[5e+138, [8, 3], false],[6e+138, [10, 3], false],[7e+138, [12, 3], false],[8e+138, [14, 3], false],[9e+138, [16, 3], false],[10e+138, [18, 3], false],[100e+138, [20, 9], false],[1e+141, [0, 3], false],[3e+141, [2, 3], false],[7e+141, [4, 3], false],[25e+141, [6, 3], false],[75e+141, [8, 3], false],[151e+141, [10, 3], false],[400e+141, [12, 3], false],[600e+141, [14, 3], false],[900e+141, [16, 3], false],[2e+144, [18, 3], false],[6e+144, [20, 9], false],[19e+144, [0, 3], false],[66e+144, [2, 3], false],[123e+144, [4, 3], false],[299e+144, [6, 3], false],[667e+144, [8, 3], false],[901e+144, [10, 3], false],[2e+147, [12, 3], false],[53e+147, [14, 3], false],[200e+147, [16, 3], false],[500e+147, [18, 3], false],[1e+150, [20, 9], false],[1e+156, [0, 3], false],[2e+156, [2, 3], false],[4e+156, [4, 3], false],[8e+156, [6, 3], false],[16e+156, [8, 3], false],[32e+156, [10, 3], false],[64e+156, [12, 3], false],[128e+156, [14, 3], false],[256e+156, [16, 3], false],[512e+156, [18, 3], false],[1e+159, [20, 9], false],[2e+162, [0, 5], false],[5e+162, [2, 5], false],[11e+162, [4, 5], false],[23e+162, [6, 5], false],[47e+162, [8, 5], false],[95e+162, [10, 5], false],[191e+162, [12, 5], false],[383e+162, [14, 5], false],[767e+162, [16, 5], false],[5e+165, [18, 5], false],[125e+165, [20, 9], false],[1e+168, [20, 9], false],[1e+171, [0, 3], false],[14e+171, [2, 3], false],[114e+171, [4, 3], false],[234e+171, [6, 3], false],[444e+171, [8, 3], false],[888e+171, [10, 3], false],[23e+174, [12, 3], false],[99e+174, [14, 3], false],[423e+174, [16, 3], false],[567e+174, [18, 3], false],[899e+174, [20, 9], false],[1e+180, [0, 3], false],[3e+180, [2, 3], false],[9e+180, [4, 3], false],[27e+180, [6, 3], false],[81e+180, [8, 3], false],[234e+180, [10, 3], false],[356e+180, [12, 3], false],[432e+180, [14, 3], false],[567e+180, [16, 3], false],[836e+180, [18, 3], false],[1e+183, [20, 9], false],[10e+186, [0, 15], false],[100e+186, [2, 15], false],[1e+189, [4, 15], false],[10e+189, [6, 15], false],[100e+189, [8, 15], false],[1e+192, [10, 15], false],[10e+192, [12, 15], false],[100e+192, [14, 15], false],[1e+195, [16, 15], false],[10e+195, [18, 15], false],[100e+195, [20, 999], false]];
     $scope.moon.angelUpgrades = [[11111, [20, 3], false, false],[222222, [0, 3], false, false],[3e+6, [2, 3], false, false],[4e+6, [4, 3], false, false],[55e+6, [6, 3], false, false],[666e+6, [8, 3], false, false],[7e+9, [10, 3], false, false],[88e+9, [12, 3], false, false],[999e+9, [14, 3], false, false],[1e+12, [16, 3], false, false],[11e+12, [18, 3], false, false],[123e+12, [20, 3], false, false],[50e+18, [31, 10], false, false],[50e+18, [33, 10], false, false],[50e+18, [35, 10], false, false],[50e+18, [37, 10], false, false],[50e+18, [39, 10], false, false],[1e+21, [0, 3], false, false],[9e+21, [2, 3], false, false],[27e+21, [4, 3], false, false],[99e+21, [6, 3], false, false],[180e+21, [8, 3], false, false],[222e+21, [10, 3], false, false],[343e+21, [12, 3], false, false],[477e+21, [14, 3], false, false],[569e+21, [16, 3], false, false],[789e+21, [18, 3], false, false],[1e+24, [20, 3], false, false],[25e+27, [31, 10], false, false],[25e+27, [33, 10], false, false],[25e+27, [35, 10], false, false],[25e+27, [37, 10], false, false],[25e+27, [39, 10], false, false],[1e+30, [0, 3], false, false],[14e+30, [2, 3], false, false],[55e+30, [4, 3], false, false],[100e+30, [6, 3], false, false],[189e+30, [8, 3], false, false],[267e+30, [10, 3], false, false],[404e+30, [12, 3], false, false],[691e+30, [14, 3], false, false],[777e+30, [16, 3], false, false],[910e+30, [18, 3], false, false],[2e+33, [20, 3], false, false],[100e+33, [31, 10], false, false],[100e+33, [33, 10], false, false],[100e+33, [35, 10], false, false],[100e+33, [37, 10], false, false],[100e+33, [39, 10], false, false],[5e+36, [0, 3], false, false],[19e+36, [2, 3], false, false],[88e+36, [4, 3], false, false],[144e+36, [6, 3], false, false],[201e+36, [8, 3], false, false],[333e+36, [10, 3], false, false],[400e+36, [12, 3], false, false],[588e+36, [14, 3], false, false],[701e+36, [16, 3], false, false],[911e+36, [18, 3], false, false],[50e+39, [20, 9], false, false],[5e+42, [31, 10], false, false],[5e+42, [33, 10], false, false],[5e+42, [35, 10], false, false],[5e+42, [37, 10], false, false],[5e+42, [39, 10], false, false],[3e+45, [0, 5], false, false],[6e+45, [2, 5], false, false],[12e+45, [4, 5], false, false],[24e+45, [6, 5], false, false],[48e+45, [8, 5], false, false],[96e+45, [10, 5], false, false],[192e+45, [12, 5], false, false],[384e+45, [14, 5], false, false],[768e+45, [16, 5], false, false],[14e+48, [18, 5], false, false],[500e+48, [20, 9], false, false],[100e+51, [20, 9], false, false],[5e+54, [30, 50], false, false],[5e+54, [31, 50], false, false],[5e+54, [32, 50], false, false],[5e+54, [33, 50], false, false],[5e+54, [34, 50], false, false],[5e+54, [35, 50], false, false],[5e+54, [36, 50], false, false],[5e+54, [37, 50], false, false],[5e+54, [37, 50], false, false],[5e+54, [39, 50], false, false],[100e+54, [0, 3], false, false],[200e+54, [2, 3], false, false],[300e+54, [4, 3], false, false],[400e+54, [6, 3], false, false],[500e+54, [8, 3], false, false],[600e+54, [10, 3], false, false],[700e+54, [12, 3], false, false],[800e+54, [14, 3], false, false],[900e+54, [16, 3], false, false],[1e+57, [18, 3], false, false],[316e+57, [20, 3], false, false],[1e+60, [20, 9], false, false],[100e+63, [30, 75], false, false],[100e+63, [31, 75], false, false],[100e+63, [32, 75], false, false],[100e+63, [33, 75], false, false],[100e+63, [34, 75], false, false],[100e+63, [35, 75], false, false],[100e+63, [36, 75], false, false],[100e+63, [37, 75], false, false],[100e+63, [37, 75], false, false],[100e+63, [39, 75], false, false],[1e+66, [20, 3], false, false],[1e+69, [0, 3], false, false],[2e+69, [2, 3], false, false],[4e+69, [4, 3], false, false],[8e+69, [6, 3], false, false],[16e+69, [8, 3], false, false],[32e+69, [10, 3], false, false],[64e+69, [12, 3], false, false],[128e+69, [14, 3], false, false],[256e+69, [16, 3], false, false],[512e+69, [18, 3], false, false],[1e+72, [20, 9], false, false],[5e+75, [31, 50], false, false],[5e+75, [33, 50], false, false],[5e+75, [34, 100], false, false],[5e+75, [36, 100], false, false],[5e+75, [39, 25], false, false],[100e+75, [0, 7], false, false],[200e+75, [2, 7], false, false],[400e+75, [4, 7], false, false],[800e+75, [6, 7], false, false],[16e+78, [8, 7], false, false],[32e+78, [10, 7], false, false],[64e+78, [12, 7], false, false],[128e+78, [14, 7], false, false],[256e+78, [16, 7], false, false],[512e+78, [18, 7], false, false],[1e+81, [20, 7], false, false],[100e+84, [33, 100], false, false],[200e+84, [34, 200], false, false],[300e+84, [36, 300], false, false],[1e+87, [0, 3], false, false],[9e+87, [2, 3], false, false],[18e+87, [4, 3], false, false],[27e+87, [6, 3], false, false],[36e+87, [8, 3], false, false],[45e+87, [10, 3], false, false],[54e+87, [12, 3], false, false],[63e+87, [14, 3], false, false],[72e+87, [16, 3], false, false],[81e+87, [18, 3], false, false],[1e+90, [20, 5], false, false]];
     $scope.moon.managerUpgrades = [[[10e+99, false]],[[10e+99, false]],[[10e+99, false]],[[10e+99, false]],[[10e+99, false]],[[10e+99, false]],[[10e+99, false]],[[10e+99, false]],[[10e+99, false]],[[10e+99, false]]];
-    /*$scope.mars.unlocks = [];
+    $scope.mars.unlocks = [];
     for (var i = 0; i < 11; i++) {
       $scope.mars.unlocks.push([]);
     }
@@ -1075,10 +1082,10 @@ advApp.controller('advController', ['$document', '$filter', '$scope', function($
     $scope.mars.unlocks[6] = [[25, [12,3]],[50, [12,3]],[75, [12,3]],[100, [13,2]],[150, [12,3]],[200, [12,3]],[250, [12,3]],[300, [12,3]],[350, [12,3]],[400, [12,3]],[450, [12,3]],[500, [13,2]],[550, [12,3]],[600, [12,3]],[650, [12,3]],[700, [12,3]],[750, [12,7]],[800, [12,3]],[850, [12,3]],[900, [12,3]],[950, [12,3]],[1000, [12,8]],[1150, [12,8]],[1300, [12,8]],[1450, [12,8]],[1600, [12,8]],[1750, [12,8]],[1900, [12,8]],[2050, [12,8]],[2200, [12,8]],[2350, [12,8]],[2500, [12,8]],[2650, [12,8]],[2800, [12,8]],[2950, [12,8]],[3100, [12,8]],[3250, [12,8]],[3400, [12,8]],[3550, [12,8]],[3700, [12,8]],[3850, [12,8]],[4000, [12,8]],[4150, [12,8]],[4300, [12,8]],[4450, [12,8]],[4600, [12,8]],[4750, [12,8]],[4900, [12,8]],[5050, [12,8]],[5200, [12,8]],[5350, [12,8]],[5500, [12,8]],[5650, [12,8]],[5800, [12,8]],[5950, [12,8]],[6100, [12,8]],[6250, [12,8]],[6400, [12,8]],[6550, [12,8]],[6700, [12,8]],[6850, [12,8]],[7000, [12,8]],[7150, [12,8]],[7300, [12,8]],[7450, [12,8]],[7600, [12,8]]];
     $scope.mars.unlocks[7] = [[100, [14,15]],[200, [14,15]],[300, [14,15]],[400, [14,15]],[500, [15,2]],[700, [14,50]],[900, [14,50]],[1100, [14,50]],[1300, [14,50]],[1500, [14,5050]],[1700, [14,50]],[1900, [14,50]],[2100, [14,50]],[2300, [14,50]],[2500, [14,50]],[2700, [14,50]],[2900, [14,50]],[3100, [14,50]],[3300, [14,50]],[3500, [14,50]],[3700, [14,50]],[3900, [14,50]],[4100, [14,50]],[4300, [14,50]],[4500, [14,50]],[4700, [14,50]],[4900, [14,50]],[5100, [14,50]],[5300, [14,50]],[5500, [14,50]],[5700, [14,50]],[5900, [14,50]],[6000, [14,50]]];
     $scope.mars.unlocks[8] = [[33, [16,333]],[66, [16,333]],[99, [16,333]],[222, [16,333]],[333, [16,333]],[444, [16,333]],[555, [16,333]],[666, [16,333]],[777, [16,333]],[888, [16,333]],[999, [16,333]],[1111, [16,333]],[2222, [16,333]]];
-    $scope.mars.unlocks[9] = [[1, [21,2]],[50, [21,2]],[100, [21,2]],[200, [21,2]],[300, [21,2]],[400, [21,2]],[500, [21,2]],[600, [21,2]],[700, [21,2]],[800, [21,2]],[900, [21,2]],[1000, [21,2]],[1200, [21,2]],[1400, [21,2]],[1600, [21,2]],[1800, [21,2]],[2000, [21,2]],[2500, [21,2]]];
-    $scope.mars.cashUpgrades = [[15000000, [0,33], false],[500000000, [2,33], false],[100e+9, [4,33], false],[19e+12, [6,33], false],[1e+15, [8,33], false],[12e+18, [10,33], false],[9e+21, [12,33], false],[600e+21, [14,33], false],[3e+27, [16,33], false],[1e+36, [4,66], false],[3e+39, [6,66], false],[25e+42, [8,66], false],[130e+45, [10,66], false],[300e+48, [12,66], false],[60e+51, [14,66], false],[10e+54, [16,66], false],[1e+57, [20,33], false],[1e+60, [0,999], false],[700e+60, [2,999], false],[900e+60, [4,99], false],[1e+63, [6,99], false],[5e+66, [8,99], false],[17e+66, [10,99], false],[99e+66, [12,99], false],[231e+66, [14,99], false],[333e+66, [16,99], false],[500e+69, [20,33], false],[123e+72, [0,999], false],[246e+72, [2,999], false],[369e+72, [6,999], false],[2e+75, [10,999], false],[3e+75, [12,999], false],[12e+75, [14,999], false],[23e+75, [16,999], false],[1e+78, [20,66], false],[5e+102, [0,33], false],[125e+102, [2,33], false],[450e+102, [4,33], false],[625e+102, [6,33], false],[3e+105, [10,33], false],[25e+105, [12,33], false],[100e+105, [14,33], false],[100e+108, [20,33], false],[1e+111, [0,77], false],[4e+111, [2,77], false],[55e+111, [4,77], false],[90e+111, [6,77], false],[210e+111, [10,77], false],[431e+111, [12,77], false],[777e+111, [14,77], false],[500e+114, [20,777], false],[5e+132, [6,33], false],[35e+132, [10,33], false],[177e+132, [12,33], false],[569e+132, [14,33], false],[714e+132, [0,33], false],[976e+132, [2,33], false],[1e+135, [4,33], false],[50e+135, [20,33], false],[1e+144, [0,66], false],[2e+144, [2,66], false],[6e+144, [4,66], false],[9e+144, [6,66], false],[49e+144, [10,66], false],[300e+144, [12,66], false],[700e+144, [14,66], false],[300e+147, [20,55], false],[5e+156, [0,99], false],[14e+156, [2,99], false],[66e+156, [4,99], false],[88e+156, [6,99], false],[250e+156, [10,99], false],[444e+156, [12,99], false],[653e+156, [14,99], false],[1e+162, [20,15], false],[1e+171, [0,77], false],[3e+171, [2,77], false],[9e+171, [4,77], false],[19e+171, [6,77], false],[36e+171, [10,77], false],[99e+171, [12,77], false],[279e+171, [14,77], false],[400e+171, [20,25], false],[1e+183, [0,999], false],[5e+183, [2,999], false],[8e+183, [4,999], false],[10e+183, [6,999], false],[66e+183, [10,999], false],[153e+183, [12,999], false],[372e+183, [14,999], false],[500e+183, [16,999], false],[6e+201, [0,33], false],[25e+201, [2,33], false],[80e+201, [4,33], false],[170e+201, [6,33], false],[439e+201, [10,33], false],[650e+201, [12,33], false],[900e+201, [14,33], false],[25e+204, [16,33], false],[250e+204, [20,9], false],[1e+213, [0,22], false],[11e+213, [2,22], false],[222e+213, [6,22], false],[333e+213, [10,22], false],[444e+213, [12,22], false],[555e+213, [14,22], false],[666e+213, [16,22], false],[1e+216, [20,66], false],[10e+222, [0,44], false],[20e+222, [2,44], false],[40e+222, [6,44], false],[60e+222, [10,44], false],[150e+222, [12,44], false],[356e+222, [14,44], false],[900e+222, [16,44], false],[6e+225, [20,777], false],[1e+228, [0,999], false],[1e+231, [2,999], false],[1e+234, [6,999], false],[1e+237, [10,999], false],[1e+240, [12,999], false],[1e+243, [14,999], false],[1e+246, [16,999], false]];
-    $scope.mars.angelUpgrades = [[100e+9, [20,3], false, false],[100e+15, [20,3], false, false],[1e+21, [0,5], false, false],[2e+21, [2,5], false, false],[4e+21, [4,5], false, false],[8e+21, [6,5], false, false],[16e+21, [8,5], false, false],[32e+21, [10,5], false, false],[64e+21, [12,5], false, false],[128e+21, [14,5], false, false],[256e+21, [16,5], false, false],[1e+24, [20,3], false, false],[1e+30, [0,7], false, false],[3e+30, [2,7], false, false],[9e+30, [4,7], false, false],[27e+30, [6,7], false, false],[100e+30, [8,7], false, false],[200e+30, [10,7], false, false],[400e+30, [12,7], false, false],[600e+30, [14,7], false, false],[900e+30, [16,7], false, false],[1e+36, [20,5], false, false],[1e+42, [20,3], false, false],[3e+45, [0,3], false, false],[12e+45, [2,3], false, false],[29e+45, [4,3], false, false],[136e+45, [6,3], false, false],[311e+45, [8,3], false, false],[555e+45, [10,3], false, false],[789e+45, [12,3], false, false],[25e+48, [14,3], false, false],[100e+48, [16,3], false, false],[100e+54, [20,5], false, false],[1e+60, [0,5], false, false],[5e+60, [2,5], false, false],[45e+60, [4,5], false, false],[66e+60, [6,5], false, false],[99e+60, [8,5], false, false],[175e+60, [10,5], false, false],[280e+60, [12,5], false, false],[420e+60, [14,5], false, false],[700e+60, [16,5], false, false],[5e+63, [20,5], false, false], 6.25 Vigintillion[100e+72, [20,7], false, false],[1e+78, [0,9], false, false],[10e+78, [2,9], false, false],[20e+78, [4,9], false, false],[100e+78, [6,9], false, false],[200e+78, [8,9], false, false],[400e+78, [10,9], false, false],[800e+78, [12,9], false, false],[16e+81, [14,9], false, false],[222e+81, [16,9], false, false],[666e+81, [20,9], false, false],[1e+84, [20,9], false, false],[2e+90, [0,15], false, false],[14e+90, [2,15], false, false],[56e+90, [4,15], false, false],[112e+90, [6,15], false, false],[179e+90, [8,15], false, false],[298e+90, [10,15], false, false],[434e+90, [12,15], false, false],[620e+90, [14,15], false, false],[808e+90, [16,15], false, false],[1e+93, [20,15], false, false],[9e+99, [20,9], false, false],[34e+105, [0,21], false, false],[6e+105, [2,21], false, false],[12e+105, [4,21], false, false],[24e+105, [6,21], false, false],[69e+105, [8,21], false, false],[105e+105, [10,21], false, false],[214e+105, [12,21], false, false],[333e+105, [14,21], false, false],[500e+105, [16,21], false, false],[1e+108, [20,9], false, false],[777e+111, [20,777], false, false]];
-    $scope.mars.managerUpgrades = [];*/
+    $scope.mars.unlocks[9] = [[1, [19,2]],[50, [19,2]],[100, [19,2]],[200, [19,2]],[300, [19,2]],[400, [19,2]],[500, [19,2]],[600, [19,2]],[700, [19,2]],[800, [19,2]],[900, [19,2]],[1000, [19,2]],[1200, [19,2]],[1400, [19,2]],[1600, [19,2]],[1800, [19,2]],[2000, [19,2]],[2500, [19,2]]];
+    $scope.mars.cashUpgrades = [[15000000, [0,33], false],[500000000, [2,33], false],[100e+9, [4,33], false],[19e+12, [6,33], false],[1e+15, [8,33], false],[12e+18, [10,33], false],[9e+21, [12,33], false],[600e+21, [14,33], false],[3e+27, [16,33], false],[1e+36, [4,66], false],[3e+39, [6,66], false],[25e+42, [8,66], false],[130e+45, [10,66], false],[300e+48, [12,66], false],[60e+51, [14,66], false],[10e+54, [16,66], false],[1e+57, [18,33], false],[1e+60, [0,999], false],[700e+60, [2,999], false],[900e+60, [4,99], false],[1e+63, [6,99], false],[5e+66, [8,99], false],[17e+66, [10,99], false],[99e+66, [12,99], false],[231e+66, [14,99], false],[333e+66, [16,99], false],[500e+69, [18,33], false],[123e+72, [0,999], false],[246e+72, [2,999], false],[369e+72, [6,999], false],[2e+75, [10,999], false],[3e+75, [12,999], false],[12e+75, [14,999], false],[23e+75, [16,999], false],[1e+78, [18,66], false],[5e+102, [0,33], false],[125e+102, [2,33], false],[450e+102, [4,33], false],[625e+102, [6,33], false],[3e+105, [10,33], false],[25e+105, [12,33], false],[100e+105, [14,33], false],[100e+108, [18,33], false],[1e+111, [0,77], false],[4e+111, [2,77], false],[55e+111, [4,77], false],[90e+111, [6,77], false],[210e+111, [10,77], false],[431e+111, [12,77], false],[777e+111, [14,77], false],[500e+114, [18,777], false],[5e+132, [6,33], false],[35e+132, [10,33], false],[177e+132, [12,33], false],[569e+132, [14,33], false],[714e+132, [0,33], false],[976e+132, [2,33], false],[1e+135, [4,33], false],[50e+135, [18,33], false],[1e+144, [0,66], false],[2e+144, [2,66], false],[6e+144, [4,66], false],[9e+144, [6,66], false],[49e+144, [10,66], false],[300e+144, [12,66], false],[700e+144, [14,66], false],[300e+147, [18,55], false],[5e+156, [0,99], false],[14e+156, [2,99], false],[66e+156, [4,99], false],[88e+156, [6,99], false],[250e+156, [10,99], false],[444e+156, [12,99], false],[653e+156, [14,99], false],[1e+162, [18,15], false],[1e+171, [0,77], false],[3e+171, [2,77], false],[9e+171, [4,77], false],[19e+171, [6,77], false],[36e+171, [10,77], false],[99e+171, [12,77], false],[279e+171, [14,77], false],[400e+171, [18,25], false],[1e+183, [0,999], false],[5e+183, [2,999], false],[8e+183, [4,999], false],[10e+183, [6,999], false],[66e+183, [10,999], false],[153e+183, [12,999], false],[372e+183, [14,999], false],[500e+183, [16,999], false],[6e+201, [0,33], false],[25e+201, [2,33], false],[80e+201, [4,33], false],[170e+201, [6,33], false],[439e+201, [10,33], false],[650e+201, [12,33], false],[900e+201, [14,33], false],[25e+204, [16,33], false],[250e+204, [18,9], false],[1e+213, [0,22], false],[11e+213, [2,22], false],[222e+213, [6,22], false],[333e+213, [10,22], false],[444e+213, [12,22], false],[555e+213, [14,22], false],[666e+213, [16,22], false],[1e+216, [18,66], false],[10e+222, [0,44], false],[20e+222, [2,44], false],[40e+222, [6,44], false],[60e+222, [10,44], false],[150e+222, [12,44], false],[356e+222, [14,44], false],[900e+222, [16,44], false],[6e+225, [18,777], false],[1e+228, [0,999], false],[1e+231, [2,999], false],[1e+234, [6,999], false],[1e+237, [10,999], false],[1e+240, [12,999], false],[1e+243, [14,999], false],[1e+246, [16,999], false]];
+    $scope.mars.angelUpgrades = [[100e+9, [18,3], false, false],[100e+15, [18,3], false, false],[1e+21, [0,5], false, false],[2e+21, [2,5], false, false],[4e+21, [4,5], false, false],[8e+21, [6,5], false, false],[16e+21, [8,5], false, false],[32e+21, [10,5], false, false],[64e+21, [12,5], false, false],[128e+21, [14,5], false, false],[256e+21, [16,5], false, false],[1e+24, [18,3], false, false],[1e+30, [0,7], false, false],[3e+30, [2,7], false, false],[9e+30, [4,7], false, false],[27e+30, [6,7], false, false],[100e+30, [8,7], false, false],[200e+30, [10,7], false, false],[400e+30, [12,7], false, false],[600e+30, [14,7], false, false],[900e+30, [16,7], false, false],[1e+36, [18,5], false, false],[1e+42, [18,3], false, false],[3e+45, [0,3], false, false],[12e+45, [2,3], false, false],[29e+45, [4,3], false, false],[136e+45, [6,3], false, false],[311e+45, [8,3], false, false],[555e+45, [10,3], false, false],[789e+45, [12,3], false, false],[25e+48, [14,3], false, false],[100e+48, [16,3], false, false],[100e+54, [18,5], false, false],[1e+60, [0,5], false, false],[5e+60, [2,5], false, false],[45e+60, [4,5], false, false],[66e+60, [6,5], false, false],[99e+60, [8,5], false, false],[175e+60, [10,5], false, false],[280e+60, [12,5], false, false],[420e+60, [14,5], false, false],[700e+60, [16,5], false, false],[5e+63, [18,5], false, false],[100e+72, [18,7], false, false],[1e+78, [0,9], false, false],[10e+78, [2,9], false, false],[20e+78, [4,9], false, false],[100e+78, [6,9], false, false],[200e+78, [8,9], false, false],[400e+78, [10,9], false, false],[800e+78, [12,9], false, false],[16e+81, [14,9], false, false],[222e+81, [16,9], false, false],[666e+81, [18,9], false, false],[1e+84, [18,9], false, false],[2e+90, [0,15], false, false],[14e+90, [2,15], false, false],[56e+90, [4,15], false, false],[112e+90, [6,15], false, false],[179e+90, [8,15], false, false],[298e+90, [10,15], false, false],[434e+90, [12,15], false, false],[620e+90, [14,15], false, false],[808e+90, [16,15], false, false],[1e+93, [18,15], false, false],[9e+99, [18,9], false, false],[34e+105, [0,21], false, false],[6e+105, [2,21], false, false],[12e+105, [4,21], false, false],[24e+105, [6,21], false, false],[69e+105, [8,21], false, false],[105e+105, [10,21], false, false],[214e+105, [12,21], false, false],[333e+105, [14,21], false, false],[500e+105, [16,21], false, false],[1e+108, [18,9], false, false],[777e+111, [18,777], false, false]];
+    $scope.mars.managerUpgrades = [];
     $scope.halloween.unlocks = [];
     for (var i = 0; i < 11; i++) {
       $scope.halloween.unlocks.push([]);
