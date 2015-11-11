@@ -99,6 +99,11 @@ advApp.controller('advController', ['$document', '$filter', '$scope', function($
       }
       reader.readAsText(file);
     });
+
+    var saved = localStorage.getItem('planets');
+    if (saved) {
+      loadExportedJson(saved);
+    }
   });
 
   function loadExportedJson(str) {
@@ -296,6 +301,7 @@ advApp.controller('advController', ['$document', '$filter', '$scope', function($
     calcState(loc);
     //calcAngels(loc);
     calcRecommendations(loc);
+    localStorage.setItem('planets', getJsonForExport());
   };
 
   function calcAngels(loc) {
