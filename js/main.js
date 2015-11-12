@@ -93,58 +93,67 @@ advApp.controller('advController', ['$document', '$filter', '$scope', function($
     var fileInput = document.getElementById('fileInput');
     fileInput.addEventListener('change', function(e) {
       var file = fileInput.files[0],
-      reader = new FileReader(),
-      i = 0, j = 0, k = 0, obj = null,
-      loadArr = ['earth', 'moon', 'halloween', 'mars'];
+      reader = new FileReader();
       reader.onload = function(e) {
-        obj = JSON.parse(e.target.result);
-        for (k in loadArr) {
-          if (obj.hasOwnProperty(loadArr[k])) {
-            $scope.fullyResetPlanet($scope[loadArr[k]]);
-            for (i in obj[loadArr[k]].levels) {
-              if (obj[loadArr[k]].levels.hasOwnProperty(i)) {
-                for (j = 0; j < $scope[loadArr[k]].investments.length; j++) {
-                  if ($scope[loadArr[k]].investments[j][0] === i) {
-                    $scope[loadArr[k]].investments[j][1] = obj[loadArr[k]].levels[i];
-                    break;
-                  }
-                }
-              }
-            }
-            $scope[loadArr[k]].numAngels = obj[loadArr[k]].numAngels;
-            $scope[loadArr[k]].viewNumAngels = $scope[loadArr[k]].numAngels;
-            for (i = 0; i < obj[loadArr[k]].upgradeIndexUpTo; i++) {
-              $scope[loadArr[k]].cashUpgrades[i][$scope[loadArr[k]].cashUpgrades[i].length - 1] = true;
-            }
-            for (i = 0; i < obj[loadArr[k]].angelUpgradeIndexUpTo; i++) {
-              $scope[loadArr[k]].angelUpgrades[i][$scope[loadArr[k]].angelUpgrades[i].length - 1] = true;
-            }
-            for (i = 0; i < obj[loadArr[k]].upgradeIndexBonus.length; i++) {
-              $scope[loadArr[k]].cashUpgrades[obj[loadArr[k]].upgradeIndexBonus[i]][$scope[loadArr[k]].cashUpgrades[obj[loadArr[k]].upgradeIndexBonus[i]].length - 1] = true;
-            }
-            for (i = 0; i < obj[loadArr[k]].angelUpgradeIndexBonus.length; i++) {
-              $scope[loadArr[k]].angelUpgrades[obj[loadArr[k]].angelUpgradeIndexBonus[i]][$scope[loadArr[k]].angelUpgrades[obj[loadArr[k]].angelUpgradeIndexBonus[i]].length - 1] = true;
-            }
-            for (i = 0; i < obj[loadArr[k]].managersBought.length; i++) {
-              $scope[loadArr[k]].managerUpgrades[Math.floor(obj[loadArr[k]].managersBought[i] / 2)][obj[loadArr[k]].managersBought[i] % 2][1] = true;
-            }
-            $scope[loadArr[k]].triples = obj[loadArr[k]].triples;
-            $scope[loadArr[k]].flux = obj[loadArr[k]].flux;
-            $scope[loadArr[k]].bonusAngelEffectiveness = obj[loadArr[k]].bonusAngelEffectiveness;
-            $scope[loadArr[k]].bonusMultiplier = obj[loadArr[k]].bonusMultiplier;
-            if (angular.isDefined(obj[loadArr[k]].megaTicket)) {
-              for (i = 0; i < obj[loadArr[k]].megaTicket.length; i++) {
-                $scope[loadArr[k]].investments[obj[loadArr[k]].megaTicket[i]][2] = true;
-              }
-            }
-          }
-          $scope.calc($scope[loadArr[k]]);
-        }
-        $scope.$digest();
+        loadExportedJson(e.target.result);
       }
       reader.readAsText(file);
     });
+
+    var saved = localStorage.getItem('planets');
+    if (saved) {
+      loadExportedJson(saved);
+    }
   });
+
+  function loadExportedJson(str) {
+    var loadArr = ['earth', 'moon', 'halloween', 'mars'],
+        i = 0, j = 0, k = 0,
+        obj = JSON.parse(str);
+    for (k in loadArr) {
+      if (obj.hasOwnProperty(loadArr[k])) {
+        $scope.fullyResetPlanet($scope[loadArr[k]]);
+        for (i in obj[loadArr[k]].levels) {
+          if (obj[loadArr[k]].levels.hasOwnProperty(i)) {
+            for (j = 0; j < $scope[loadArr[k]].investments.length; j++) {
+              if ($scope[loadArr[k]].investments[j][0] === i) {
+                $scope[loadArr[k]].investments[j][1] = obj[loadArr[k]].levels[i];
+                break;
+              }
+            }
+          }
+        }
+        $scope[loadArr[k]].numAngels = obj[loadArr[k]].numAngels;
+        $scope[loadArr[k]].viewNumAngels = $scope[loadArr[k]].numAngels;
+        for (i = 0; i < obj[loadArr[k]].upgradeIndexUpTo; i++) {
+          $scope[loadArr[k]].cashUpgrades[i][$scope[loadArr[k]].cashUpgrades[i].length - 1] = true;
+        }
+        for (i = 0; i < obj[loadArr[k]].angelUpgradeIndexUpTo; i++) {
+          $scope[loadArr[k]].angelUpgrades[i][$scope[loadArr[k]].angelUpgrades[i].length - 1] = true;
+        }
+        for (i = 0; i < obj[loadArr[k]].upgradeIndexBonus.length; i++) {
+          $scope[loadArr[k]].cashUpgrades[obj[loadArr[k]].upgradeIndexBonus[i]][$scope[loadArr[k]].cashUpgrades[obj[loadArr[k]].upgradeIndexBonus[i]].length - 1] = true;
+        }
+        for (i = 0; i < obj[loadArr[k]].angelUpgradeIndexBonus.length; i++) {
+          $scope[loadArr[k]].angelUpgrades[obj[loadArr[k]].angelUpgradeIndexBonus[i]][$scope[loadArr[k]].angelUpgrades[obj[loadArr[k]].angelUpgradeIndexBonus[i]].length - 1] = true;
+        }
+        for (i = 0; i < obj[loadArr[k]].managersBought.length; i++) {
+          $scope[loadArr[k]].managerUpgrades[Math.floor(obj[loadArr[k]].managersBought[i] / 2)][obj[loadArr[k]].managersBought[i] % 2][1] = true;
+        }
+        $scope[loadArr[k]].triples = obj[loadArr[k]].triples;
+        $scope[loadArr[k]].flux = obj[loadArr[k]].flux;
+        $scope[loadArr[k]].bonusAngelEffectiveness = obj[loadArr[k]].bonusAngelEffectiveness;
+        $scope[loadArr[k]].bonusMultiplier = obj[loadArr[k]].bonusMultiplier;
+        if (angular.isDefined(obj[loadArr[k]].megaTicket)) {
+          for (i = 0; i < obj[loadArr[k]].megaTicket.length; i++) {
+            $scope[loadArr[k]].investments[obj[loadArr[k]].megaTicket[i]][2] = true;
+          }
+        }
+      }
+      $scope.calc($scope[loadArr[k]]);
+    }
+    $scope.$digest();
+  }
 
   $scope.apply = function(loc) {
     if (loc.rec[0] === 'level') {
@@ -292,6 +301,7 @@ advApp.controller('advController', ['$document', '$filter', '$scope', function($
     calcState(loc);
     //calcAngels(loc);
     calcRecommendations(loc);
+    localStorage.setItem('planets', getJsonForExport());
   };
 
   function calcAngels(loc) {
@@ -588,7 +598,7 @@ advApp.controller('advController', ['$document', '$filter', '$scope', function($
   }
 
   $scope.export = function() {
-    var blob = new Blob(['{' + formatState($scope.earth) + ',\r\n' + formatState($scope.moon) + ',\r\n' + formatState($scope.halloween) + ',\r\n' + formatState($scope.mars) + '}'], {type: "application/json"});
+    var blob = new Blob([getJsonForExport()], {type: "application/json"});
     var title = "AdvCapCalc.json";
     if (window.navigator.msSaveOrOpenBlob) {
       navigator.msSaveBlob(blob, title);
@@ -601,6 +611,10 @@ advApp.controller('advController', ['$document', '$filter', '$scope', function($
       downloadLink.remove();
     }
   };
+
+  function getJsonForExport() {
+    return '{' + formatState($scope.earth) + ',\r\n' + formatState($scope.moon) + ',\r\n' + formatState($scope.halloween) + ',\r\n' + formatState($scope.mars) + '}';
+  }
 
   function formatState(loc) {
     var string = '"' + loc.name + '": {\r\n  "levels": {\r\n',
