@@ -78,6 +78,7 @@ advApp.controller('advController', ['$document', '$filter', '$scope', function($
   $scope.compare = false;
   $scope.earth = {};
   $scope.fillBefore = [false, false];
+  $scope.selectAll = [false, false, false, false];
   $scope.filterOpen = false;
   $scope.filterTime = {'days': null, 'hours': null, 'minutes': null};
   $scope.halloween = {};
@@ -693,7 +694,7 @@ advApp.controller('advController', ['$document', '$filter', '$scope', function($
     string += '\r\n  ]\r\n}';
     return string;
   };
-  
+
   $scope.fullyResetPlanet = function(loc) {
     var i = 0;
     for (; i < loc.cashUpgrades.length; i++) {
@@ -828,6 +829,68 @@ advApp.controller('advController', ['$document', '$filter', '$scope', function($
 
   $scope.isMoon = function() {
     return $scope.ref === $scope.moon;
+  };
+
+  $scope.resetPlanet = function(loc) {
+    var i = 0;
+    for (; i < loc.cashUpgrades.length; i++) {
+      loc.cashUpgrades[i][loc.cashUpgrades[i].length - 1] = false;
+    }
+    for (i = 0; i < loc.angelUpgrades.length; i++) {
+      loc.angelUpgrades[i][loc.angelUpgrades[i].length - 1] = false;
+    }
+    for (i = 0; i < loc.managerUpgrades.length; i++) {
+      loc.managerUpgrades[i][0][loc.managerUpgrades[i][0].length - 1] = false;
+      if (angular.isDefined(loc.managerUpgrades[i][1])) {
+        loc.managerUpgrades[i][1][loc.managerUpgrades[i][1].length - 1] = false;
+      }
+    }
+    loc.angelEffectiveness = 0.02;
+    loc.angelExclamation = false;
+    loc.bonusAngelEffectiveness = 0;
+    loc.bonusMultiplier = 0;
+    for (i = 0; i < loc.investments.length; i++) {
+      if (i === 0) {
+        loc.investments[i][1] = 1;
+      } else {
+        loc.investments[i][1] = 0;
+      }
+    }
+    loc.rec = null;
+    loc.recTable = [];
+    loc.recommendation = '';
+    loc.totalMoneyPerSecond = 0;
+    loc.upgradeCosts = [[0, 0, 0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0, 0, 0]];
+    $scope.calc(loc);
+  };
+
+  $scope.selectedAll = function(loc, index) {
+    var i = 0;
+    if (index === 0) {
+      for (i = 0; i < loc.investments.length; i++) {
+        loc.investments[i][2] = $scope.selectAll[0];
+      }
+    } else if (index === 1) {
+      for (i = 0; i < loc.managerUpgrades.length; i++) {
+        loc.managerUpgrades[i][0][1] = $scope.selectAll[1];
+/*        if ($scope.selectAll[2]) {
+          $scope.selectAll[2] = false;
+        }
+        loc.managerUpgrades[i][1][1] = $scope.selectAll[2];*/
+      }
+    } else if (index === 2) {
+      for (i = 0; i < loc.managerUpgrades.length; i++) {
+        loc.managerUpgrades[i][1][1] = $scope.selectAll[2];
+/*        if ($scope.selectAll[1]) {
+          $scope.selectAll[1] = false;
+        }
+        loc.managerUpgrades[i][0][1] = $scope.selectAll[1];*/
+      }
+    } else if (index === 3) {
+      for (i = 0; i < loc.managerUpgrades.length; i++) {
+        loc.managerUpgrades[i][0][1] = $scope.selectAll[3];
+      }
+    }
   };
 
   $scope.setEarth = function() {
