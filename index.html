@@ -38,7 +38,8 @@
         <div>
           <input type="number" class="form-control" min="0" data-ng-model="ref.viewNumAngels" data-ng-blur="updateAngels()" step="0.001" required></input> <input type="text" class="form-control illions" data-ng-model="ref.illions" typeahead="ill for ill in illionsArray | filter:$viewValue | limitTo:8" placeholder="*illions" data-ng-blur="updateAngels()"></input><label> # Angels</label>
           <label class="checkbox"><input type="checkbox" class="form-control" data-ng-model="raw"></input> Raw Values</label>
-          <button type="button" class="btn btn-primary" data-ng-click="fullyResetPlanet(ref)">Reset Planet</button>
+          <button type="button" class="btn btn-primary" data-ng-click="resetPlanet(ref)">Reset Planet</button>
+          <button type="button" class="btn btn-primary" data-ng-click="fullyResetPlanet(ref)">Hard Reset Planet</button>
         </div>
         <div>
           <table class="table table-striped table-hover table-bordered space_top">
@@ -46,7 +47,7 @@
               <tr>
                 <th>Type</th>
                 <th>Number</th>
-                <th>Mega Ticket</th>
+                <th><input type="checkbox" class="form-control" data-ng-model="selectAll[0]" data-ng-change="selectedAll(ref, 0)"> Mega Ticket</th>
                 <th>$ / Cycle</th>
                 <th>Cycle Time</th>
                 <th>$ / Second</th>
@@ -133,9 +134,9 @@
                 <thead>
                   <tr>
                     <th>Business</th>
-                    <th data-ng-show="isEarth()">10% off</th>
-                    <th data-ng-show="isEarth()">99.999% off</th>
-                    <th data-ng-show="isMoon()">25% off</th>
+                    <th data-ng-show="isEarth()"><input type="checkbox" class="form-control" data-ng-model="selectAll[1]" data-ng-change="selectedAll(ref, 1)"> 10% off</th>
+                    <th data-ng-show="isEarth()"><input type="checkbox" class="form-control" data-ng-model="selectAll[2]" data-ng-change="selectedAll(ref, 2)"> 99.999% off</th>
+                    <th data-ng-show="isMoon()"><input type="checkbox" class="form-control" data-ng-model="selectAll[3]" data-ng-change="selectedAll(ref, 3)"> 25% off</th>
                   </tr>
                 </thead>
                 <tbody>
