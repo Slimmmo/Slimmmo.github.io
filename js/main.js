@@ -108,7 +108,7 @@ advApp.controller('advController', ['$document', '$filter', '$scope', function($
   });
 
   function loadExportedJson(str) {
-    var loadArr = ['earth', 'moon', 'friday', 'mars'],
+    var loadArr = ['earth', 'moon'/*, 'friday'*/, 'mars'],
         i = 0, j = 0, k = 0,
         obj = JSON.parse(str);
     for (k in loadArr) {
