@@ -141,8 +141,8 @@ advApp.controller('advController', ['$document', '$filter', '$scope', function($
         for (i = 0; i < obj[loadArr[k]].managersBought.length; i++) {
           $scope[loadArr[k]].managerUpgrades[Math.floor(obj[loadArr[k]].managersBought[i] / 2)][obj[loadArr[k]].managersBought[i] % 2][1] = true;
         }
-        $scope[loadArr[k]].noSingles = obj[loadArr[k]].noSingles;
-        $scope[loadArr[k]].noTens = obj[loadArr[k]].noTens;
+        $scope[loadArr[k]].noSingles = obj[loadArr[k]].noSingles || false;
+        $scope[loadArr[k]].noTens = obj[loadArr[k]].noTens || false;
         $scope[loadArr[k]].triples = obj[loadArr[k]].triples;
         $scope[loadArr[k]].flux = obj[loadArr[k]].flux;
         $scope[loadArr[k]].bonusAngelEffectiveness = obj[loadArr[k]].bonusAngelEffectiveness;
