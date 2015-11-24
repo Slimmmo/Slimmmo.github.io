@@ -78,7 +78,6 @@ advApp.controller('advController', ['$document', '$filter', '$scope', function($
   $scope.compare = false;
   $scope.earth = {};
   $scope.fillBefore = [false, false];
-  $scope.selectAll = [false, false, false, false];
   $scope.filterOpen = false;
   $scope.filterTime = {'days': null, 'hours': null, 'minutes': null};
   $scope.halloween = {};
@@ -88,6 +87,7 @@ advApp.controller('advController', ['$document', '$filter', '$scope', function($
   $scope.raw = false;
   $scope.ref = $scope.earth;
   $scope.reverse = true;
+  $scope.selectAll = [false, false, false, false];
   $scope.sortIndex = 2;
 
   angular.element(document).ready(function() {
@@ -141,6 +141,8 @@ advApp.controller('advController', ['$document', '$filter', '$scope', function($
         for (i = 0; i < obj[loadArr[k]].managersBought.length; i++) {
           $scope[loadArr[k]].managerUpgrades[Math.floor(obj[loadArr[k]].managersBought[i] / 2)][obj[loadArr[k]].managersBought[i] % 2][1] = true;
         }
+        $scope[loadArr[k]].noSingles = obj[loadArr[k]].noSingles || false;
+        $scope[loadArr[k]].noTens = obj[loadArr[k]].noTens || false;
         $scope[loadArr[k]].triples = obj[loadArr[k]].triples;
         $scope[loadArr[k]].flux = obj[loadArr[k]].flux;
         $scope[loadArr[k]].bonusAngelEffectiveness = obj[loadArr[k]].bonusAngelEffectiveness;
@@ -675,7 +677,8 @@ advApp.controller('advController', ['$document', '$filter', '$scope', function($
         }
       }
     }
-    string += '\r\n  ],\r\n  "triples": ' + loc.triples + ',\r\n  "flux": ' + loc.flux + ',\r\n  "bonusAngelEffectiveness": ' + loc.bonusAngelEffectiveness + ',\r\n  "bonusMultiplier": ' + loc.bonusMultiplier + ',\r\n  "megaTicket": [';
+    string += '\r\n  ], \r\n  "noSingles": ' + loc.noSingles + ',\r\n  "noTens": ' + loc.noTens;
+    string += ',\r\n  "triples": ' + loc.triples + ',\r\n  "flux": ' + loc.flux + ',\r\n  "bonusAngelEffectiveness": ' + loc.bonusAngelEffectiveness + ',\r\n  "bonusMultiplier": ' + loc.bonusMultiplier + ',\r\n  "megaTicket": [';
     first = true;
     for (i = 0; i < loc.investments.length; i++) {
       if (loc.investments[i][2] === true) {
