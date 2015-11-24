@@ -1,0 +1,30 @@
+$scope.halloween.baseCost = [6, 71, 640, 20680, 344160, 1492920, 89133040, 149084800, 5758901760, 66666666666];
+$scope.halloween.basePower = [1.02, 1.04, 1.08, 1.16, 1.32, 1.64, 2.28, 3.56, 6.12, 12.24];
+$scope.halloween.baseProfit = [.75, 20, 180, 1440, 17280, 207360, 2488325, 29860000, 358318000, 6666500000];
+$scope.halloween.baseSpeed = [2, 5, 9, 14, 20, 56, 84, 144, 328, 666];
+$scope.halloween.investments = [
+  ['Texas Raisins', 1, false, 0, 0, 0, 0],
+  ['Dandy Candy', 0, false, 0, 0, 0, 0],
+  ['Ice Screams', 0, false, 0, 0, 0, 0],
+  ['Snack O\'Lanterns', 0, false, 0, 0, 0, 0],
+  ['Shredded Treat', 0, false, 0, 0, 0, 0],
+  ['Creepy Dollies', 0, false, 0, 0, 0, 0],
+  ['Korn Maizes', 0, false, 0, 0, 0, 0],
+  ['Brains', 0, false, 0, 0, 0, 0],
+  ['Treat Baskets', 0, false, 0, 0, 0, 0],
+  ['Full Sized Choco-Bar', 0, false, 0, 0, 0, 0]
+];
+$scope.halloween.unlocks[0] = [[111, [0,66]],[1111, [0,66]],[2222, [0,66]],[3333, [0,66]],[4444, [0,66]],[5555, [0,66]],[6666, [0,66]]];
+$scope.halloween.unlocks[1] = [[100, [2,66]],[750, [2,66]],[1500, [2,666]],[3000, [2,666]]];
+$scope.halloween.unlocks[2] = [[60, [4,66]],[600, [4,666]],[1200, [4,666]],[1800, [4,666]]];
+$scope.halloween.unlocks[3] = [[50, [6,66]],[200, [6,666]],[500, [6,666]],[1000, [6,66]]];
+$scope.halloween.unlocks[4] = [[25, [8,66]],[100, [8,66]],[250, [8,666]],[500, [8,66]]];
+$scope.halloween.unlocks[5] = [[15, [10,66]],[75, [10,66]],[150, [10,66]],[300, [10,666]]];
+$scope.halloween.unlocks[6] = [[10, [12,66]],[25, [12,66]],[75, [12,66]],[125, [12,66]],[175, [12,666]]];
+$scope.halloween.unlocks[7] = [[5, [14,66]],[30, [14,66]],[60, [14,66]],[120, [14,666]]];
+$scope.halloween.unlocks[8] = [[5, [16,66]],[25, [16,66]],[50, [16,66]],[75, [16,666]]];
+$scope.halloween.unlocks[9] = [[3, [18,66]],[18, [18,66]],[32, [18,66]],[50, [18,666]]];
+$scope.halloween.unlocks[10] = [[1, [21,2]],[5, [21,2]],[10, [21,2]],[15, [21,2]],[25, [21,2]],[35, [21,2]],[45, [21,2]]];
+$scope.halloween.cashUpgrades = [[333333, [0,6], false],[999999, [2,6], false],[3333333, [4,6], false],[9999999, [6,6], false],[333333333, [8,6], false],[999999999, [10,6], false],[33.333e+9, [12,6], false],[99.999e+9, [14,6], false],[3.333e+12, [16,6], false],[9.999e+12, [18,6], false],[66.666e+12, [20,9], false],[600e+12, [0,6], false],[1.2e+15, [2,6], false],[2.4e+15, [4,6], false],[4.8e+15, [6,6], false],[9.6e+15, [8,6], false],[22.2e+15, [10,6], false],[44.4e+15, [12,6], false],[66.6e+15, [14,6], false],[500e+15, [16,6], false],[2.5e+18, [18,6], false],[10e+18, [20,9], false],[66.6e+21, [0,6], false],[99.9e+21, [2,6], false],[200e+21, [4,6], false],[800e+21, [6,6], false],[3.2e+24, [8,6], false],[8.8e+24, [10,6], false],[15.1e+24, [12,6], false],[32.5e+24, [14,6], false],[56.7e+24, [16,6], false],[75e+24, [18,6], false],[100e+24, [20,9], false],[400e+27, [0,6], false],[1.6e+30, [2,6], false],[6.4e+30, [4,6], false],[12.8e+30, [6,6], false],[25e+30, [8,6], false],[50e+30, [10,6], false],[88.8e+30, [12,6], false],[300e+30, [14,6], false],[2e+33, [16,6], false],[10e+33, [18,6], false],[666.666e+33, [20,9], false],[1e+36, [0,6], false],[2e+36, [2,6], false],[3e+36, [4,6], false],[4e+36, [6,6], false],[5e+36, [8,6], false],[6e+36, [10,6], false],[7e+36, [12,6], false],[8e+36, [14,6], false],[9e+36, [16,6], false],[10e+36, [18,6], false],[100e+36, [20,9], false],[3.33e+39, [0,6], false],[6.66e+39, [2,6], false],[9.99e+39, [4,6], false],[24e+39, [6,6], false],[48e+39, [8,6], false],[64e+39, [10,6], false],[128e+39, [12,6], false],[200e+39, [14,6], false],[355e+39, [16,6], false],[500e+39, [18,6], false],[1e+42, [20,9], false],[6.666e+45, [0,66], false],[66.666e+45, [2,66], false],[666.666e+45, [4,66], false],[6.666e+48, [6,66], false],[66.666e+48, [8,66], false],[666.666e+48, [10,66], false],[6.666e+51, [12,66], false],[66.666e+51, [14,66], false],[666.666e+51, [16,66], false],[6.666e+54, [18,66], false],[66.666e+54, [20,9], false]];
+$scope.halloween.angelUpgrades = [[777777, [0,777], false, false],[7e+6, [2,777], false, false],[77e+6, [4,777], false, false],[777e+6, [6,777], false, false],[7e+9, [8,777], false, false],[77e+9, [10,777], false, false],[777e+9, [12,777], false, false],[7e+12, [14,777], false, false],[77e+12, [16,777], false, false],[777e+12, [18,777], false, false],[77e+15, [20,7], false, false],[77e+15, [30,111], false, false],[77e+15, [31,99], false, false],[77e+15, [32,88], false, false],[77e+15, [33,66], false, false],[77e+15, [34,44], false, false],[77e+15, [35,33], false, false],[77e+15, [36,22], false, false],[77e+15, [37,11], false, false],[77e+15, [38,6], false, false],[77e+15, [39,2], false, false],[77e+15, [0,7], false, false],[777e+15, [2,7], false, false],[7e+18, [4,7], false, false],[77e+18, [6,7], false, false],[777e+18, [8,7], false, false],[7e+21, [10,7], false, false],[77e+21, [12,7], false, false],[777e+21, [14,7], false, false],[7e+24, [16,7], false, false],[77e+24, [18,7], false, false],[7e+27, [20,7], false, false]];
+$scope.halloween.managerUpgrades = [];
