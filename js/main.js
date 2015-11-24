@@ -1160,8 +1160,8 @@ advApp.controller('advController', ['$document', '$filter', '$scope', function($
       $scope.friday.unlocks.push([]);
     }
     $scope.friday.unlocks[0] = [];
-    $scope.friday.cashUpgrades = []];
-    $scope.friday.angelUpgrades = []];
+    $scope.friday.cashUpgrades = [];
+    $scope.friday.angelUpgrades = [];
     $scope.friday.managerUpgrades = [];
   };
   loadDefaults();
