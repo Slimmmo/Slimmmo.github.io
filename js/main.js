@@ -1159,7 +1159,7 @@ advApp.controller('advController', ['$document', '$filter', '$scope', function($
     for (var i = 0; i < 11; i++) {
       $scope.friday.unlocks.push([]);
     }
-    $scope.friday.unlocks[0] = [];
+    //$scope.friday.unlocks[0] = [];
     $scope.friday.cashUpgrades = [];
     $scope.friday.angelUpgrades = [];
     $scope.friday.managerUpgrades = [];
