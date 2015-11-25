@@ -79,7 +79,7 @@ advApp.controller('advController', ['$document', '$filter', '$scope', function($
   $scope.earth = {};
   $scope.fillBefore = [false, false];
   $scope.filterOpen = false;
-  $scope.filterTime = {'days': null, 'hours': null, 'minutes': null};
+  $scope.filterTime = {'days': null, 'hours': null, 'minutes': null, 'percentage': null};
   $scope.friday = {};
   $scope.illionsArray = illionsArr.slice(1);
   $scope.mars = {};
@@ -336,7 +336,7 @@ advApp.controller('advController', ['$document', '$filter', '$scope', function($
     tempPlanet = JSON.parse(JSON.stringify(loc)),
     max = 0,
     maxObj = [0, 0],
-    tempUnlock = null, tempUnlockTime = null,
+    tempUnlock = null, tempUnlockTime = null, tempPercentageIncrease = null,
     upgradeScore = 0;
     loc.recTable = [];
     if (!loc.noSingles) {
@@ -370,13 +370,14 @@ advApp.controller('advController', ['$document', '$filter', '$scope', function($
         calcState(tempPlanet);
         tempUnlock = calcUnlockCost(loc, i, loc.investments[i][1], inc[j]);
         tempUnlockTime = tempUnlock / loc.totalMoneyPerSecond;
-        if (loc.filterTime === null || loc.filterTime > tempUnlockTime) {
+        tempPercentageIncrease = (tempPlanet.totalMoneyPerSecond - loc.totalMoneyPerSecond) * 100 / loc.totalMoneyPerSecond;
+        if ((loc.filterTime === null || loc.filterTime > tempUnlockTime) && ($scope.filterTime.percentage === null || $scope.filterTime.percentage < tempPercentageIncrease)) {
           upgradeScore = calcUpgradeScore(tempPlanet, loc, tempUnlockTime);
           if (upgradeScore > max) {
             max = upgradeScore;
             maxObj = ['level', i, tempPlanet.investments[i][1]];
           }
-          loc.recTable.push([loc.investments[i][0], tempPlanet.investments[i][1], upgradeScore, tempUnlock, tempUnlockTime, tempPlanet.totalMoneyPerSecond - loc.totalMoneyPerSecond, (tempPlanet.totalMoneyPerSecond - loc.totalMoneyPerSecond) * 100 / loc.totalMoneyPerSecond, null]);
+          loc.recTable.push([loc.investments[i][0], tempPlanet.investments[i][1], upgradeScore, tempUnlock, tempUnlockTime, tempPlanet.totalMoneyPerSecond - loc.totalMoneyPerSecond, tempPercentageIncrease, null]);
         }
       }
     }
@@ -390,7 +391,8 @@ advApp.controller('advController', ['$document', '$filter', '$scope', function($
         tempPlanet.cashUpgrades[j][tempPlanet.cashUpgrades[j].length - 1] = true;
         calcState(tempPlanet);
         tempUnlockTime = loc.cashUpgrades[j][0] / loc.totalMoneyPerSecond;
-        if (loc.filterTime === null || loc.filterTime > tempUnlockTime) {
+        tempPercentageIncrease = (tempPlanet.totalMoneyPerSecond - loc.totalMoneyPerSecond) * 100 / loc.totalMoneyPerSecond;
+        if ((loc.filterTime === null || loc.filterTime > tempUnlockTime) && ($scope.filterTime.percentage === null || $scope.filterTime.percentage < tempPercentageIncrease)) {
           upgradeScore = calcUpgradeScore(tempPlanet, loc, tempUnlockTime);
           if (upgradeScore > max) {
             max = upgradeScore;
@@ -424,7 +426,8 @@ advApp.controller('advController', ['$document', '$filter', '$scope', function($
     }
     calcState(tempPlanet);
     tempUnlockTime = tempUnlock / loc.totalMoneyPerSecond;
-    if (loc.filterTime === null || loc.filterTime > tempUnlockTime) {
+    tempPercentageIncrease = (tempPlanet.totalMoneyPerSecond - loc.totalMoneyPerSecond) * 100 / loc.totalMoneyPerSecond;
+    if ((loc.filterTime === null || loc.filterTime > tempUnlockTime) && ($scope.filterTime.percentage === null || $scope.filterTime.percentage < tempPercentageIncrease)) {
       upgradeScore = calcUpgradeScore(tempPlanet, loc, tempUnlockTime);
       if (upgradeScore > max) {
         max = upgradeScore;
@@ -585,6 +588,14 @@ advApp.controller('advController', ['$document', '$filter', '$scope', function($
     if ($scope.filterTime.minutes !== null) {
       if ($scope.filterTime.minutes > 0) {
         $scope.filterTime.minutes--;
+      }
+    }
+  };
+
+  $scope.decrementPercentage = function(loc) {
+    if ($scope.filterTime.percentage !== null) {
+      if ($scope.filterTime.percentage > 0) {
+        $scope.filterTime.percentage--;
       }
     }
   };
@@ -804,6 +815,14 @@ advApp.controller('advController', ['$document', '$filter', '$scope', function($
       $scope.filterTime.minutes++;
     } else {
       $scope.filterTime.minutes = 1;
+    }
+  };
+
+  $scope.incrementPercentage = function(loc) {
+    if ($scope.filterTime.percentage !== null) {
+      $scope.filterTime.percentage++;
+    } else {
+      $scope.filterTime.percentage = 1;
     }
   };
 

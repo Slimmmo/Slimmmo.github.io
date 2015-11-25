@@ -212,6 +212,22 @@
                 <td><a ng-click="decrementMinutes(ref)" class="btn btn-link"><span class="fa fa-chevron-down"></span></a></td>
               </tr>
             </table>
+            <div>
+              Don't show upgrades that have % Increase in $ / Second less than X
+            </div>
+            <table>
+              <tr class="text-center">
+                <td><a ng-click="incrementPercentage(ref)" class="btn btn-link"><span class="fa fa-chevron-up"></span></a></td>
+              </tr>
+              <tr class="form-group">
+				<td class="form-group">
+                  <input style="width:50px;" data-ng-model="filterTime.percentage" class="form-control text-center" type="text" pattern="[0-9]*" placeholder="%">
+                </td>
+              </tr>
+              <tr class="text-center">
+                <td><a ng-click="decrementPercentage(ref)" class="btn btn-link"><span class="fa fa-chevron-down"></span></a></td>
+              </tr>
+            </table>
           </accordion-group>
         </accordion>
         <button type="button" class="btn btn-primary" data-ng-click="calc(ref)">Calculate</button>
