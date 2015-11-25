@@ -1074,18 +1074,25 @@ advApp.controller('advController', ['$document', '$filter', '$scope', function($
     $scope.mars.viewNumAngels = 0;
     $scope.friday.angelEffectiveness = 0.02;
     $scope.friday.angelExclamation = false;
-    $scope.friday.baseCost = [];
-    $scope.friday.basePower = [];
-    $scope.friday.baseProfit = [];
-    $scope.friday.baseSpeed = [];
+    $scope.friday.baseCost = [17.5, 40, 67.5, 100, 137.5, 360, 700, 1120, 2250];
+    $scope.friday.basePower = [1.75, 2, 2.25, 2.5, 2.75, 3, 3.5, 4, 4.5];
+    $scope.friday.baseProfit = [1, 3, 5, 7, 21, 60, 145, 270, 525];
+    $scope.friday.baseSpeed = [5, 8, 11, 14, 17, 20, 35, 45, 60];
     $scope.friday.bonusAngelEffectiveness = 0;
     $scope.friday.bonusMultiplier = 0;
     $scope.friday.filterTime = null;
     $scope.friday.flux = 0;
     $scope.friday.illions = '';
     $scope.friday.investments = [
-      ['', 1, false, 0, 0, 0, 0],
-      ['', 0, false, 0, 0, 0, 0]
+      ['Door Crashers', 1, false, 0, 0, 0, 0],
+      ['Power Tools', 1, false, 0, 0, 0, 0],
+      ['Waffle Irons', 1, false, 0, 0, 0, 0],
+      ['Blu-Ray Players', 1, false, 0, 0, 0, 0],
+      ['Coupon Clippers', 1, false, 0, 0, 0, 0],
+      ['Microwaves', 1, false, 0, 0, 0, 0],
+      ['Kitchen Gadgets', 1, false, 0, 0, 0, 0],
+      ['Trample-ines', 1, false, 0, 0, 0, 0],
+      ['Sucky Vacuums', 1, false, 0, 0, 0, 0]
     ];
     $scope.friday.name = 'friday';
     $scope.friday.noSingles = false;
@@ -1156,13 +1163,21 @@ advApp.controller('advController', ['$document', '$filter', '$scope', function($
     $scope.mars.angelUpgrades = [[100000000000, [18, 3], false, false],[1e+17, [18, 3], false, false],[1e+21, [0, 5], false, false],[2e+21, [2, 5], false, false],[4e+21, [4, 5], false, false],[8e+21, [6, 5], false, false],[1.6e+22, [8, 5], false, false],[3.2e+22, [10, 5], false, false],[6.4e+22, [12, 5], false, false],[1.28e+23, [14, 5], false, false],[2.56e+23, [16, 5], false, false],[1e+24, [18, 3], false, false],[1e+30, [0, 7], false, false],[3e+30, [2, 7], false, false],[9e+30, [4, 7], false, false],[2.7e+31, [6, 7], false, false],[1e+32, [8, 7], false, false],[2e+32, [10, 7], false, false],[4e+32, [12, 7], false, false],[6e+32, [14, 7], false, false],[9e+32, [16, 7], false, false],[1e+36, [18, 5], false, false],[1e+42, [18, 3], false, false],[3e+45, [0, 3], false, false],[1.2e+46, [2, 3], false, false],[2.9e+46, [4, 3], false, false],[1.36e+47, [6, 3], false, false],[3.11e+47, [8, 3], false, false],[5.55e+47, [10, 3], false, false],[7.89e+47, [12, 3], false, false],[2.5e+49, [14, 3], false, false],[1e+50, [16, 3], false, false],[1e+56, [18, 5], false, false],[1e+60, [0, 5], false, false],[5e+60, [2, 5], false, false],[4.5e+61, [4, 5], false, false],[6.6e+61, [6, 5], false, false],[9.9e+61, [8, 5], false, false],[1.75e+62, [10, 5], false, false],[2.8e+62, [12, 5], false, false],[4.2e+62, [14, 5], false, false],[7e+62, [16, 5], false, false],[5e+63, [18, 5], false, false],[1e+74, [18, 7], false, false],[1e+78, [0, 9], false, false],[1e+79, [2, 9], false, false],[2e+79, [4, 9], false, false],[1e+80, [6, 9], false, false],[2e+80, [8, 9], false, false],[4e+80, [10, 9], false, false],[8e+80, [12, 9], false, false],[1.6e+82, [14, 9], false, false],[2.22e+83, [16, 9], false, false],[6.66e+83, [18, 9], false, false],[1e+84, [18, 9], false, false],[2e+90, [0, 15], false, false],[1.4e+91, [2, 15], false, false],[5.6e+91, [4, 15], false, false],[1.12e+92, [6, 15], false, false],[1.79e+92, [8, 15], false, false],[2.98e+92, [10, 15], false, false],[4.34e+92, [12, 15], false, false],[6.2e+92, [14, 15], false, false],[8.08e+92, [16, 15], false, false],[1e+93, [18, 15], false, false],[9e+99, [18, 9], false, false],[4e+105, [0, 21], false, false],[6e+105, [2, 21], false, false],[1.2e+106, [4, 21], false, false],[2.4e+106, [6, 21], false, false],[6.9e+106, [8, 21], false, false],[1.05e+107, [10, 21], false, false],[2.14e+107, [12, 21], false, false],[3.33e+107, [14, 21], false, false],[5e+107, [16, 21], false, false],[1e+108, [18, 9], false, false],[7.77e+113, [18, 777], false, false]];
     $scope.mars.managerUpgrades = [];
     $scope.friday.unlocks = [];
-    for (var i = 0; i < 2; i++) {
+    for (var i = 0; i < 10; i++) {
       $scope.friday.unlocks.push([]);
     }
-    $scope.friday.unlocks[0] = [];
-    $scope.friday.unlocks[1] = [];
-    $scope.friday.cashUpgrades = [];
-    $scope.friday.angelUpgrades = [];
+    $scope.friday.unlocks[0] = [[5, [0, 3]], [10, [0, 5]], [20, [0, 7]], [25, [1, 2]], [40, [0, 9]], [60, [0, 11]], [70, [1, 2]], [80, [0, 12]], [100, [0, 3]], [125, [0, 3]], [150, [0, 3]], [175, [0, 3]], [200, [0, 3]], [250, [0, 3]], [300, [0, 3]]];
+    $scope.friday.unlocks[1] = [[5, [2, 4]], [10, [2, 6]], [20, [2, 8]], [25, [3, 2]], [40, [2, 10]], [60, [2, 12]], [70, [3, 2]], [80, [2, 13]], [100, [2, 4]], [125, [2, 4]], [150, [2, 4]], [175, [2, 4]], [200, [2, 4]], [250, [2, 4]]];
+    $scope.friday.unlocks[2] = [[5, [4, 5]], [10, [4, 7]], [20, [4, 9]], [25, [5, 2]], [40, [4, 11]], [60, [4, 13]], [70, [5, 2]], [80, [4, 14]], [100, [4, 5]], [125, [4, 5]], [150, [4, 5]], [175, [4, 5]], [200, [4, 5]]];
+    $scope.friday.unlocks[3] = [[5, [6, 6]], [10, [6, 8]], [20, [6, 10]], [25, [7, 2]], [40, [6, 12]], [60, [6, 14]], [70, [7, 2]], [80, [6, 15]], [100, [6, 6]], [125, [6, 6]], [150, [6, 6]], [175, [6, 6]]];
+    $scope.friday.unlocks[4] = [[5, [8, 7]], [10, [8, 9]], [20, [8, 11]], [25, [9, 2]], [40, [8, 13]], [60, [8, 15]], [70, [9, 2]], [80, [8, 16]], [100, [8, 7]], [125, [8, 7]], [150, [8, 7]], [175, [8, 7]]];
+    $scope.friday.unlocks[5] = [[5, [10, 8]], [10, [10, 10]], [20, [10, 12]], [25, [11, 2]], [40, [10, 14]], [60, [10, 16]], [70, [11, 2]], [80, [10, 17]], [100, [10, 8]], [125, [10, 8]], [150, [10, 8]]];
+    $scope.friday.unlocks[6] = [[5, [12, 9]], [10, [12, 11]], [20, [12, 13]], [25, [13, 2]], [40, [12, 15]], [60, [12, 17]], [70, [13, 2]], [80, [12, 18]], [100, [12, 9]], [125, [12, 9]]];
+    $scope.friday.unlocks[7] = [[5, [14, 10]], [10, [14, 12]], [20, [14, 14]], [25, [15, 2]], [40, [14, 16]], [60, [14, 18]], [70, [15, 2]], [80, [14, 19]], [100, [14, 10]], [125, [14, 10]]];
+    $scope.friday.unlocks[8] = [[5, [16, 11]], [10, [16, 13]], [20, [16, 15]], [25, [17, 2]], [40, [16, 17]], [60, [16, 19]], [70, [17, 2]], [80, [16, 20]], [100, [16, 11]]];
+    $scope.friday.unlocks[9] = [[6, [0, 50]], [12, [2, 50]], [18, [4, 50]], [24, [6, 50]], [30, [8, 50]], [36, [10, 50]], [42, [12, 50]], [48, [14, 50]], [54, [16, 50]], [60, [19, 2]], [75, [18, 50]], [100, [18, 50]]];
+    $scope.friday.cashUpgrades = [[100000, [18, 4], false], [10000000, [18, 5], false], [1e+9, [18, 6], false], [100e+9, [18, 7], false], [10e+12, [18, 8], false], [1e+15, [18, 9], false], [100e+15, [18, 10], false], [1e+18, [18, 11], false], [1e+21, [18, 12], false], [1e+24, [18, 13], false], [1e+27, [18, 14], false], [1e+30, [18, 15], false], [1e+33, [18, 16], false], [1e+36, [18, 17], false], [1e+39, [18, 18], false], [1e+42, [18, 19], false], [10e+45, [18, 20], false], [100e+48, [18, 21], false], [1e+54, [18, 22], false], [100e+57, [18, 23], false], [100e+63, [18, 24], false]];
+    $scope.friday.angelUpgrades = [[10e+6, [20, 2], false, false], [10e+12, [20, 3], false, false], [10e+18, [20, 4], false, false], [100e+24, [20, 5], false, false], [1e+33, [20, 16], false, false]];
     $scope.friday.managerUpgrades = [];
   };
   loadDefaults();
