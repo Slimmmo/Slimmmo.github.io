@@ -1103,7 +1103,7 @@ advApp.controller('advController', ['$document', '$filter', '$scope', function($
     $scope.friday.recommendation = '';
     $scope.friday.totalMoneyPerSecond = 0;
     $scope.friday.triples = 0;
-    $scope.friday.upgradeCosts = [];
+    $scope.friday.upgradeCosts = upgradeCosts = [[0, 0, 0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0, 0, 0]];
     $scope.friday.unlocks = [];
     $scope.friday.viewNumAngels = 0;
   };
