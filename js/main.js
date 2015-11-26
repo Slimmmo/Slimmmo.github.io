@@ -246,7 +246,7 @@ advApp.controller('advController', ['$document', '$filter', '$scope', function($
     for (; i < numLevels; i++) {
       retVal += Math.pow(loc.basePower[index], i);
     };
-    if (index === 0 && $scope.isEarth()) {
+    if ((index === 0 && $scope.isEarth()) || $scope.isFriday()) {
       fromLevel -= 1;
     }
     for (i = 0; i < loc.angelUpgrades.length; i++) {
