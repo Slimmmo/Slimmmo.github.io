@@ -14,6 +14,12 @@ Please let me know if:
 - Remember to manually check number of angels after each angel purchase. It's not intuitive yet.
 
 ### To Do:
+
+### Code
+- Lots of overlap between resetPlanet, fullyResetPlanet and loadDefaults. Will need a rewrite.
+- Saving and loading formatting is nasty but don't want to save the whole planet since lots of it doesn't need to be saved. Output only the necessary fields (e.g. not upgradeCosts). When loading, load defaults then overwrite them with saved values while checking that the save actually has a value for that variable. This also needs a considerable redesign.
+
+### Features
 - Implement cycle time increments instead of averages to make the saving time calculations more accurate.
 - Incorporate a method to make decimal calculations accurate (stupid Javascript floats).
 - Add the managers that reduce unlock cost of businesses to recommendations.

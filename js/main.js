@@ -74,11 +74,11 @@ advApp.filter('percentage', function() {
 
 advApp.controller('advController', ['$document', '$filter', '$scope', function($document, $filter, $scope) {
   $scope.accOpen = [false, false, false, false, false, false];
+  $scope.accOpen2 = [false, false];
   $scope.clearAfter = [false, false];
   $scope.compare = false;
   $scope.earth = {};
   $scope.fillBefore = [false, false];
-  $scope.filterOpen = false;
   $scope.filterTime = {'days': null, 'hours': null, 'minutes': null};
   $scope.friday = {};
   $scope.illionsArray = illionsArr.slice(1);
@@ -88,7 +88,9 @@ advApp.controller('advController', ['$document', '$filter', '$scope', function($
   $scope.ref = $scope.earth;
   $scope.reverse = true;
   $scope.selectAll = [false, false, false, false];
+  $scope.showUpdate = true;
   $scope.sortIndex = 2;
+  var planets = ['earth', 'moon', 'mars', 'friday'];
 
   angular.element(document).ready(function() {
     var fileInput = document.getElementById('fileInput');
@@ -100,7 +102,6 @@ advApp.controller('advController', ['$document', '$filter', '$scope', function($
       }
       reader.readAsText(file);
     });
-
     var saved = localStorage.getItem('planets');
     if (saved) {
       loadExportedJson(saved);
@@ -108,52 +109,51 @@ advApp.controller('advController', ['$document', '$filter', '$scope', function($
   });
 
   function loadExportedJson(str) {
-    var loadArr = ['earth', 'moon', 'friday', 'mars'],
-        i = 0, j = 0, k = 0,
-        obj = JSON.parse(str);
-    for (k in loadArr) {
-      if (obj.hasOwnProperty(loadArr[k])) {
-        $scope.fullyResetPlanet($scope[loadArr[k]]);
-        for (i in obj[loadArr[k]].levels) {
-          if (obj[loadArr[k]].levels.hasOwnProperty(i)) {
-            for (j = 0; j < $scope[loadArr[k]].investments.length; j++) {
-              if ($scope[loadArr[k]].investments[j][0] === i) {
-                $scope[loadArr[k]].investments[j][1] = obj[loadArr[k]].levels[i];
+    var i = 0, j = 0, k = 0,
+    obj = JSON.parse(str);
+    for (k in planets) {
+      if (obj.hasOwnProperty(planets[k])) {
+        $scope.fullyResetPlanet($scope[planets[k]]);
+        for (i in obj[planets[k]].levels) {
+          if (obj[planets[k]].levels.hasOwnProperty(i)) {
+            for (j = 0; j < $scope[planets[k]].investments.length; j++) {
+              if ($scope[planets[k]].investments[j][0] === i) {
+                $scope[planets[k]].investments[j][1] = obj[planets[k]].levels[i];
                 break;
               }
             }
           }
         }
-        $scope[loadArr[k]].numAngels = obj[loadArr[k]].numAngels;
-        $scope[loadArr[k]].viewNumAngels = $scope[loadArr[k]].numAngels;
-        for (i = 0; i < obj[loadArr[k]].upgradeIndexUpTo; i++) {
-          $scope[loadArr[k]].cashUpgrades[i][$scope[loadArr[k]].cashUpgrades[i].length - 1] = true;
+        $scope[planets[k]].numAngels = obj[planets[k]].numAngels;
+        $scope[planets[k]].viewNumAngels = $scope[planets[k]].numAngels;
+        for (i = 0; i < obj[planets[k]].upgradeIndexUpTo; i++) {
+          $scope[planets[k]].cashUpgrades[i][$scope[planets[k]].cashUpgrades[i].length - 1] = true;
         }
-        for (i = 0; i < obj[loadArr[k]].angelUpgradeIndexUpTo; i++) {
-          $scope[loadArr[k]].angelUpgrades[i][$scope[loadArr[k]].angelUpgrades[i].length - 1] = true;
+        for (i = 0; i < obj[planets[k]].angelUpgradeIndexUpTo; i++) {
+          $scope[planets[k]].angelUpgrades[i][$scope[planets[k]].angelUpgrades[i].length - 1] = true;
         }
-        for (i = 0; i < obj[loadArr[k]].upgradeIndexBonus.length; i++) {
-          $scope[loadArr[k]].cashUpgrades[obj[loadArr[k]].upgradeIndexBonus[i]][$scope[loadArr[k]].cashUpgrades[obj[loadArr[k]].upgradeIndexBonus[i]].length - 1] = true;
+        for (i = 0; i < obj[planets[k]].upgradeIndexBonus.length; i++) {
+          $scope[planets[k]].cashUpgrades[obj[planets[k]].upgradeIndexBonus[i]][$scope[planets[k]].cashUpgrades[obj[planets[k]].upgradeIndexBonus[i]].length - 1] = true;
         }
-        for (i = 0; i < obj[loadArr[k]].angelUpgradeIndexBonus.length; i++) {
-          $scope[loadArr[k]].angelUpgrades[obj[loadArr[k]].angelUpgradeIndexBonus[i]][$scope[loadArr[k]].angelUpgrades[obj[loadArr[k]].angelUpgradeIndexBonus[i]].length - 1] = true;
+        for (i = 0; i < obj[planets[k]].angelUpgradeIndexBonus.length; i++) {
+          $scope[planets[k]].angelUpgrades[obj[planets[k]].angelUpgradeIndexBonus[i]][$scope[planets[k]].angelUpgrades[obj[planets[k]].angelUpgradeIndexBonus[i]].length - 1] = true;
         }
-        for (i = 0; i < obj[loadArr[k]].managersBought.length; i++) {
-          $scope[loadArr[k]].managerUpgrades[Math.floor(obj[loadArr[k]].managersBought[i] / 2)][obj[loadArr[k]].managersBought[i] % 2][1] = true;
+        for (i = 0; i < obj[planets[k]].managersBought.length; i++) {
+          $scope[planets[k]].managerUpgrades[Math.floor(obj[planets[k]].managersBought[i] / 2)][obj[planets[k]].managersBought[i] % 2][1] = true;
         }
-        $scope[loadArr[k]].noSingles = obj[loadArr[k]].noSingles || false;
-        $scope[loadArr[k]].noTens = obj[loadArr[k]].noTens || false;
-        $scope[loadArr[k]].triples = obj[loadArr[k]].triples;
-        $scope[loadArr[k]].flux = obj[loadArr[k]].flux;
-        $scope[loadArr[k]].bonusAngelEffectiveness = obj[loadArr[k]].bonusAngelEffectiveness;
-        $scope[loadArr[k]].bonusMultiplier = obj[loadArr[k]].bonusMultiplier;
-        if (angular.isDefined(obj[loadArr[k]].megaTicket)) {
-          for (i = 0; i < obj[loadArr[k]].megaTicket.length; i++) {
-            $scope[loadArr[k]].investments[obj[loadArr[k]].megaTicket[i]][2] = true;
+        $scope[planets[k]].noSingles = obj[planets[k]].noSingles || false;
+        $scope[planets[k]].noTens = obj[planets[k]].noTens || false;
+        $scope[planets[k]].triples = obj[planets[k]].triples;
+        $scope[planets[k]].flux = obj[planets[k]].flux;
+        $scope[planets[k]].bonusAngelEffectiveness = obj[planets[k]].bonusAngelEffectiveness;
+        $scope[planets[k]].bonusMultiplier = obj[planets[k]].bonusMultiplier;
+        if (angular.isDefined(obj[planets[k]].megaTicket)) {
+          for (i = 0; i < obj[planets[k]].megaTicket.length; i++) {
+            $scope[planets[k]].investments[obj[planets[k]].megaTicket[i]][2] = true;
           }
         }
       }
-      $scope.calc($scope[loadArr[k]]);
+      $scope.calc($scope[planets[k]]);
     }
     $scope.$digest();
   }
@@ -305,6 +305,25 @@ advApp.controller('advController', ['$document', '$filter', '$scope', function($
     //calcAngels(loc);
     calcRecommendations(loc);
     localStorage.setItem('planets', getJsonForExport());
+  };
+
+  function calcAngelCost(numAngels, mul) {
+    return (1e+15 * Math.pow(numAngels / mul, 2));
+  };
+
+  $scope.calcAngelInvestors = function(loc) {
+    loc.angelCosts = [];
+    var earnedNumAngels = loc.numAngels + loc.sacAngels;
+    var loopVals = [['10%', 1.1], ['50%', 1.5], ['Doubled', 2], ['5x', 5], ['10x', 10], ['Custom Multiplier', loc.customAngelMul || 0]];
+    for (var val in loopVals) {
+      loc.angelCosts[val] = []
+      loc.angelCosts[val][0] = loopVals[val][0];
+      if (loopVals[val][1] !== 0) {
+        loc.angelCosts[val][1] = calcAngelCost(loopVals[val][1] * earnedNumAngels, loc.angelScale);
+        loc.angelCosts[val][2] = Math.max(loc.angelCosts[val][1] - loc.lifetimeEarnings, 0);
+        loc.angelCosts[val][3] = loc.angelCosts[val][2] / loc.totalMoneyPerSecond;
+      }
+    }
   };
 
   function calcAngels(loc) {
@@ -612,10 +631,6 @@ advApp.controller('advController', ['$document', '$filter', '$scope', function($
     }
   };
 
-  function getJsonForExport() {
-    return '{' + formatState($scope.earth) + ',\r\n' + formatState($scope.moon) + ',\r\n' + formatState($scope.friday) + ',\r\n' + formatState($scope.mars) + '}';
-  }
-
   function formatState(loc) {
     var string = '"' + loc.name + '": {\r\n  "levels": {\r\n',
     i = 0, j = 0, first = true;
@@ -729,7 +744,10 @@ advApp.controller('advController', ['$document', '$filter', '$scope', function($
     loc.recommendation = '';
     loc.totalMoneyPerSecond = 0;
     loc.triples = 0;
-    loc.upgradeCosts = [[0, 0, 0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0, 0, 0]];
+    loc.upgradeCosts = [];
+    for (var i = 0; i <= loc.investments.length; i++) {
+      loc.upgradeCosts.push([0, 0, 0, 0, 0, 0, 0, 0]);
+    }
     loc.viewNumAngels = 0;
     $scope.calc(loc);
   };
@@ -746,6 +764,17 @@ advApp.controller('advController', ['$document', '$filter', '$scope', function($
       }
     }
     return (retVal === null) ? null : retVal - loc.investments[index][1];
+  };
+
+  function getJsonForExport() {
+    var retString = '{';
+    for (var p in planets) {
+      if (p !== '0') {
+        retString += ',\r\n';
+      }
+      retString += formatState($scope[planets[p]]);
+    }
+    return retString + '}';
   };
 
   $scope.getNamedType = function(loc, tuple) {
@@ -781,6 +810,10 @@ advApp.controller('advController', ['$document', '$filter', '$scope', function($
       index = null;
     }
     return index;
+  };
+
+  $scope.hideUpdate = function() {
+    $scope.showUpdate = false;
   };
 
   $scope.incrementDays = function(loc) {
@@ -860,7 +893,10 @@ advApp.controller('advController', ['$document', '$filter', '$scope', function($
     loc.recTable = [];
     loc.recommendation = '';
     loc.totalMoneyPerSecond = 0;
-    loc.upgradeCosts = [[0, 0, 0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0, 0, 0]];
+    loc.upgradeCosts = [];
+    for (var i = 0; i <= loc.investments.length; i++) {
+      loc.upgradeCosts.push([0, 0, 0, 0, 0, 0, 0, 0]);
+    }
     $scope.calc(loc);
   };
 
@@ -894,31 +930,26 @@ advApp.controller('advController', ['$document', '$filter', '$scope', function($
   };
 
   $scope.setEarth = function() {
-    $scope.clearAfter = [false, false];
-    $scope.fillBefore = [false, false];
-    $scope.compare = false;
-    $scope.ref = $scope.earth;
+    setPlanet('earth');
   };
 
   $scope.setFriday = function() {
-    $scope.clearAfter = [false, false];
-    $scope.fillBefore = [false, false];
-    $scope.compare = false;
-    $scope.ref = $scope.friday;
+    setPlanet('friday');
   };
 
   $scope.setMars = function() {
-    $scope.clearAfter = [false, false];
-    $scope.fillBefore = [false, false];
-    $scope.compare = false;
-    $scope.ref = $scope.mars;
+    setPlanet('mars');
   };
 
   $scope.setMoon = function() {
+    setPlanet('moon')
+  };
+
+  function setPlanet(planet) {
     $scope.clearAfter = [false, false];
     $scope.fillBefore = [false, false];
     $scope.compare = false;
-    $scope.ref = $scope.moon;
+    $scope.ref = $scope[planet];
   };
 
   $scope.toggleManagers = function(row, index) {
@@ -934,16 +965,11 @@ advApp.controller('advController', ['$document', '$filter', '$scope', function($
   };
 
   $scope.updateAngels = function() {
-    if ($scope.ref.illions === '') {
-      $scope.ref.numAngels = $scope.ref.viewNumAngels;
-    } else {
-      $scope.ref.illions = $scope.ref.illions.trim();
-      $scope.ref.illions = $scope.ref.illions.charAt(0).toUpperCase() + $scope.ref.illions.slice(1).toLowerCase();
-      var index = $scope.illionsArray.indexOf(' ' + $scope.ref.illions);
-      if (index !== -1) {
-        $scope.ref.numAngels = $scope.ref.viewNumAngels * Math.pow(10, 6 + (index * 3));
-      }
-    }
+    updateIllionize('numAngels', 'viewNumAngels', 'illions');
+  };
+
+  $scope.updateEarnings = function() {
+    updateIllionize('lifetimeEarnings', 'viewLifetimeEarnings', 'angelIllions');
   };
 
   $scope.updateFilterTime = function(loc) {
@@ -953,6 +979,19 @@ advApp.controller('advController', ['$document', '$filter', '$scope', function($
       loc.filterTime = ($scope.filterTime.days !== null ? $scope.filterTime.days * 86400 : 0) + ($scope.filterTime.hours !== null ? $scope.filterTime.hours * 3600 : 0) + ($scope.filterTime.minutes !== null ? $scope.filterTime.minutes * 60 : 0)
       if (loc.filterTime === 0) {
         loc.filterTime = null;
+      }
+    }
+  };
+
+  function updateIllionize(varName, viewName, illionsName) {
+    if ($scope.ref[illionsName] === '') {
+      $scope.ref[varName] = $scope.ref[viewName];
+    } else {
+      $scope.ref[illionsName] = $scope.ref[illionsName].trim();
+      $scope.ref[illionsName] = $scope.ref[illionsName].charAt(0).toUpperCase() + $scope.ref[illionsName].slice(1).toLowerCase();
+      var index = $scope.illionsArray.indexOf(' ' + $scope.ref[illionsName]);
+      if (index !== -1) {
+        $scope.ref[varName] = $scope.ref[viewName] * Math.pow(10, 6 + (index * 3));
       }
     }
   };
@@ -967,53 +1006,33 @@ advApp.controller('advController', ['$document', '$filter', '$scope', function($
     }
   };
 
+  $scope.updateSacrificedAngels = function() {
+    updateIllionize('sacAngels', 'viewSacAngels', 'sacIllions');
+  };
+
   function loadDefaults() {
-    $scope.earth.angelEffectiveness = 0.02;
-    $scope.earth.angelExclamation = false;
+    $scope.earth.angelScale = 150;
     $scope.earth.baseCost = [4, 60, 720, 8640, 103680, 1244160, 14929920, 179159040, 2149908480, 25798901760];
     $scope.earth.basePower = [1.07, 1.15, 1.14, 1.13, 1.12, 1.11, 1.1, 1.09, 1.08, 1.07];
     $scope.earth.baseProfit = [1, 60, 540, 4320, 51840, 622080, 7464960, 89579520, 1074954240, 29668737024];
     $scope.earth.baseSpeed = [0.6, 3, 6, 12, 24, 96, 384, 1536, 6144, 36864];
-    $scope.earth.bonusAngelEffectiveness = 0;
-    $scope.earth.bonusMultiplier = 0;
-    $scope.earth.filterTime = null;
-    $scope.earth.flux = 0;
-    $scope.earth.illions = '';
     $scope.earth.investments = [
-      ['Lemonade Stand', 1, false, 0, 0, 0, 0],
-      ['Newspaper Delivery', 0, false, 0, 0, 0, 0],
-      ['Car Wash', 0, false, 0, 0, 0, 0],
-      ['Pizza Delivery', 0, false, 0, 0, 0, 0],
-      ['Donut Shop', 0, false, 0, 0, 0, 0],
-      ['Shrimp Boat', 0, false, 0, 0, 0, 0],
-      ['Hockey Team', 0, false, 0, 0, 0, 0],
-      ['Movie Studio', 0, false, 0, 0, 0, 0],
+      ['Lemon', 1, false, 0, 0, 0, 0],
+      ['Newspaper', 0, false, 0, 0, 0, 0],
+      ['Carwash', 0, false, 0, 0, 0, 0],
+      ['Pizza', 0, false, 0, 0, 0, 0],
+      ['Donut', 0, false, 0, 0, 0, 0],
+      ['Shrimp', 0, false, 0, 0, 0, 0],
+      ['Hockey', 0, false, 0, 0, 0, 0],
+      ['Movies', 0, false, 0, 0, 0, 0],
       ['Bank', 0, false, 0, 0, 0, 0],
-      ['Oil Company', 0, false, 0, 0, 0, 0]
+      ['Oil', 0, false, 0, 0, 0, 0]
     ];
-    $scope.earth.name = 'earth';
-    $scope.earth.noSingles = false;
-    $scope.earth.noTens = false;
-    $scope.earth.numAngels = 0;
-    $scope.earth.rec = null;
-    $scope.earth.recTable = [];
-    $scope.earth.recommendation = '';
-    $scope.earth.totalMoneyPerSecond = 0;
-    $scope.earth.triples = 0;
-    $scope.earth.upgradeCosts = [[0, 0, 0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0, 0, 0]];
-    $scope.earth.unlocks = [];
-    $scope.earth.viewNumAngels = 0;
-    $scope.moon.angelEffectiveness = 0.02;
-    $scope.moon.angelExclamation = false;
-    $scope.moon.baseCost = [5, 105, 2929, 42525, 493025, 18753525, 393824025, 8270304525, 173676395025, 1000000000000];
+    $scope.moon.angelScale = 165;
+    $scope.moon.baseCost = [5, 105, 2929, 42525, 493025, 18753525, 393824025, 8270000000, 173676000000, 1000000000000];
     $scope.moon.basePower = [1.05, 1.21, 1.07, 1.19, 1.09, 1.15, 1.13, 1.17, 1.11, 1.5];
     $scope.moon.baseProfit = [1, 21, 2001, 376, 98820, 1976400, 32940000, 1152900000, 11067840000, 332035000000];
     $scope.moon.baseSpeed = [2, 7, 28, 2, 45, 180, 600, 3000, 14400, 86400];
-    $scope.moon.bonusAngelEffectiveness = 0;
-    $scope.moon.bonusMultiplier = 0;
-    $scope.moon.filterTime = null;
-    $scope.moon.flux = 0;
-    $scope.moon.illions = '';
     $scope.moon.investments = [
       ['Moon Shoe', 1, false, 0, 0, 0, 0],
       ['Gravity Booth', 0, false, 0, 0, 0, 0],
@@ -1026,29 +1045,11 @@ advApp.controller('advController', ['$document', '$filter', '$scope', function($
       ['Werewolf Colony', 0, false, 0, 0, 0, 0],
       ['Giant Laser', 0, false, 0, 0, 0, 0]
     ];
-    $scope.moon.name = 'moon';
-    $scope.moon.noSingles = false;
-    $scope.moon.noTens = false;
-    $scope.moon.numAngels = 0;
-    $scope.moon.rec = null;
-    $scope.moon.recTable = [];
-    $scope.moon.recommendation = '';
-    $scope.moon.totalMoneyPerSecond = 0;
-    $scope.moon.triples = 0;
-    $scope.moon.upgradeCosts = [[0, 0, 0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0, 0, 0]];
-    $scope.moon.unlocks = [];
-    $scope.moon.viewNumAngels = 0;
-    $scope.mars.angelEffectiveness = 0.02;
-    $scope.mars.angelExclamation = false;
-    $scope.mars.baseCost = [0.05, 1, 1234, 23000000, 49000000000, 77000000000000, 5e+15, 1e+18, 1.3e+25];
+    $scope.mars.angelScale = 300;
+    $scope.mars.baseCost = [0.05, 1, 1234, 23e+6, 49e+9, 77e+12, 5e+15, 1e+18, 13e+24];
     $scope.mars.basePower = [1.01, 1.03, 1.05, 1.07, 1.11, 1.04, 1.07, 1.09, 1.25];
-    $scope.mars.baseProfit = [0.011, 1, 4321, 4007310, 518783295, 500634321, 7543177325, 69263532485, 9.97602739165e+16];
+    $scope.mars.baseProfit = [0.011, 1, 4321, 4007310, 518783295, 500634321, 7543177325, 69263532485, 99760273916482500];
     $scope.mars.baseSpeed = [0.5, 3, 9, 32, 64, 4, 18, 42, 43200];
-    $scope.mars.bonusAngelEffectiveness = 0;
-    $scope.mars.bonusMultiplier = 0;
-    $scope.mars.filterTime = null;
-    $scope.mars.flux = 0;
-    $scope.mars.illions = '';
     $scope.mars.investments = [
       ['Red Dirt', 1, false, 0, 0, 0, 0],
       ['Marsies', 0, false, 0, 0, 0, 0],
@@ -1057,32 +1058,14 @@ advApp.controller('advController', ['$document', '$filter', '$scope', function($
       ['Heck Portal', 0, false, 0, 0, 0, 0],
       ['Ambassadors', 0, false, 0, 0, 0, 0],
       ['Brain-cation', 0, false, 0, 0, 0, 0],
-      ['LiFE Pod', 0, false, 0, 0, 0, 0],
+      ['LIFE Pod', 0, false, 0, 0, 0, 0],
       ['Terrorformer', 0, false, 0, 0, 0, 0]
     ];
-    $scope.mars.name = 'mars';
-    $scope.mars.noSingles = false;
-    $scope.mars.noTens = false;
-    $scope.mars.numAngels = 0;
-    $scope.mars.rec = null;
-    $scope.mars.recTable = [];
-    $scope.mars.recommendation = '';
-    $scope.mars.totalMoneyPerSecond = 0;
-    $scope.mars.triples = 0;
-    $scope.mars.upgradeCosts = [[0, 0, 0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0, 0, 0]];
-    $scope.mars.unlocks = [];
-    $scope.mars.viewNumAngels = 0;
-    $scope.friday.angelEffectiveness = 0.02;
-    $scope.friday.angelExclamation = false;
+    $scope.friday.angelScale = 150; // idk if this is right
     $scope.friday.baseCost = [17.5, 40, 67.5, 100, 137.5, 360, 700, 1120, 2250];
     $scope.friday.basePower = [1.75, 2, 2.25, 2.5, 2.75, 3, 3.5, 4, 4.5];
     $scope.friday.baseProfit = [1, 3, 5, 7, 21, 60, 145, 270, 525];
     $scope.friday.baseSpeed = [5, 8, 11, 14, 17, 20, 35, 45, 60];
-    $scope.friday.bonusAngelEffectiveness = 0;
-    $scope.friday.bonusMultiplier = 0;
-    $scope.friday.filterTime = null;
-    $scope.friday.flux = 0;
-    $scope.friday.illions = '';
     $scope.friday.investments = [
       ['Door Crashers', 1, false, 0, 0, 0, 0],
       ['Power Tools', 1, false, 0, 0, 0, 0],
@@ -1094,18 +1077,36 @@ advApp.controller('advController', ['$document', '$filter', '$scope', function($
       ['Trample-ines', 1, false, 0, 0, 0, 0],
       ['Sucky Vacuums', 1, false, 0, 0, 0, 0]
     ];
-    $scope.friday.name = 'friday';
-    $scope.friday.noSingles = false;
-    $scope.friday.noTens = false;
-    $scope.friday.numAngels = 0;
-    $scope.friday.rec = null;
-    $scope.friday.recTable = [];
-    $scope.friday.recommendation = '';
-    $scope.friday.totalMoneyPerSecond = 0;
-    $scope.friday.triples = 0;
-    $scope.friday.upgradeCosts = [[0, 0, 0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0, 0, 0]];
-    $scope.friday.unlocks = [];
-    $scope.friday.viewNumAngels = 0;
+    for (var p in planets) {
+      $scope[planets[p]].angelEffectiveness = 0.02;
+      $scope[planets[p]].angelExclamation = false;
+      $scope[planets[p]].angelIllions = '';
+      $scope[planets[p]].bonusAngelEffectiveness = 0;
+      $scope[planets[p]].bonusMultiplier = 0;
+      $scope[planets[p]].filterTime = null;
+      $scope[planets[p]].flux = 0;
+      $scope[planets[p]].illions = '';
+      $scope[planets[p]].lifetimeEarnings = 0;
+      $scope[planets[p]].name = planets[p];
+      $scope[planets[p]].noSingles = false;
+      $scope[planets[p]].noTens = false;
+      $scope[planets[p]].numAngels = 0;
+      $scope[planets[p]].rec = null;
+      $scope[planets[p]].recTable = [];
+      $scope[planets[p]].recommendation = '';
+      $scope[planets[p]].sacAngels = 0;
+      $scope[planets[p]].sacIllions = '';
+      $scope[planets[p]].totalMoneyPerSecond = 0;
+      $scope[planets[p]].triples = 0;
+      $scope[planets[p]].unlocks = [];
+      $scope[planets[p]].viewLifetimeEarnings = 0;
+      $scope[planets[p]].viewNumAngels = 0;
+      $scope[planets[p]].viewSacAngels = 0;
+      $scope[planets[p]].upgradeCosts = [];
+      for (var i = 0; i <= $scope[planets[p]].investments.length; i++) {
+        $scope[planets[p]].upgradeCosts.push([0, 0, 0, 0, 0, 0, 0, 0]);
+      }
+    }
   };
 
   function loadUnlocks() {
