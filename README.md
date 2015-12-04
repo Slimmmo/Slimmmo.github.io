@@ -27,3 +27,4 @@ Please let me know if:
 - Add a way to compare strategies.
 - Implement Simulate function from dev to play out the strategy that always purchases the highest recommended upgrade.
 - Add a way to change number of steps in the Simulate function.
+- A cool tree-based exploration for comparing upgrade paths (https://www.reddit.com/r/AdventureCapitalist/comments/3ik18l/another_calculator/cvvvcdt)
