@@ -314,14 +314,15 @@ advApp.controller('advController', ['$document', '$filter', '$scope', function($
   $scope.calcAngelInvestors = function(loc) {
     loc.angelCosts = [];
     var earnedNumAngels = loc.numAngels + loc.sacAngels;
-    var loopVals = [['10%', 1.1], ['50%', 1.5], ['Doubled', 2], ['5x', 5], ['10x', 10], ['Custom Multiplier', loc.customAngelMul || 0]];
+    var loopVals = [['10%', 1.1], ['50%', 1.5], ['Doubled w/o Sacrificed', 2], ['Doubled', 2], ['5x', 5], ['10x', 10], ['Custom Multiplier', loc.customAngelMul || 0]];
     for (var val in loopVals) {
       loc.angelCosts[val] = []
       loc.angelCosts[val][0] = loopVals[val][0];
       if (loopVals[val][1] !== 0) {
-        loc.angelCosts[val][1] = calcAngelCost(loopVals[val][1] * earnedNumAngels, loc.angelScale);
-        loc.angelCosts[val][2] = Math.max(loc.angelCosts[val][1] - loc.lifetimeEarnings, 0);
-        loc.angelCosts[val][3] = loc.angelCosts[val][2] / loc.totalMoneyPerSecond;
+        loc.angelCosts[val][1] = loopVals[val][1] * ((val !== '2') ? earnedNumAngels : loc.numAngels);
+        loc.angelCosts[val][2] = calcAngelCost(loc.angelCosts[val][1], loc.angelScale);
+        loc.angelCosts[val][3] = Math.max(loc.angelCosts[val][2] - loc.lifetimeEarnings, 0);
+        loc.angelCosts[val][4] = loc.angelCosts[val][3] / loc.totalMoneyPerSecond;
       }
     }
   };
