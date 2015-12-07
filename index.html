@@ -180,6 +180,8 @@
             <uib-accordion-heading>
               Angel Calculations<span class="pull-right fa" ng-class="{'fa-chevron-down': accOpen2[0], 'fa-chevron-right': !accOpen2[0]}"></span>
             </uib-accordion-heading>
+            All of values in the tables will include sacrificed angels in calculating the number required to increase by x%. The only exception is Doubled w/o Sacrificed which should match your in game numbers exactly and does not include sacrificed angels.
+            <br><br>
             <input type="number" class="form-control" min="0" data-ng-model="ref.viewLifetimeEarnings" data-ng-blur="updateEarnings()" step="0.001" required></input> <input type="text" class="form-control illions" data-ng-model="ref.angelIllions" uib-typeahead="ill for ill in illionsArray | filter:$viewValue | limitTo:8" placeholder="*illions" data-ng-blur="updateEarnings()"></input><label> Lifetime Earnings</label>
             <br>
             <input type="number" class="form-control" min="0" data-ng-model="ref.viewSacAngels" data-ng-blur="updateSacrificedAngels()" step="0.001" required></input> <input type="text" class="form-control illions" data-ng-model="ref.sacIllions" uib-typeahead="ill for ill in illionsArray | filter:$viewValue | limitTo:8" placeholder="*illions" data-ng-blur="updateSacrificedAngels()"></input><label> # Angels Sacrificed</label>
@@ -189,6 +191,7 @@
               <thead>
                 <tr>
                   <th></th>
+                  <th>Number of Angels</th>
                   <th>Lifetime Cost</th>
                   <th>Lifetime Difference</th>
                   <th>Difference Time Cost</th>
@@ -198,9 +201,10 @@
                 <tr data-ng-repeat="aUC in ref.angelCosts track by $index">
                   <td data-ng-if="!$last">{{aUC[0]}}</td>
                   <td data-ng-if="$last"><input type="number" class="form-control" min="0" data-ng-model="ref.customAngelMul" step="0.1"></input> x</td>
-                  <td>${{aUC[1] | num:raw}}</td>
+                  <td>{{aUC[1] | num:raw}} AI</td>
                   <td>${{aUC[2] | num:raw}}</td>
-                  <td>{{aUC[3] | time:raw}}</td>
+                  <td>${{aUC[3] | num:raw}}</td>
+                  <td>{{aUC[4] | time:raw}}</td>
                 </tr>
               </tbody>
             </table>
