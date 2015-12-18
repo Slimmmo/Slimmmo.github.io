@@ -1,5 +1,5 @@
 from decimal import *
-import re
+import re, sys
 parseObj = {}
 parsing = 0
 planets = ['earth', 'moon', 'mars']
@@ -120,6 +120,8 @@ def writeObj():
 		o.write(parseObj[w])
 
 loadRegexes()
+if len(sys.argv) == 2:
+	planets.append(sys.argv[1])
 o = open('GameState_Out.txt', 'w')
 for planet in planets:
 	parseObj = {}
