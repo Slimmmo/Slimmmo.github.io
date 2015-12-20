@@ -1,3 +1,7 @@
+Things needed to implement a new planet or event.
+
+Preferably I just need to run parseGameState.py on a planet's file and it will extract everything. Events are loaded from a Google Sheet url so if I can get the URL or the file it will be easy.
+
 1. The lifetime earnings required to get the nth (preferably first) angel investor.
   Why do I need this?
     To set angelScale to be able to calculate angel earnings
