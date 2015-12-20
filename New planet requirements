@@ -1,0 +1,37 @@
+1. The lifetime earnings required to get the nth (preferably first) angel investor.
+  Why do I need this?
+    To set angelScale to be able to calculate angel earnings
+  e.g. earth has a first angel amount of 44.444 billion, the moon has 367.309 billion, and mars has 111.111 billion
+
+2. The cost of buying the first of each of the businesses.
+
+3. The scale of the cost of each of the businesses.
+  e.g. If buying one level costs $1 then buying the next level costs $2.5, then the scale is 2.5
+
+4. The profit made by one cycle of each of the businesses at level 1.
+
+5. The time it takes for one cycle of each business at level 1.
+
+6. The name of each of the businesses.
+
+7. The level that each business starts at.
+  This is usually level 1 for the first business and 0 for the rest of them but it's not always that way.
+
+8. The unlocks for each of the businesses. 
+  This requires:
+    1. The amount required for the unlock.
+    2. Which business the unlock effects.
+    3. What is the type of effect. e.g. profit multiplication increase, profit speed increase, etc
+    4. What is the amount of the effect. e.g. profit multiplication x4 is 4
+
+9. The cash upgrades.
+  This has the same requirements for the unlocks, simply replacing amount required for cost.
+
+10. The angel upgrades.
+  Same as cash upgrades.
+
+11. The managers.
+  Managers are only required if they reduce the cost of buying businesses. If they do then it requires:
+  1. The cost.
+  2. Which business the manager effects.
+  3. The amount of the manager discount.
