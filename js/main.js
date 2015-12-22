@@ -1081,7 +1081,7 @@ advApp.controller('advController', ['$document', '$filter', '$scope', function($
       ['LIFE Pod', 0, false, 0, 0, 0, 0],
       ['Terrorformer', 0, false, 0, 0, 0, 0]
     ];
-    /*$scope.carol.angelScale = ?;
+    /*$scope.carol.angelScale = 10;
     $scope.carol.baseCost = [0.16, 10000, 1e+9, 1e+13, 1e+17, 1e+22, 1e+27, 1e+32, 1e+39];
     $scope.carol.basePower = [1.03, 1.05, 1.07, 1.09, 1.12, 1.15, ?, ?, ?];
     // need to double check most of the baseProfits
@@ -1183,8 +1183,8 @@ advApp.controller('advController', ['$document', '$filter', '$scope', function($
     $scope.carol.unlocks[7] = [[1, [14, 2]],[25, [15, 2]],[75, [15, 2]],[150, [15, 2]],[300, [15, 2]]];
     $scope.carol.unlocks[8] = [[1, [16, 2]],[25, [17, 2]],[75, [17, 2]],[150, [17, 2]],[150, [16, 2]]];
     $scope.carol.unlocks[9] = [];
-    // still more cash upgrades to input, got up to 10 undecillion
-    $scope.carol.cashUpgrades = [[500, [0, 5], false],[5e+7, [0, 555], false],[5e+10, [2, 55], false],[5e+11, [0, 555], false],[1e+12, [2, 555], false],[5e+12, [4, 55], false],[5e+13, [0, 5], false],[5e+14, [2, 5], false],[5e+16, [4, 55], false],[1e+17, [6, 5], false],[1e+18, [0, 55], false],[1e+20, [2, 55], false],[1e+22, [4, 55], false],[1e+23, [6, 55], false],[1e+23, [8, 5], false],[5e+24, [0, 55], false],[1e+26, [2, 55], false],[5e+26, [4, 5], false],[1e+28, [6, 55], false],[5e+28, [8, 55], false],[1e+29, [10, 5], false],[5e+29, [0, 5], false],[1e+31, [2, 5], false],[5e+31, [4, 55], false],[1e+32, [6, 5], false],[5e+33, [8, 55], false],[1e+34, [10, 55], false],[5e+34, [12, 5], false],[1e+35, [0, 55], false],[1e+37, [2, 55], false]];
+    // still more cash upgrades to input, got up to 50 duodecillion
+    $scope.carol.cashUpgrades = [[500, [0, 5], false],[5e+7, [0, 555], false],[5e+10, [2, 55], false],[5e+11, [0, 555], false],[1e+12, [2, 555], false],[5e+12, [4, 55], false],[5e+13, [0, 5], false],[5e+14, [2, 5], false],[5e+16, [4, 55], false],[1e+17, [6, 5], false],[1e+18, [0, 55], false],[1e+20, [2, 55], false],[1e+22, [4, 55], false],[1e+23, [6, 55], false],[1e+23, [8, 5], false],[5e+24, [0, 55], false],[1e+26, [2, 55], false],[5e+26, [4, 5], false],[1e+28, [6, 55], false],[5e+28, [8, 55], false],[1e+29, [10, 5], false],[5e+29, [0, 5], false],[1e+31, [2, 5], false],[5e+31, [4, 55], false],[1e+32, [6, 5], false],[5e+33, [8, 55], false],[1e+34, [10, 55], false],[5e+34, [12, 5], false],[1e+35, [0, 55], false],[1e+37, [2, 55], false],[5e+38, [4, 55], false],[1e+39, [6, 55], false],[5e+40, [8, 5], false]];
     $scope.carol.angelUpgrades = [[1e+21, [18, 3], false, false]];
     $scope.carol.managerUpgrades = [];*/
   };
