@@ -1081,7 +1081,7 @@ advApp.controller('advController', ['$document', '$filter', '$scope', function($
       ['LIFE Pod', 0, false, 0, 0, 0, 0],
       ['Terrorformer', 0, false, 0, 0, 0, 0]
     ];
-    $scope.carol.angelScale = 10;
+    $scope.carol.angelScale = 7.5;
     $scope.carol.baseCost = [0.1068, 10000, 1e+9, 1e+13, 1e+17, 1e+22, 1e+27, 1e+32, 1e+39];
     $scope.carol.basePower = [1.03, 1.05, 1.07, 1.09, 1.12, 1.15, 1.18, 1.21, 1.25];
     // All of the e+ baseProfit values are not exact. Can't get at the file. Roast Beast is probably the most wrong.
