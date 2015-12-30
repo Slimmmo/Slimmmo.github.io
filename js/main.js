@@ -557,7 +557,7 @@ advApp.controller('advController', ['$document', '$filter', '$scope', function($
         loc.angelUpgrades[i][loc.angelUpgrades[i].length - 1] = false;
       }
     }
-    calcAngels(loc);
+    //calcAngels(loc);
   };
 
   $scope.checkCash = function(loc, index) {
