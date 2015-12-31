@@ -532,6 +532,9 @@ advApp.controller('advController', ['$document', '$filter', '$scope', function($
     var overflowPotential = planet.totalMoneyPerSecond * unlockCost,
     divNum = 0,
     retVal = planet.totalMoneyPerSecond - loc.totalMoneyPerSecond;
+    if (!isFinite(unlockCost)) {
+      return 0;
+    }
     while (!isFinite(overflowPotential)) {
       divNum += 100;
       overflowPotential = planet.totalMoneyPerSecond * (unlockCost / Number('1e+' + divNum));
