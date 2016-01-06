@@ -109,7 +109,7 @@ advApp.controller('advController', ['$document', '$filter', '$scope', function($
   $scope.ref = $scope.earth;
   $scope.reverse = true;
   $scope.selectAll = [false, false, false, false];
-  $scope.showUpdate = true;
+  $scope.showUpdate = false;
   $scope.sortIndex = 2;
   var planets = ['earth', 'moon', 'mars', 'carol'];
 
