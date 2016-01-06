@@ -9,8 +9,7 @@ function numFilter(input, raw) {
   e = 6;
   if (input === Infinity) {
     return "Infinity";
-  }
-  if (input !== null) {
+  } else if (input !== null) {
     if (!raw) {
       while (input >= Number('1e+' + e)) {
         e += 3;
@@ -37,26 +36,25 @@ advApp.filter('time', function() {
   return function(input, raw) {
     if (input === Infinity) {
       return "———";
-    }
-    var out = (raw === true) ? numFilter(input, raw) + ' s' : '';
-    if (!raw) {
+    } else if (raw) {
+      var out = numFilter(input, raw) + ' s';
+    } else {
       input = Math.floor(input);
       var s = ("00" + input % 60).slice(-2);
       var m = ("00" + Math.floor(input / 60) % 60).slice(-2);
       var h = ("00" + Math.floor(input / 3600) % 24).slice(-2);
       var d = Math.floor(input / 86400);
+      var out = "";
       if (d >= 1) {
         out += numFilter(d, false) + ' d';
         if (d < 100) {
-          out += ', ';
+          out += ', '
         }
       }
       if (d < 100) {
         out += h + ":" + m + ":" + s;
       }
       return out;
-    } else {
-      return input + 's';
     }
   };
 });
@@ -69,28 +67,9 @@ advApp.filter('num', function() {
 
 advApp.filter('percentage', function() {
   return function(input) {
-    if (isNaN(input)) {
-      return input;
-    }
+    if (isNaN(input)) return input;
     return Math.floor(input * 1000) / 10 + '%';
   };
-});
-
-advApp.filter('rec', function() {
-  "use strict";
-  return function(input, loc) {
-    var retVal = '';
-    if (input === 'all') {
-      retVal = 'All';
-    } else if (input[0] === 'level') {
-      retVal = loc.investments[input[1]][0];
-    } else if (input[0] === 'cash') {
-      retVal = (input[1] < loc.investments.length) ? loc.investments[input[1]][0] : 'All';
-      retVal += (loc.cashUpgrades[input[1]][1][0] % 2 === 0) ? ' Profit' : ' Speed';
-      retVal += ' ' + loc.cashUpgrades[input[1]][1][1];
-    }
-    return retVal;
-  }
 });
 
 advApp.controller('advController', ['$document', '$filter', '$scope', function($document, $filter, $scope) {
@@ -109,7 +88,7 @@ advApp.controller('advController', ['$document', '$filter', '$scope', function($
   $scope.ref = $scope.earth;
   $scope.reverse = true;
   $scope.selectAll = [false, false, false, false];
-  $scope.showUpdate = false;
+  $scope.showUpdate = true;
   $scope.sortIndex = 2;
   var planets = ['earth', 'moon', 'mars', 'carol'];
 
@@ -120,7 +99,7 @@ advApp.controller('advController', ['$document', '$filter', '$scope', function($
       reader = new FileReader();
       reader.onload = function(e) {
         loadExportedJson(e.target.result);
-      };
+      }
       reader.readAsText(file);
     });
     var saved = localStorage.getItem('planets');
@@ -180,21 +159,43 @@ advApp.controller('advController', ['$document', '$filter', '$scope', function($
   }
 
   $scope.apply = function(loc) {
-    $scope.applyRow(loc, loc.rec);
+    if (loc.rec[0] === 'level') {
+      loc.investments[loc.rec[1]][1] = loc.rec[2];
+    } else if (loc.rec[0] === 'all') {
+      for (var i = 0; i < loc.investments.length; i++) {
+        if (loc.investments[i][1] < loc.rec[1]) {
+          loc.investments[i][1] = loc.rec[1];
+        }
+      }
+    } else if (loc.rec[0] === 'manager') {
+      loc.managerUpgrades[loc.rec[1]][loc.managerUpgrades[loc.rec[1]].length - 1] = true;
+    } else {
+      loc.cashUpgrades[loc.rec[1]][loc.cashUpgrades[loc.rec[1]].length - 1] = true;
+    }
+    $scope.calc(loc);
   };
 
   $scope.applyRow = function(loc, row) {
-    var i = 0;
-    if (row[0] === 'all') {
+    var name = row[0].split(' '),
+    i = 0, j = false;
+    if (name.length >= 3 && (name[name.length - 2] === 'Profit' || name[name.length - 2] === 'Speed' || name[name.length - 2] === 'Investor')) {
+      j = true;
+    }
+    if (j === true) {
+      loc.cashUpgrades[row[row.length - 1]][loc.cashUpgrades[row[row.length - 1]].length - 1] = true;
+    } else if (name[0] === 'All') {
       for (; i < loc.investments.length; i++) {
         if (loc.investments[i][1] < row[1]) {
           loc.investments[i][1] = row[1];
         }
       }
-    } else if (row[0][0] === 'level') {
-      loc.investments[row[0][1]][1] = row[1];
-    } else if (row[0][0] === 'cash') {
-      loc.cashUpgrades[row[0][1]][loc.cashUpgrades[row[0][1]].length - 1] = true;
+    } else {
+      for (; i < loc.investments.length; i++) {
+        if (loc.investments[i][0] === name[0] || (name.length > 1 && loc.investments[i][0] === name[0] + ' ' + name[1])) {
+          loc.investments[i][1] = row[1];
+          break;
+        }
+      }
     }
     $scope.calc(loc);
   };
@@ -236,15 +237,15 @@ advApp.controller('advController', ['$document', '$filter', '$scope', function($
         }
       }
     }
-  }
+  };
 
   function calcUnlockCost(loc, index, fromLevel, numLevels) {
     var retVal = 1,
-    i = 1,
+    i = 1, j = 0,
     managerDiscount = 1;
     for (; i < numLevels; i++) {
       retVal += Math.pow(loc.basePower[index], i);
-    }
+    };
     if (index === 0 && $scope.isEarth()) {
       fromLevel -= 1;
     }
@@ -272,7 +273,7 @@ advApp.controller('advController', ['$document', '$filter', '$scope', function($
     }
     retVal *= loc.baseCost[index] * Math.pow(loc.basePower[index], fromLevel) * managerDiscount;
     return retVal;
-  }
+  };
 
   function calcUnlockCostAll(loc) {
     var lowestLevel = loc.investments[0][1],
@@ -308,14 +309,14 @@ advApp.controller('advController', ['$document', '$filter', '$scope', function($
 
   function calcAngelCost(numAngels, mul) {
     return (1e+15 * Math.pow(numAngels / mul, 2));
-  }
+  };
 
   $scope.calcAngelInvestors = function(loc) {
     loc.angelCosts = [];
     var earnedNumAngels = loc.numAngels + loc.sacAngels;
     var loopVals = [['10%', 1.1], ['50%', 1.5], ['Doubled w/o Sacrificed', 2], ['Doubled', 2], ['5x', 5], ['10x', 10], ['Custom Multiplier', loc.customAngelMul || 0]];
     for (var val in loopVals) {
-      loc.angelCosts[val] = [];
+      loc.angelCosts[val] = []
       loc.angelCosts[val][0] = loopVals[val][0];
       if (loopVals[val][1] !== 0) {
         loc.angelCosts[val][1] = loopVals[val][1] * ((val !== '2') ? earnedNumAngels : loc.numAngels);
@@ -346,13 +347,15 @@ advApp.controller('advController', ['$document', '$filter', '$scope', function($
         }
       }
     }
-  }
+  };
 
   function calcRecommendations(loc) {
     var i = 0, j = 0, k = 0,
     highestSharedLevel = loc.investments[0][1],
     inc = [],
     tempPlanet = JSON.parse(JSON.stringify(loc)),
+    max = 0,
+    maxObj = [0, 0],
     tempUnlock = null, tempUnlockTime = null, tempPercentageIncrease = null,
     upgradeScore = 0;
     loc.recTable = [];
@@ -390,7 +393,11 @@ advApp.controller('advController', ['$document', '$filter', '$scope', function($
         tempPercentageIncrease = (tempPlanet.totalMoneyPerSecond - loc.totalMoneyPerSecond) * 100 / loc.totalMoneyPerSecond;
         if ((loc.filterTime === null || loc.filterTime > tempUnlockTime) && ($scope.filterTime.percentage === null || $scope.filterTime.percentage < tempPercentageIncrease)) {
           upgradeScore = calcUpgradeScore(tempPlanet, loc, tempUnlockTime);
-          loc.recTable.push([['level', i], tempPlanet.investments[i][1], upgradeScore, tempUnlock, tempUnlockTime, tempPlanet.totalMoneyPerSecond - loc.totalMoneyPerSecond, tempPercentageIncrease]);
+          if (upgradeScore > max) {
+            max = upgradeScore;
+            maxObj = ['level', i, tempPlanet.investments[i][1]];
+          }
+          loc.recTable.push([loc.investments[i][0], tempPlanet.investments[i][1], upgradeScore, tempUnlock, tempUnlockTime, tempPlanet.totalMoneyPerSecond - loc.totalMoneyPerSecond, tempPercentageIncrease, null]);
         }
       }
     }
@@ -407,7 +414,11 @@ advApp.controller('advController', ['$document', '$filter', '$scope', function($
         tempPercentageIncrease = (tempPlanet.totalMoneyPerSecond - loc.totalMoneyPerSecond) * 100 / loc.totalMoneyPerSecond;
         if ((loc.filterTime === null || loc.filterTime > tempUnlockTime) && ($scope.filterTime.percentage === null || $scope.filterTime.percentage < tempPercentageIncrease)) {
           upgradeScore = calcUpgradeScore(tempPlanet, loc, tempUnlockTime);
-          loc.recTable.push([['cash', j], null, upgradeScore, loc.cashUpgrades[j][0], tempUnlockTime, tempPlanet.totalMoneyPerSecond - loc.totalMoneyPerSecond, tempPercentageIncrease]);
+          if (upgradeScore > max) {
+            max = upgradeScore;
+            maxObj = ['upgrade', j];
+          }
+          loc.recTable.push([$scope.getNamedType(loc, loc.cashUpgrades[j]), null, upgradeScore, loc.cashUpgrades[j][0], tempUnlockTime, tempPlanet.totalMoneyPerSecond - loc.totalMoneyPerSecond, tempPercentageIncrease, j]);
         }
       } else {
         break;
@@ -438,14 +449,18 @@ advApp.controller('advController', ['$document', '$filter', '$scope', function($
     tempPercentageIncrease = (tempPlanet.totalMoneyPerSecond - loc.totalMoneyPerSecond) * 100 / loc.totalMoneyPerSecond;
     if ((loc.filterTime === null || loc.filterTime > tempUnlockTime) && ($scope.filterTime.percentage === null || $scope.filterTime.percentage < tempPercentageIncrease)) {
       upgradeScore = calcUpgradeScore(tempPlanet, loc, tempUnlockTime);
-      loc.recTable.push(['all', highestSharedLevel, upgradeScore, tempUnlock, tempUnlock / loc.totalMoneyPerSecond, tempPlanet.totalMoneyPerSecond - loc.totalMoneyPerSecond, tempPercentageIncrease]);
+      if (upgradeScore > max) {
+        max = upgradeScore;
+        maxObj = ['all', highestSharedLevel];
+      }
+      loc.recTable.push(['All', highestSharedLevel, upgradeScore, tempUnlock, tempUnlock / loc.totalMoneyPerSecond, tempPlanet.totalMoneyPerSecond - loc.totalMoneyPerSecond, tempPercentageIncrease, null]);
     }
+    loc.rec = maxObj;
     $scope.reverse = true;
     $scope.sortIndex = 2;
     loc.recTable = $filter('orderBy')(loc.recTable, indexOrder, $scope.reverse);
-    loc.rec = loc.recTable[0];
     updateRecString(loc);
-  }
+  };
 
   function calcState(loc) {
     var i = 0, j = 0,
@@ -499,7 +514,7 @@ advApp.controller('advController', ['$document', '$filter', '$scope', function($
     }
     for (i = 0; i < loc.investments.length; i++) {
       loc.investments[i][3] *= (1 + (loc.angelEffectiveness * loc.numAngels));
-      loc.investments[i][5] = loc.investments[i][3] / loc.investments[i][4];
+      loc.investments[i][5] = loc.investments[i][3] / loc.investments[i][4]
       loc.totalMoneyPerSecond += loc.investments[i][5];
     }
     for (i = 0; i < loc.investments.length; i++) {
@@ -511,7 +526,7 @@ advApp.controller('advController', ['$document', '$filter', '$scope', function($
       loc.upgradeCosts[i][5] = loc.upgradeCosts[i][4] / loc.totalMoneyPerSecond;
       loc.upgradeCosts[i][7] = loc.upgradeCosts[i][6] / loc.totalMoneyPerSecond;
     }
-  }
+  };
 
   function calcUpgradeScore(planet, loc, unlockCost) {
     var overflowPotential = planet.totalMoneyPerSecond * unlockCost,
@@ -529,7 +544,7 @@ advApp.controller('advController', ['$document', '$filter', '$scope', function($
       retVal *= Number('1e+' + divNum);
     }
     return retVal;
-  }
+  };
 
   $scope.checkAngel = function(loc, index) {
     var i = 0;
@@ -545,6 +560,7 @@ advApp.controller('advController', ['$document', '$filter', '$scope', function($
         loc.angelUpgrades[i][loc.angelUpgrades[i].length - 1] = false;
       }
     }
+    //calcAngels(loc);
   };
 
   $scope.checkCash = function(loc, index) {
@@ -615,7 +631,7 @@ advApp.controller('advController', ['$document', '$filter', '$scope', function($
     return temp;
   }
 
-  $scope.exportFile = function() {
+  $scope.export = function() {
     var blob = new Blob([getJsonForExport()], {type: "application/json"});
     var title = "AdvCapCalc.json";
     if (window.navigator.msSaveOrOpenBlob) {
@@ -707,7 +723,7 @@ advApp.controller('advController', ['$document', '$filter', '$scope', function($
     }
     string += '\r\n  ]\r\n}';
     return string;
-  }
+  };
 
   $scope.fullyResetPlanet = function(loc) {
     var i = 0;
@@ -744,7 +760,7 @@ advApp.controller('advController', ['$document', '$filter', '$scope', function($
     loc.totalMoneyPerSecond = 0;
     loc.triples = 0;
     loc.upgradeCosts = [];
-    for (i = 0; i <= loc.investments.length; i++) {
+    for (var i = 0; i <= loc.investments.length; i++) {
       loc.upgradeCosts.push([0, 0, 0, 0, 0, 0, 0, 0]);
     }
     loc.viewNumAngels = 0;
@@ -763,7 +779,7 @@ advApp.controller('advController', ['$document', '$filter', '$scope', function($
       }
     }
     return (retVal === null) ? null : retVal - loc.investments[index][1];
-  }
+  };
 
   function getJsonForExport() {
     var retString = '{';
@@ -774,7 +790,7 @@ advApp.controller('advController', ['$document', '$filter', '$scope', function($
       retString += formatState($scope[planets[p]]);
     }
     return retString + '}';
-  }
+  };
 
   $scope.getNamedType = function(loc, tuple) {
     var i, j, k = '', l = 1, num;
@@ -809,7 +825,7 @@ advApp.controller('advController', ['$document', '$filter', '$scope', function($
       index = null;
     }
     return index;
-  }
+  };
 
   $scope.hideUpdate = function() {
     $scope.showUpdate = false;
@@ -849,7 +865,7 @@ advApp.controller('advController', ['$document', '$filter', '$scope', function($
 
   function indexOrder(input) {
     return input[$scope.sortIndex];
-  }
+  };
 
   $scope.isCarol = function() {
     return $scope.ref === $scope.carol;
@@ -901,7 +917,7 @@ advApp.controller('advController', ['$document', '$filter', '$scope', function($
     loc.recommendation = '';
     loc.totalMoneyPerSecond = 0;
     loc.upgradeCosts = [];
-    for (i = 0; i <= loc.investments.length; i++) {
+    for (var i = 0; i <= loc.investments.length; i++) {
       loc.upgradeCosts.push([0, 0, 0, 0, 0, 0, 0, 0]);
     }
     $scope.calc(loc);
@@ -949,7 +965,7 @@ advApp.controller('advController', ['$document', '$filter', '$scope', function($
   };
 
   $scope.setMoon = function() {
-    setPlanet('moon');
+    setPlanet('moon')
   };
 
   function setPlanet(planet) {
@@ -957,7 +973,7 @@ advApp.controller('advController', ['$document', '$filter', '$scope', function($
     $scope.fillBefore = [false, false];
     $scope.compare = false;
     $scope.ref = $scope[planet];
-  }
+  };
 
   $scope.toggleManagers = function(row, index) {
     if ($scope.isEarth()) {
@@ -969,7 +985,7 @@ advApp.controller('advController', ['$document', '$filter', '$scope', function($
 
   function tupleIsActive(tuple) {
     return tuple[tuple.length - 1];
-  }
+  };
 
   $scope.updateAngels = function() {
     updateIllionize('numAngels', 'viewNumAngels', 'illions');
@@ -983,7 +999,7 @@ advApp.controller('advController', ['$document', '$filter', '$scope', function($
     if ($scope.filterTime.days === null && $scope.filterTime.hours === null && $scope.filterTime.minutes === null) {
       loc.filterTime = null;
     } else {
-      loc.filterTime = ($scope.filterTime.days !== null ? $scope.filterTime.days * 86400 : 0) + ($scope.filterTime.hours !== null ? $scope.filterTime.hours * 3600 : 0) + ($scope.filterTime.minutes !== null ? $scope.filterTime.minutes * 60 : 0);
+      loc.filterTime = ($scope.filterTime.days !== null ? $scope.filterTime.days * 86400 : 0) + ($scope.filterTime.hours !== null ? $scope.filterTime.hours * 3600 : 0) + ($scope.filterTime.minutes !== null ? $scope.filterTime.minutes * 60 : 0)
       if (loc.filterTime === 0) {
         loc.filterTime = null;
       }
@@ -1001,17 +1017,17 @@ advApp.controller('advController', ['$document', '$filter', '$scope', function($
         $scope.ref[varName] = $scope.ref[viewName] * Math.pow(10, 6 + (index * 3));
       }
     }
-  }
+  };
 
   function updateRecString(loc) {
-    if (loc.rec[0] === 'all') {
+    if (loc.rec[0] === 'level') {
+      loc.recommendation = 'Buy ' + loc.recTable[0][0] + ' to level ' + loc.rec[2] + '.';
+    } else if (loc.rec[0] === 'all') {
       loc.recommendation = 'Buy all to level ' + loc.rec[1];
-    } else if (loc.rec[0][0] === 'level') {
-      loc.recommendation = 'Buy ' + loc.investments[loc.rec[0][1]][0] + ' to level ' + loc.rec[1] + '.';
     } else {
-      loc.recommendation = 'Buy ' + loc.investments[loc.rec[0][1]][0] + ' Cash Upgrade.'
+      loc.recommendation = 'Buy ' + loc.recTable[0][0] + ' Cash Upgrade.'
     }
-  }
+  };
 
   $scope.updateSacrificedAngels = function() {
     updateIllionize('sacAngels', 'viewSacAngels', 'sacIllions');
@@ -1116,7 +1132,7 @@ advApp.controller('advController', ['$document', '$filter', '$scope', function($
         $scope[planets[p]].unlocks.push([]);
       }
     }
-  }
+  };
 
   function loadUnlocks() {
     $scope.earth.unlocks[0] = [[25, [1, 2]],[50, [1, 2]],[100, [1, 2]],[200, [1, 2]],[300, [1, 2]],[400, [1, 2]],[500, [0, 4]],[600, [0, 4]],[700, [0, 4]],[800, [0, 4]],[900, [0, 4]],[1000, [0, 5]],[1100, [0, 4]],[1200, [0, 4]],[1300, [0, 4]],[1400, [0, 4]],[1500, [0, 4]],[1600, [0, 4]],[1700, [0, 4]],[1800, [0, 4]],[1900, [0, 4]],[2000, [0, 5]],[2250, [0, 2]],[2500, [0, 2]],[2750, [0, 2]],[3000, [0, 5]],[3250, [0, 2]],[3500, [0, 2]],[3750, [0, 2]],[4000, [0, 5]],[4250, [0, 2]],[4500, [0, 2]],[4750, [0, 2]],[5000, [0, 5]],[5250, [0, 3]],[5500, [0, 3]],[5750, [0, 3]],[6000, [0, 5]],[6250, [0, 3]],[6500, [0, 3]],[6750, [0, 3]],[7000, [0, 5]],[7000, [0, 3]],[7250, [0, 3]],[7500, [0, 3]],[7777, [0, 3]],[8000, [0, 3]],[8200, [0, 3]],[8400, [0, 3]],[8600, [0, 3]],[8800, [0, 3]],[9000, [0, 3]],[9100, [0, 3]],[9200, [0, 3]],[9300, [0, 3]],[9400, [0, 3]],[9500, [0, 3]],[9600, [0, 3]],[9700, [0, 3]],[9800, [0, 3]],[9999, [0, 1.9999]],[10000, [0, 5]]];
@@ -1160,7 +1176,7 @@ advApp.controller('advController', ['$document', '$filter', '$scope', function($
     $scope.mars.cashUpgrades = [[15000000, [0, 33], false],[500000000, [2, 33], false],[100000000000, [4, 33], false],[19000000000000, [6, 33], false],[1e+15, [8, 33], false],[1.2e+19, [10, 33], false],[9e+21, [12, 33], false],[6e+23, [14, 33], false],[3e+27, [16, 33], false],[1e+36, [4, 66], false],[5e+39, [6, 66], false],[2.5e+43, [8, 66], false],[1.3e+47, [10, 66], false],[3e+50, [12, 66], false],[6e+52, [14, 66], false],[1e+55, [16, 66], false],[1e+57, [18, 33], false],[1e+60, [0, 999], false],[7e+62, [2, 999], false],[9e+62, [4, 99], false],[1e+63, [6, 99], false],[5e+66, [8, 99], false],[1.7e+67, [10, 99], false],[9.9e+67, [12, 99], false],[2.31e+68, [14, 99], false],[3.33e+68, [16, 99], false],[5e+71, [18, 33], false],[1.23e+74, [0, 999], false],[2.46e+74, [2, 999], false],[3.69e+74, [6, 999], false],[2e+75, [10, 999], false],[3e+75, [12, 999], false],[1.2e+76, [14, 999], false],[2.3e+76, [16, 999], false],[1e+78, [18, 66], false],[5e+102, [0, 33], false],[1.25e+104, [2, 33], false],[4.5e+104, [4, 33], false],[6.25e+104, [6, 33], false],[3e+105, [10, 33], false],[2.5e+106, [12, 33], false],[1e+107, [14, 33], false],[1e+110, [18, 33], false],[1e+111, [0, 77], false],[4e+111, [2, 77], false],[5.5e+112, [4, 77], false],[9e+112, [6, 77], false],[2.1e+113, [10, 77], false],[4.31e+113, [12, 77], false],[7.77e+113, [14, 77], false],[5e+116, [18, 777], false],[5e+132, [6, 33], false],[3.5e+133, [10, 33], false],[1.77e+134, [12, 33], false],[5.69e+134, [14, 33], false],[7.14e+134, [0, 33], false],[9.76e+134, [2, 33], false],[1e+135, [4, 33], false],[5e+136, [18, 33], false],[1e+144, [0, 66], false],[2e+144, [2, 66], false],[6e+144, [4, 66], false],[9e+144, [6, 66], false],[4.9e+145, [10, 66], false],[3e+146, [12, 66], false],[7e+146, [14, 66], false],[3e+149, [18, 55], false],[5e+156, [0, 99], false],[1.4e+157, [2, 99], false],[6.6e+157, [4, 99], false],[8.8e+157, [6, 99], false],[2.5e+158, [10, 99], false],[4.44e+158, [12, 99], false],[6.53e+158, [14, 99], false],[1e+162, [18, 15], false],[1e+171, [0, 77], false],[3e+171, [2, 77], false],[9e+171, [4, 77], false],[1.9e+172, [6, 77], false],[3.6e+172, [10, 77], false],[9.9e+172, [12, 77], false],[2.79e+173, [14, 77], false],[4e+173, [18, 25], false],[1e+183, [0, 999], false],[5e+183, [2, 999], false],[8e+183, [4, 999], false],[1e+184, [6, 999], false],[6.6e+184, [10, 999], false],[1.53e+185, [12, 999], false],[3.72e+185, [14, 999], false],[5e+185, [16, 999], false],[6e+201, [0, 33], false],[2.5e+202, [2, 33], false],[8e+202, [4, 33], false],[1.7e+203, [6, 33], false],[4.39e+203, [10, 33], false],[6.5e+203, [12, 33], false],[9e+203, [14, 33], false],[2.5e+205, [16, 33], false],[2.5e+206, [18, 9], false],[1e+213, [0, 22], false],[1.1e+214, [2, 22], false],[2.22e+215, [6, 22], false],[3.33e+215, [10, 22], false],[4.44e+215, [12, 22], false],[5.55e+215, [14, 22], false],[6.66e+215, [16, 22], false],[1e+216, [18, 66], false],[1e+223, [0, 44], false],[2e+223, [2, 44], false],[4e+223, [6, 44], false],[6e+223, [10, 44], false],[1.5e+224, [12, 44], false],[3.56e+224, [14, 44], false],[9e+224, [16, 44], false],[6e+225, [18, 777], false],[1e+228, [0, 999], false],[1e+231, [2, 999], false],[1e+234, [6, 999], false],[1e+237, [10, 999], false],[1e+240, [12, 999], false],[1e+243, [14, 999], false],[1e+246, [16, 999], false]];
     $scope.mars.angelUpgrades = [[100000000000, [18, 3], false, false],[1e+17, [18, 3], false, false],[1e+21, [0, 5], false, false],[2e+21, [2, 5], false, false],[4e+21, [4, 5], false, false],[8e+21, [6, 5], false, false],[1.6e+22, [8, 5], false, false],[3.2e+22, [10, 5], false, false],[6.4e+22, [12, 5], false, false],[1.28e+23, [14, 5], false, false],[2.56e+23, [16, 5], false, false],[1e+24, [18, 3], false, false],[1e+30, [0, 7], false, false],[3e+30, [2, 7], false, false],[9e+30, [4, 7], false, false],[2.7e+31, [6, 7], false, false],[1e+32, [8, 7], false, false],[2e+32, [10, 7], false, false],[4e+32, [12, 7], false, false],[6e+32, [14, 7], false, false],[9e+32, [16, 7], false, false],[1e+36, [18, 5], false, false],[1e+42, [18, 3], false, false],[3e+45, [0, 3], false, false],[1.2e+46, [2, 3], false, false],[2.9e+46, [4, 3], false, false],[1.36e+47, [6, 3], false, false],[3.11e+47, [8, 3], false, false],[5.55e+47, [10, 3], false, false],[7.89e+47, [12, 3], false, false],[2.5e+49, [14, 3], false, false],[1e+50, [16, 3], false, false],[1e+56, [18, 5], false, false],[1e+60, [0, 5], false, false],[5e+60, [2, 5], false, false],[4.5e+61, [4, 5], false, false],[6.6e+61, [6, 5], false, false],[9.9e+61, [8, 5], false, false],[1.75e+62, [10, 5], false, false],[2.8e+62, [12, 5], false, false],[4.2e+62, [14, 5], false, false],[7e+62, [16, 5], false, false],[5e+63, [18, 5], false, false],[1e+74, [18, 7], false, false],[1e+78, [0, 9], false, false],[1e+79, [2, 9], false, false],[2e+79, [4, 9], false, false],[1e+80, [6, 9], false, false],[2e+80, [8, 9], false, false],[4e+80, [10, 9], false, false],[8e+80, [12, 9], false, false],[1.6e+82, [14, 9], false, false],[2.22e+83, [16, 9], false, false],[6.66e+83, [18, 9], false, false],[1e+84, [18, 9], false, false],[2e+90, [0, 15], false, false],[1.4e+91, [2, 15], false, false],[5.6e+91, [4, 15], false, false],[1.12e+92, [6, 15], false, false],[1.79e+92, [8, 15], false, false],[2.98e+92, [10, 15], false, false],[4.34e+92, [12, 15], false, false],[6.2e+92, [14, 15], false, false],[8.08e+92, [16, 15], false, false],[1e+93, [18, 15], false, false],[9e+99, [18, 9], false, false],[4e+105, [0, 21], false, false],[6e+105, [2, 21], false, false],[1.2e+106, [4, 21], false, false],[2.4e+106, [6, 21], false, false],[6.9e+106, [8, 21], false, false],[1.05e+107, [10, 21], false, false],[2.14e+107, [12, 21], false, false],[3.33e+107, [14, 21], false, false],[5e+107, [16, 21], false, false],[1e+108, [18, 9], false, false],[7.77e+113, [18, 777], false, false]];
     $scope.mars.managerUpgrades = [];
-    $scope.carol.unlocks[0] = [[25, [1, 2]],[75, [1, 2]],[150, [1, 2]],[300, [1, 2]],[450, [1, 2]],[600, [1, 2]],[900, [0, 3]],[1300, [0, 4]],[1800, [0, 5]],[2400, [0, 6]],[3100, [0, 7]],[4000, [0, 8]]];
+    $scope.carol.unlocks[0] = [[25, [1, 2]],[75, [1, 2]],[150, [1, 2]],[300, [1, 2]],[450, [1, 2]],[600, [1, 2]],[900, [0, 3]],[1300, [0, 4]],[1800, [0, 5]],[2400, [0, 6]],[3100, [0, 7]],[4000, [0, 8]]];;
     $scope.carol.unlocks[1] = [[1, [2, 2]],[25, [3, 2]],[75, [3, 2]],[150, [3, 2]],[300, [3, 2]],[450, [3, 2]],[600, [3, 2]],[900, [3, 2]],[1300, [2, 3]],[1800, [2, 4]],[2400, [2, 5]]];
     $scope.carol.unlocks[2] = [[1, [4, 2]],[25, [5, 2]],[75, [5, 2]],[150, [5, 2]],[300, [5, 2]],[450, [5, 2]],[600, [5, 2]],[900, [5, 2]],[1300, [4, 3]]];
     $scope.carol.unlocks[3] = [[1, [6, 2]],[25, [7, 2]],[75, [7, 2]],[150, [7, 2]],[300, [7, 2]],[450, [7, 2]],[600, [7, 2]],[900, [7, 2]]];
@@ -1173,7 +1189,7 @@ advApp.controller('advController', ['$document', '$filter', '$scope', function($
     $scope.carol.cashUpgrades = [[500, [0, 5], false],[5e+7, [0, 555], false],[5e+10, [2, 55], false],[5e+11, [0, 555], false],[1e+12, [2, 555], false],[5e+12, [4, 55], false],[5e+13, [0, 5], false],[5e+14, [2, 5], false],[5e+16, [4, 55], false],[1e+17, [6, 5], false],[1e+18, [0, 55], false],[1e+20, [2, 55], false],[1e+22, [4, 55], false],[1e+23, [6, 55], false],[1e+23, [8, 5], false],[5e+24, [0, 55], false],[1e+26, [2, 55], false],[5e+26, [4, 5], false],[1e+28, [6, 55], false],[5e+28, [8, 55], false],[1e+29, [10, 5], false],[5e+29, [0, 5], false],[1e+31, [2, 5], false],[5e+31, [4, 55], false],[1e+32, [6, 5], false],[5e+33, [8, 55], false],[1e+34, [10, 55], false],[5e+34, [12, 5], false],[1e+35, [0, 55], false],[1e+37, [2, 55], false],[5e+38, [4, 55], false],[1e+39, [6, 55], false],[5e+40, [8, 5], false],[1e+41, [10, 55], false],[5e+42, [12, 55], false],[1e+43, [14, 5], false],[5e+46, [0, 55], false],[1e+47, [2, 55], false],[5e+47, [4, 5], false],[1e+49, [6, 55], false],[5e+49, [8, 55], false],[1e+50, [10, 5], false],[5e+50, [12, 55], false],[1e+51, [14, 55], false],[5e+51, [16, 55], false],[7.7777e+52, [18, 777], false]];
     $scope.carol.angelUpgrades = [[1e+21, [18, 3], false, false]];
     $scope.carol.managerUpgrades = [];
-  }
+  };
   loadDefaults();
   loadUnlocks();
 }]);
