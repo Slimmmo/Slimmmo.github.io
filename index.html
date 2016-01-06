@@ -26,11 +26,11 @@
         <h1>AdVenture Capitalist Calculator </h1> v0.1<a class="pull-right" href="https://www.reddit.com/r/AdventureCapitalist/comments/3ik18l/another_calculator/">Feedback</a>
       </div>
       <div>
-        Load a saved state: <input type="file" id="fileInput"><button type="button" class="btn btn-primary pull-right" data-ng-click="export()">Save State</button>
+        Load a saved state: <input type="file" id="fileInput"><button type="button" class="btn btn-primary pull-right" data-ng-click="exportFile()">Save State</button>
       </div>
       <br>
       <uib-alert data-ng-if="showUpdate" type="success" close="hideUpdate()">
-        <strong>Update!</strong> Carol Event Calculations are here!
+        <strong>Update!</strong> Christmas Carol event calculations are here!
       </uib-alert>
       <ul class="nav nav-tabs nav-justified">
         <li role="presentation" data-ng-class="{active: !isCompare() && isEarth()}"><a data-ng-click="setEarth()">Earth</a></li>
@@ -257,7 +257,7 @@
                 <td><a ng-click="incrementPercentage(ref)" class="btn btn-link"><span class="fa fa-chevron-up"></span></a></td>
               </tr>
               <tr class="form-group">
-				<td class="form-group">
+                <td class="form-group">
                   <input style="width:50px;" data-ng-model="filterTime.percentage" class="form-control text-center" type="text" pattern="[0-9]*" placeholder="%">
                 </td>
               </tr>
