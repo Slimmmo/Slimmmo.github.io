@@ -90,7 +90,7 @@ advApp.controller('advController', ['$document', '$filter', '$scope', function($
   $scope.selectAll = [false, false, false, false];
   $scope.showUpdate = false;
   $scope.sortIndex = 2;
-  var planets = ['earth', 'moon', 'mars'/*, 'newYou'*/];
+  var planets = ['earth', 'moon', 'mars', 'newYou'];
 
   angular.element(document).ready(function() {
     var fileInput = document.getElementById('fileInput');
@@ -212,10 +212,7 @@ advApp.controller('advController', ['$document', '$filter', '$scope', function($
           if (applyType === 0) {
             loc.investments[applyRow][3] *= row[i][1];
           } else {
-            if (row[i][1] !== 2) {
-              throw 'Not double speed rate, error? ' + row;
-            }
-            loc.investments[applyRow][4] /= 2;
+            loc.investments[applyRow][4] /= row[i][1];
           }
         } else if (applyRow === loc.investments.length) {
           if (applyType === 0) {
@@ -223,11 +220,8 @@ advApp.controller('advController', ['$document', '$filter', '$scope', function($
               loc.investments[j][3] *= row[i][1];
             }
           } else {
-            if (row[i][1] !== 2) {
-              throw 'Not double speed rate, error? ' + row;
-            }
             for (j = 0; j < loc.investments.length; j++) {
-              loc.investments[j][4] /= 2;
+              loc.investments[j][4] /= row[i][1];
             }
           }
         } else if (applyRow === loc.investments.length + 1) {
@@ -1084,15 +1078,23 @@ advApp.controller('advController', ['$document', '$filter', '$scope', function($
       ['LIFE Pod', 0, false, 0, 0, 0, 0],
       ['Terrorformer', 0, false, 0, 0, 0, 0]
     ];
-    /*$scope.newYou.angelScale = ;
-    $scope.newYou.baseCost = [];
-    $scope.newYou.basePower = [];
-    $scope.newYou.baseProfit = [];
-    $scope.newYou.baseSpeed = [];
+    $scope.newYou.angelScale = 100; // abitrary
+    $scope.newYou.baseCost = [174, 1080, 7680, 48000, 276480, 9.72, 48, 315, 792, 2310];
+    $scope.newYou.basePower = [1.45, 1.7, 1.95, 2.9, 5.9, 1.08, 1.13, 1.17, 1.21, 1.25];
+    $scope.newYou.baseProfit = [600, 3600, 19200, 96000, 460800, 3, 12, 63, 132, 330];
+    $scope.newYou.baseSpeed = [30, 45, 60, 75, 90, 3, 6, 9, 12, 15];
     $scope.newYou.investments = [
-      ['', 1, false, 0, 0, 0, 0],
-      ['', 0, false, 0, 0, 0, 0]
-    ];*/
+      ['Shred-mill', 1, false, 0, 0, 0, 0],
+      ['Pro-Team Shakes', 0, false, 0, 0, 0, 0],
+      ['Tae Kwon Do-Flex', 0, false, 0, 0, 0, 0],
+      ['Dum Dum-Bells', 0, false, 0, 0, 0, 0],
+      ['Veggies', 0, false, 0, 0, 0, 0],
+      ['Com-Fy Boys', 1, false, 0, 0, 0, 0],
+      ['Soda-licious', 0, false, 0, 0, 0, 0],
+      ['Vid-Yah Games', 0, false, 0, 0, 0, 0],
+      ['Macro Chips', 0, false, 0, 0, 0, 0],
+      ['Mystery Meat', 0, false, 0, 0, 0, 0]
+    ];
     for (var p in planets) {
       $scope[planets[p]].angelEffectiveness = 0.02;
       $scope[planets[p]].angelExclamation = false;
@@ -1168,250 +1170,21 @@ advApp.controller('advController', ['$document', '$filter', '$scope', function($
     $scope.mars.cashUpgrades = [[15000000, [0, 33], false],[500000000, [2, 33], false],[100000000000, [4, 33], false],[19000000000000, [6, 33], false],[1e+15, [8, 33], false],[1.2e+19, [10, 33], false],[9e+21, [12, 33], false],[6e+23, [14, 33], false],[3e+27, [16, 33], false],[1e+36, [4, 66], false],[5e+39, [6, 66], false],[2.5e+43, [8, 66], false],[1.3e+47, [10, 66], false],[3e+50, [12, 66], false],[6e+52, [14, 66], false],[1e+55, [16, 66], false],[1e+57, [18, 33], false],[1e+60, [0, 999], false],[7e+62, [2, 999], false],[9e+62, [4, 99], false],[1e+63, [6, 99], false],[5e+66, [8, 99], false],[1.7e+67, [10, 99], false],[9.9e+67, [12, 99], false],[2.31e+68, [14, 99], false],[3.33e+68, [16, 99], false],[5e+71, [18, 33], false],[1.23e+74, [0, 999], false],[2.46e+74, [2, 999], false],[3.69e+74, [6, 999], false],[2e+75, [10, 999], false],[3e+75, [12, 999], false],[1.2e+76, [14, 999], false],[2.3e+76, [16, 999], false],[1e+78, [18, 66], false],[5e+102, [0, 33], false],[1.25e+104, [2, 33], false],[4.5e+104, [4, 33], false],[6.25e+104, [6, 33], false],[3e+105, [10, 33], false],[2.5e+106, [12, 33], false],[1e+107, [14, 33], false],[1e+110, [18, 33], false],[1e+111, [0, 77], false],[4e+111, [2, 77], false],[5.5e+112, [4, 77], false],[9e+112, [6, 77], false],[2.1e+113, [10, 77], false],[4.31e+113, [12, 77], false],[7.77e+113, [14, 77], false],[5e+116, [18, 777], false],[5e+132, [6, 33], false],[3.5e+133, [10, 33], false],[1.77e+134, [12, 33], false],[5.69e+134, [14, 33], false],[7.14e+134, [0, 33], false],[9.76e+134, [2, 33], false],[1e+135, [4, 33], false],[5e+136, [18, 33], false],[1e+144, [0, 66], false],[2e+144, [2, 66], false],[6e+144, [4, 66], false],[9e+144, [6, 66], false],[4.9e+145, [10, 66], false],[3e+146, [12, 66], false],[7e+146, [14, 66], false],[3e+149, [18, 55], false],[5e+156, [0, 99], false],[1.4e+157, [2, 99], false],[6.6e+157, [4, 99], false],[8.8e+157, [6, 99], false],[2.5e+158, [10, 99], false],[4.44e+158, [12, 99], false],[6.53e+158, [14, 99], false],[1e+162, [18, 15], false],[1e+171, [0, 77], false],[3e+171, [2, 77], false],[9e+171, [4, 77], false],[1.9e+172, [6, 77], false],[3.6e+172, [10, 77], false],[9.9e+172, [12, 77], false],[2.79e+173, [14, 77], false],[4e+173, [18, 25], false],[1e+183, [0, 999], false],[5e+183, [2, 999], false],[8e+183, [4, 999], false],[1e+184, [6, 999], false],[6.6e+184, [10, 999], false],[1.53e+185, [12, 999], false],[3.72e+185, [14, 999], false],[5e+185, [16, 999], false],[6e+201, [0, 33], false],[2.5e+202, [2, 33], false],[8e+202, [4, 33], false],[1.7e+203, [6, 33], false],[4.39e+203, [10, 33], false],[6.5e+203, [12, 33], false],[9e+203, [14, 33], false],[2.5e+205, [16, 33], false],[2.5e+206, [18, 9], false],[1e+213, [0, 22], false],[1.1e+214, [2, 22], false],[2.22e+215, [6, 22], false],[3.33e+215, [10, 22], false],[4.44e+215, [12, 22], false],[5.55e+215, [14, 22], false],[6.66e+215, [16, 22], false],[1e+216, [18, 66], false],[1e+223, [0, 44], false],[2e+223, [2, 44], false],[4e+223, [6, 44], false],[6e+223, [10, 44], false],[1.5e+224, [12, 44], false],[3.56e+224, [14, 44], false],[9e+224, [16, 44], false],[6e+225, [18, 777], false],[1e+228, [0, 999], false],[1e+231, [2, 999], false],[1e+234, [6, 999], false],[1e+237, [10, 999], false],[1e+240, [12, 999], false],[1e+243, [14, 999], false],[1e+246, [16, 999], false]];
     $scope.mars.angelUpgrades = [[100000000000, [18, 3], false, false],[1e+17, [18, 3], false, false],[1e+21, [0, 5], false, false],[2e+21, [2, 5], false, false],[4e+21, [4, 5], false, false],[8e+21, [6, 5], false, false],[1.6e+22, [8, 5], false, false],[3.2e+22, [10, 5], false, false],[6.4e+22, [12, 5], false, false],[1.28e+23, [14, 5], false, false],[2.56e+23, [16, 5], false, false],[1e+24, [18, 3], false, false],[1e+30, [0, 7], false, false],[3e+30, [2, 7], false, false],[9e+30, [4, 7], false, false],[2.7e+31, [6, 7], false, false],[1e+32, [8, 7], false, false],[2e+32, [10, 7], false, false],[4e+32, [12, 7], false, false],[6e+32, [14, 7], false, false],[9e+32, [16, 7], false, false],[1e+36, [18, 5], false, false],[1e+42, [18, 3], false, false],[3e+45, [0, 3], false, false],[1.2e+46, [2, 3], false, false],[2.9e+46, [4, 3], false, false],[1.36e+47, [6, 3], false, false],[3.11e+47, [8, 3], false, false],[5.55e+47, [10, 3], false, false],[7.89e+47, [12, 3], false, false],[2.5e+49, [14, 3], false, false],[1e+50, [16, 3], false, false],[1e+56, [18, 5], false, false],[1e+60, [0, 5], false, false],[5e+60, [2, 5], false, false],[4.5e+61, [4, 5], false, false],[6.6e+61, [6, 5], false, false],[9.9e+61, [8, 5], false, false],[1.75e+62, [10, 5], false, false],[2.8e+62, [12, 5], false, false],[4.2e+62, [14, 5], false, false],[7e+62, [16, 5], false, false],[5e+63, [18, 5], false, false],[1e+74, [18, 7], false, false],[1e+78, [0, 9], false, false],[1e+79, [2, 9], false, false],[2e+79, [4, 9], false, false],[1e+80, [6, 9], false, false],[2e+80, [8, 9], false, false],[4e+80, [10, 9], false, false],[8e+80, [12, 9], false, false],[1.6e+82, [14, 9], false, false],[2.22e+83, [16, 9], false, false],[6.66e+83, [18, 9], false, false],[1e+84, [18, 9], false, false],[2e+90, [0, 15], false, false],[1.4e+91, [2, 15], false, false],[5.6e+91, [4, 15], false, false],[1.12e+92, [6, 15], false, false],[1.79e+92, [8, 15], false, false],[2.98e+92, [10, 15], false, false],[4.34e+92, [12, 15], false, false],[6.2e+92, [14, 15], false, false],[8.08e+92, [16, 15], false, false],[1e+93, [18, 15], false, false],[9e+99, [18, 9], false, false],[4e+105, [0, 21], false, false],[6e+105, [2, 21], false, false],[1.2e+106, [4, 21], false, false],[2.4e+106, [6, 21], false, false],[6.9e+106, [8, 21], false, false],[1.05e+107, [10, 21], false, false],[2.14e+107, [12, 21], false, false],[3.33e+107, [14, 21], false, false],[5e+107, [16, 21], false, false],[1e+108, [18, 9], false, false],[7.77e+113, [18, 777], false, false]];
     $scope.mars.managerUpgrades = [];
-    /*$scope.newYou.unlocks[0] = [];
-    $scope.newYou.cashUpgrades = [];
-    $scope.newYou.angelUpgrades = [];
-    $scope.newYou.managerUpgrades = [];*/
+    $scope.newYou.unlocks[0] = [[25, [0, 25]],[50, [0, 27]],[70, [0, 29]],[100, [0, 31]],[125, [0, 33]],[150, [0, 35]],[175, [0, 37]],[200, [0, 39]],[225, [0, 41]],[250, [0, 43]]];
+    $scope.newYou.unlocks[1] = [[20, [2, 25]],[40, [2, 27]],[60, [2, 29]],[80, [2, 31]],[100, [2, 33]],[120, [2, 35]],[140, [2, 37]],[160, [2, 39]],[180, [2, 41]],[200, [2, 43]]];
+    $scope.newYou.unlocks[2] = [[15, [4, 25]],[30, [4, 27]],[45, [4, 29]],[60, [4, 31]],[75, [4, 33]],[90, [4, 35]],[105, [4, 37]],[120, [4, 39]],[135, [4, 41]],[150, [4, 43]]];
+    $scope.newYou.unlocks[3] = [[10, [6, 25]],[20, [6, 27]],[30, [6, 29]],[40, [6, 31]],[50, [6, 33]],[60, [6, 35]],[70, [6, 37]],[80, [6, 39]],[90, [6, 41]],[100, [6, 43]]];
+    $scope.newYou.unlocks[4] = [[5, [9, 2]],[10, [9, 2]],[15, [9, 2]],[20, [9, 2]],[25, [9, 2]],[30, [9, 2]],[35, [9, 2]],[40, [9, 2]],[45, [9, 2]],[50, [9, 2]],[55, [9, 2]]];
+    $scope.newYou.unlocks[5] = [[25, [11, 2]],[50, [1, 0.8]],[75, [10, 20]],[100, [1, 0.8]],[150, [11, 2]],[200, [1, 0.8]],[250, [10, 20]],[300, [1, 0.8]],[350, [11, 2]],[400, [1, 0.8]],[450, [10, 20]],[500, [1, 0.8]],[550, [11, 2]],[600, [1, 0.8]],[650, [10, 20]],[700, [1, 0.5]],[800, [11, 2]],[900, [1, 0.5]],[1000, [10, 20]],[1100, [1, 0.5]],[1200, [11, 2]],[1300, [1, 0.5]],[1400, [10, 20]],[1500, [1, 0.5]],[1600, [11, 2]],[1700, [1, 0.5]],[1800, [10, 20]],[1900, [1, 0.5]],[2000, [10, 333]]];
+    $scope.newYou.unlocks[6] = [[25, [13, 2]],[100, [3, 0.8]],[175, [12, 25]],[250, [3, 0.8]],[300, [13, 2]],[400, [3, 0.8]],[475, [12, 25]],[550, [3, 0.8]],[625, [13, 2]],[700, [3, 0.5]],[775, [12, 25]],[850, [3, 0.5]],[925, [13, 2]],[1000, [3, 0.5]],[1075, [12, 25]],[1150, [3, 0.5]],[1250, [12, 444]]];
+    $scope.newYou.unlocks[7] = [[25, [15, 2]],[75, [5, 0.8]],[125, [14, 30]],[200, [5, 0.8]],[250, [15, 2]],[300, [5, 0.8]],[350, [14, 30]],[400, [5, 0.8]],[450, [15, 2]],[500, [5, 0.8]],[550, [14, 30]],[600, [5, 0.5]],[650, [15, 2]],[700, [5, 0.5]],[750, [14, 30]],[800, [5, 0.5]],[850, [15, 2]],[900, [5, 0.5]],[1000, [14, 555]]];
+    $scope.newYou.unlocks[8] = [[25, [17, 2]],[75, [7, 0.8]],[135, [16, 35]],[200, [7, 0.8]],[250, [17, 2]],[300, [7, 0.8]],[350, [16, 35]],[400, [7, 0.8]],[450, [17, 2]],[500, [7, 0.5]],[550, [16, 35]],[600, [7, 0.5]],[650, [17, 2]],[700, [7, 0.5]],[750, [16, 666]]];
+    $scope.newYou.unlocks[9] = [[25, [18, 9]],[50, [9, 0.8]],[75, [19, 2]],[100, [9, 0.8]],[125, [18, 40]],[150, [9, 0.8]],[175, [19, 2]],[200, [9, 0.8]],[225, [18, 40]],[250, [9, 0.8]],[275, [19, 2]],[300, [9, 0.8]],[325, [18, 40]],[350, [9, 0.5]],[375, [19, 2]],[400, [9, 0.5]],[425, [18, 40]],[450, [9, 0.5]],[475, [19, 2]],[500, [9, 0.5]],[525, [18, 40]],[550, [9, 0.5]],[575, [19, 2]],[600, [9, 0.5]],[650, [18, 777]]];
+    $scope.newYou.unlocks[10] = [[7, [20, 3]],[15, [20, 2]]];
+    $scope.newYou.cashUpgrades = [[3e+6, [0, 7], false],[24e+6, [2, 7], false],[192e+6, [4, 7], false],[1.536e+9, [6, 7], false],[12.288e+9, [8, 7], false],[100e+9, [20, 15], false],[447.456e+9, [0, 7], false],[1.769e+12, [2, 7], false],[21.233e+12, [4, 7], false],[254.803e+12, [6, 7], false],[4.076e+15, [8, 7], false],[10e+15, [20, 15], false],[65.2e+15, [0, 7], false],[104e+15, [2, 7], false],[4.32e+18, [4, 7], false],[96.3e+18, [6, 7], false],[321e+18, [8, 7], false],[1e+21, [20, 10], false],[2.23e+21, [0, 7], false],[45.3e+21, [2, 7], false],[721e+21, [4, 7], false]];
+    $scope.newYou.angelUpgrades = [[1e+6, [30, 25], false, false],[2e+6, [31, 20], false, false],[3e+6, [32, 15], false, false],[4e+6, [33, 10], false, false],[5e+6, [34, 5], false, false],[6e+12, [30, 25], false, false],[7e+12, [31, 20], false, false],[8e+12, [32, 15], false, false],[9e+12, [33, 10], false, false],[10e+12, [34, 5], false, false],[11e+18, [30, 25], false, false],[12e+18, [31, 20], false, false],[13e+18, [32, 15], false, false],[140e+18, [33, 10], false, false],[150e+18, [34, 5], false, false]];
+    $scope.newYou.managerUpgrades = [];
   };
   loadDefaults();
   loadUnlocks();
 }]);
-
-
-/*
-Shred Mills -
-Com-Fy Boys -
-
-Pro-Team Shakes ?
-Soda-licious 48
-
-Tae Kwon Do-Flex 7680
-Vid-Yah Games 315
-
-Dum Dum-Bells 48000
-Macro Chips 792
-
-Veggies 276480
-Mystery Meat 2310
-
-shred mills
-25 25
-50 27
-70 29
-100 31
-125 33
-150 35
-175 37
-200 39
-225 41
-250 43
-
-Pro-team shakes
-20 25
-40 27
-60 29
-80 31
-100 33
-120 35
-140 37
-160 39
-180 41
-200 43
-
-Tae kwon
-15 25
-30 27
-45 29
-60 31
-75 33
-90 35
-105 37
-120 39
-135 41
-150 43
-
-dum-dum
-10 25
-20 27
-30 29
-40 31
-50 33
-60 35
-70 37
-80 39
-90 41
-100 43
-
-veggies (all speed x 2)
-5
-10
-15
-20
-25
-30
-35
-40
-45
-50
-55
-
-com-fy
-25 speed 2
-50 speed shred-mills 0.80
-75 profit 20
-100 speed shred-mills 0.80
-150 speed 2
-200 speed shred-mills 0.80
-250 profit 20
-300 speed shred-mills 0.80
-350 speed 2
-400 speed shred-mills 0.80
-450 profit 20
-500 speed shred-mills 0.80
-550 speed 2
-600 speed shred-mills 0.80
-650 profit 20
-700 speed shred-mills 0.50
-800 speed 2
-900 speed shred-mills 0.50
-1000 profit 20
-1100 speed shred-mills 0.50
-1200 speed 2
-1300 speed shred-mills 0.50
-1400 profit 20
-1500 speed shred-mills 0.50
-1600 speed 2
-1700 speed shred-mills 0.50
-1800 profit 20
-1900 speed shred-mills 0.50
-2000 profit 333
-
-soda
-25 speed 2
-100 speed pro-team 0.80
-175 profit 25
-250 speed pro-team 0.80
-300 speed 2
-400 speed pro-team 0.80
-475 profit 25
-550 speed pro-team 0.80
-625 speed 2
-700 speed pro-team 0.50
-775 profit 25
-850 speed pro-team 0.50
-925 speed 2
-1000 speed pro-team 0.50
-1075 profit 25
-1150 speed pro-team 0.50
-1250 profit 444
-
-vid-yah
-25 speed 2
-75 speed tae kwon 0.80
-125 profits 30
-200 speed tae kwon 0.80
-250 speed 2
-300 speed tae kwon 0.80
-350 profits 30
-400 speed tae kwon 0.80
-450 speed 2
-500 speed tae kwon 0.80
-550 profits 30
-600 speed tae kwon 0.50
-650 speed 2
-700 speed tae kwon 0.50
-750 profits 30
-800 speed tae kwon 0.50
-850 speed 2
-900 speed tae kwon 0.50
-1000 profits 555
-
-macro chips
-25 speed 2
-75 speed dum-dum 0.80
-135 profits 35
-200 speed dum-dum 0.80
-250 speed 2
-300 speed dum-dum 0.80
-350 profits 35
-400 speed dum-dum 0.80
-450 speed 2
-500 speed dum-dum 0.50
-550 profits 35
-600 speed dum-dum 0.50
-650 speed 2
-700 speed dum-dum 0.50
-750 profits 666
-
-mystery meat
-25 profits 9
-50 speed veggies 0.80
-75 speed 2
-100 speed veggies 0.80
-125 profits 40
-150 speed veggies 0.80
-175 speed 2
-200 speed veggies 0.80
-225 profits 40
-250 speed veggies 0.80
-275 speed 2
-300 speed veggies 0.80
-325 profits 40
-350 speed veggies 0.50
-375 speed 2
-400 speed veggies 0.50
-425 profits 40
-450 speed veggies 0.50
-475 speed 2
-500 speed veggies 0.50
-525 profits 40
-550 speed veggies 0.50
-575 speed 2
-600 speed veggies 0.50
-650 profits 777
-
-everything
-7 profit 3
-15 profit 2
-
-
-angels
-1 mill +25 shred
-2 mill +20 pro-team
-3 mill +15 tae
-4 mill +10 dum-dum
-5 mill +5 veggies
-6 trill +25 shred
-7 trill +20 pro-team
-8 trill +15 tae
-9 trill +10 dum-dum
-10 trill +5 veggies
-11 quint +25 shred
-12 quint +20 pro-team
-13 quint +15 tae
-140 quint +10 dum-dum
-150 quint +5 veggies
-
-cash
-3 mill shred 7
-24 mill pro 7
-192 mill tae 7
-1.536 bill dum 7
-12.288 bill veggies 7
-100 bill all 15
-447.456 bill shred 7
-1.769 trill pro-team 7
-21.233 trill tae 7
-254.803 trill dum 7
-4.076 quadrillion veggies 7
-10 quadrillion all 15
-65.2 quadrillion shred 7
-104 quadrillion pro 7
-4.32 quint tae 7
-96.3 quint dum 7
-321 quint veggies 7
-1 sext all 10
-2.23 sext shred 7
-45.3 sext pro 7
-721 sext tae 7
-*/
