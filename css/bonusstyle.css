@@ -2,7 +2,7 @@ h1 {
   display:inline;
 }
 
-li {
+.nav-tabs > li > a {
   cursor: pointer;
 }
 
@@ -24,10 +24,24 @@ thead th {
 }
 
 .illions {
-  width: 300px;
+  width: 18em;
 }
 
 .nav {
   margin-bottom: 15px;
   margin-top: 15px;
+}
+
+label:hover {
+  background: #f5f5f5;
+}
+
+.multicolumn {
+  -webkit-columns: 23em;
+  -moz-columns: 23em;
+  columns: 23em;
+}
+
+label.strike-when-checked > input:checked + span {
+  text-decoration: line-through;
 }
