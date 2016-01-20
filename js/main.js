@@ -1176,3 +1176,242 @@ advApp.controller('advController', ['$document', '$filter', '$scope', function($
   loadDefaults();
   loadUnlocks();
 }]);
+
+
+/*
+Shred Mills -
+Com-Fy Boys -
+
+Pro-Team Shakes ?
+Soda-licious 48
+
+Tae Kwon Do-Flex 7680
+Vid-Yah Games 315
+
+Dum Dum-Bells 48000
+Macro Chips 792
+
+Veggies 276480
+Mystery Meat 2310
+
+shred mills
+25 25
+50 27
+70 29
+100 31
+125 33
+150 35
+175 37
+200 39
+225 41
+250 43
+
+Pro-team shakes
+20 25
+40 27
+60 29
+80 31
+100 33
+120 35
+140 37
+160 39
+180 41
+200 43
+
+Tae kwon
+15 25
+30 27
+45 29
+60 31
+75 33
+90 35
+105 37
+120 39
+135 41
+150 43
+
+dum-dum
+10 25
+20 27
+30 29
+40 31
+50 33
+60 35
+70 37
+80 39
+90 41
+100 43
+
+veggies (all speed x 2)
+5
+10
+15
+20
+25
+30
+35
+40
+45
+50
+55
+
+com-fy
+25 speed 2
+50 speed shred-mills 0.80
+75 profit 20
+100 speed shred-mills 0.80
+150 speed 2
+200 speed shred-mills 0.80
+250 profit 20
+300 speed shred-mills 0.80
+350 speed 2
+400 speed shred-mills 0.80
+450 profit 20
+500 speed shred-mills 0.80
+550 speed 2
+600 speed shred-mills 0.80
+650 profit 20
+700 speed shred-mills 0.50
+800 speed 2
+900 speed shred-mills 0.50
+1000 profit 20
+1100 speed shred-mills 0.50
+1200 speed 2
+1300 speed shred-mills 0.50
+1400 profit 20
+1500 speed shred-mills 0.50
+1600 speed 2
+1700 speed shred-mills 0.50
+1800 profit 20
+1900 speed shred-mills 0.50
+2000 profit 333
+
+soda
+25 speed 2
+100 speed pro-team 0.80
+175 profit 25
+250 speed pro-team 0.80
+300 speed 2
+400 speed pro-team 0.80
+475 profit 25
+550 speed pro-team 0.80
+625 speed 2
+700 speed pro-team 0.50
+775 profit 25
+850 speed pro-team 0.50
+925 speed 2
+1000 speed pro-team 0.50
+1075 profit 25
+1150 speed pro-team 0.50
+1250 profit 444
+
+vid-yah
+25 speed 2
+75 speed tae kwon 0.80
+125 profits 30
+200 speed tae kwon 0.80
+250 speed 2
+300 speed tae kwon 0.80
+350 profits 30
+400 speed tae kwon 0.80
+450 speed 2
+500 speed tae kwon 0.80
+550 profits 30
+600 speed tae kwon 0.50
+650 speed 2
+700 speed tae kwon 0.50
+750 profits 30
+800 speed tae kwon 0.50
+850 speed 2
+900 speed tae kwon 0.50
+1000 profits 555
+
+macro chips
+25 speed 2
+75 speed dum-dum 0.80
+135 profits 35
+200 speed dum-dum 0.80
+250 speed 2
+300 speed dum-dum 0.80
+350 profits 35
+400 speed dum-dum 0.80
+450 speed 2
+500 speed dum-dum 0.50
+550 profits 35
+600 speed dum-dum 0.50
+650 speed 2
+700 speed dum-dum 0.50
+750 profits 666
+
+mystery meat
+25 profits 9
+50 speed veggies 0.80
+75 speed 2
+100 speed veggies 0.80
+125 profits 40
+150 speed veggies 0.80
+175 speed 2
+200 speed veggies 0.80
+225 profits 40
+250 speed veggies 0.80
+275 speed 2
+300 speed veggies 0.80
+325 profits 40
+350 speed veggies 0.50
+375 speed 2
+400 speed veggies 0.50
+425 profits 40
+450 speed veggies 0.50
+475 speed 2
+500 speed veggies 0.50
+525 profits 40
+550 speed veggies 0.50
+575 speed 2
+600 speed veggies 0.50
+650 profits 777
+
+everything
+7 profit 3
+15 profit 2
+
+
+angels
+1 mill +25 shred
+2 mill +20 pro-team
+3 mill +15 tae
+4 mill +10 dum-dum
+5 mill +5 veggies
+6 trill +25 shred
+7 trill +20 pro-team
+8 trill +15 tae
+9 trill +10 dum-dum
+10 trill +5 veggies
+11 quint +25 shred
+12 quint +20 pro-team
+13 quint +15 tae
+140 quint +10 dum-dum
+150 quint +5 veggies
+
+cash
+3 mill shred 7
+24 mill pro 7
+192 mill tae 7
+1.536 bill dum 7
+12.288 bill veggies 7
+100 bill all 15
+447.456 bill shred 7
+1.769 trill pro-team 7
+21.233 trill tae 7
+254.803 trill dum 7
+4.076 quadrillion veggies 7
+10 quadrillion all 15
+65.2 quadrillion shred 7
+104 quadrillion pro 7
+4.32 quint tae 7
+96.3 quint dum 7
+321 quint veggies 7
+1 sext all 10
+2.23 sext shred 7
+45.3 sext pro 7
+721 sext tae 7
+*/
