@@ -81,7 +81,7 @@ advApp.filter('rec', function() {
     } else if (input[0] === 'level') {
       retVal = loc.investments[input[1]][0];
     } else if (input[0] === 'cash') {
-      retVal = (input[1] < loc.investments.length) ? loc.investments[input[1]][0] : 'All';
+      retVal = (input[1] < loc.investments.length) ? loc.investments[Math.floor(loc.cashUpgrades[input[1]][1][0] / 2)][0] : 'All';
       retVal += (loc.cashUpgrades[input[1]][1][0] % 2 === 0) ? ' Profit' : ' Speed';
       retVal += ' ' + loc.cashUpgrades[input[1]][1][1];
     }
