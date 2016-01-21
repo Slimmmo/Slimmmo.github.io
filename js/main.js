@@ -72,23 +72,6 @@ advApp.filter('percentage', function() {
   };
 });
 
-advApp.filter('rec', function() {
-  "use strict";
-  return function(input, loc) {
-    var retVal = '';
-    if (input === 'all') {
-      retVal = 'All';
-    } else if (input[0] === 'level') {
-      retVal = loc.investments[input[1]].name;
-    } else if (input[0] === 'cash') {
-      retVal = (input[1] < loc.investments.length) ? loc.investments[input[1]].name : 'All';
-      retVal += (loc.cashUpgrades[input[1]][1][1] === 0) ? ' Profit' : ' Speed';
-      retVal += ' ' + loc.cashUpgrades[input[1]][1][2];
-    }
-    return retVal;
-  }
-});
-
 advApp.controller('advController', ['$document', '$filter', '$scope', function($document, $filter, $scope) {
   $scope.accOpen = [false, false, false, false, false, false];
   $scope.accOpen2 = [false, false];
@@ -176,21 +159,43 @@ advApp.controller('advController', ['$document', '$filter', '$scope', function($
   }
 
   $scope.apply = function(loc) {
-    $scope.applyRow(loc, loc.recTable[0]);
+    if (loc.rec[0] === 'level') {
+      loc.investments[loc.rec[1]][1] = loc.rec[2];
+    } else if (loc.rec[0] === 'all') {
+      for (var i = 0; i < loc.investments.length; i++) {
+        if (loc.investments[i][1] < loc.rec[1]) {
+          loc.investments[i][1] = loc.rec[1];
+        }
+      }
+    } else if (loc.rec[0] === 'manager') {
+      loc.managerUpgrades[loc.rec[1]][loc.managerUpgrades[loc.rec[1]].length - 1] = true;
+    } else {
+      loc.cashUpgrades[loc.rec[1]][loc.cashUpgrades[loc.rec[1]].length - 1] = true;
+    }
+    $scope.calc(loc);
   };
 
   $scope.applyRow = function(loc, row) {
-    var i = 0;
-    if (row[0] === 'all') {
+    var name = row[0].split(' '),
+    i = 0, j = false;
+    if (name.length >= 3 && (name[name.length - 2] === 'Profit' || name[name.length - 2] === 'Speed' || name[name.length - 2] === 'Investor')) {
+      j = true;
+    }
+    if (j === true) {
+      loc.cashUpgrades[row[row.length - 1]][loc.cashUpgrades[row[row.length - 1]].length - 1] = true;
+    } else if (name[0] === 'All') {
       for (; i < loc.investments.length; i++) {
         if (loc.investments[i][1] < row[1]) {
           loc.investments[i][1] = row[1];
         }
       }
-    } else if (row[0][0] === 'level') {
-      loc.investments[row[0][1]][1] = row[1];
-    } else if (row[0][0] === 'cash') {
-      loc.cashUpgrades[row[0][1]][2] = true;
+    } else {
+      for (; i < loc.investments.length; i++) {
+        if (loc.investments[i][0] === name[0] || (name.length > 1 && loc.investments[i][0] === name[0] + ' ' + name[1])) {
+          loc.investments[i][1] = row[1];
+          break;
+        }
+      }
     }
     $scope.calc(loc);
   };
@@ -386,7 +391,7 @@ advApp.controller('advController', ['$document', '$filter', '$scope', function($
             max = upgradeScore;
             maxObj = ['level', i, tempPlanet.investments[i][1]];
           }
-          loc.recTable.push([['level', i], tempPlanet.investments[i][1], upgradeScore, tempUnlock, tempUnlockTime, tempPlanet.totalMoneyPerSecond - loc.totalMoneyPerSecond, tempPercentageIncrease]);
+          loc.recTable.push([loc.investments[i][0], tempPlanet.investments[i][1], upgradeScore, tempUnlock, tempUnlockTime, tempPlanet.totalMoneyPerSecond - loc.totalMoneyPerSecond, tempPercentageIncrease, null]);
         }
       }
     }
@@ -407,7 +412,7 @@ advApp.controller('advController', ['$document', '$filter', '$scope', function($
             max = upgradeScore;
             maxObj = ['upgrade', j];
           }
-          loc.recTable.push([['cash', j], null, upgradeScore, loc.cashUpgrades[j][0], tempUnlockTime, tempPlanet.totalMoneyPerSecond - loc.totalMoneyPerSecond, tempPercentageIncrease]);
+          loc.recTable.push([$scope.getNamedType(loc, loc.cashUpgrades[j]), null, upgradeScore, loc.cashUpgrades[j][0], tempUnlockTime, tempPlanet.totalMoneyPerSecond - loc.totalMoneyPerSecond, tempPercentageIncrease, j]);
         }
       } else {
         break;
@@ -442,7 +447,7 @@ advApp.controller('advController', ['$document', '$filter', '$scope', function($
         max = upgradeScore;
         maxObj = ['all', highestSharedLevel];
       }
-      loc.recTable.push(['all', highestSharedLevel, upgradeScore, tempUnlock, tempUnlock / loc.totalMoneyPerSecond, tempPlanet.totalMoneyPerSecond - loc.totalMoneyPerSecond, tempPercentageIncrease]);
+      loc.recTable.push(['All', highestSharedLevel, upgradeScore, tempUnlock, tempUnlock / loc.totalMoneyPerSecond, tempPlanet.totalMoneyPerSecond - loc.totalMoneyPerSecond, tempPercentageIncrease, null]);
     }
     loc.rec = maxObj;
     $scope.reverse = true;
