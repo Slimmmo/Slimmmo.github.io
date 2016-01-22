@@ -1010,12 +1010,12 @@ advApp.controller('advController', ['$document', '$filter', '$scope', function($
   };
 
   function updateRecString(loc) {
-    if (loc.rec[0] === 'level') {
-      loc.recommendation = 'Buy ' + loc.investments[loc.recTable[0][0][1]][0] + ' to level ' + loc.rec[2] + '.';
-    } else if (loc.rec[0] === 'all') {
+    if (loc.rec[0] === 'all') {
       loc.recommendation = 'Buy all to level ' + loc.rec[1];
+    } else if (loc.rec[0] === 'level') {
+      loc.recommendation = 'Buy ' + loc.investments[loc.rec[1]][0] + ' to level ' + loc.rec[2] + '.';
     } else {
-      loc.recommendation = 'Buy ' + loc.recTable[0][0] + ' Cash Upgrade.'
+      loc.recommendation = 'Buy ' + $filter('rec')(loc.rec[1], loc) + ' Cash Upgrade.'
     }
   };
 
