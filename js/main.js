@@ -1015,7 +1015,7 @@ advApp.controller('advController', ['$document', '$filter', '$scope', function($
     } else if (loc.rec[0] === 'level') {
       loc.recommendation = 'Buy ' + loc.investments[loc.rec[1]][0] + ' to level ' + loc.rec[2] + '.';
     } else {
-      loc.recommendation = 'Buy ' + $filter('rec')(loc.rec[1], loc) + ' Cash Upgrade.'
+      loc.recommendation = 'Buy ' + $filter('rec')(loc.recTable[0][0], loc) + ' Cash Upgrade.'
     }
   };
 
