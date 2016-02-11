@@ -1078,7 +1078,7 @@ advApp.controller('advController', ['$document', '$filter', '$scope', function($
     $scope.love.baseCost = [2, 5, 10, 24, 50, 84, 126, 198, 272];
     $scope.love.basePower = [1.03, 1.07, 1.15, 1.35, 1.75, 2.2, 2.7, 3.2, 4];
     $scope.love.baseProfit = [1, 3, 6, 10, 15, 21, 28, 36, 45];
-    $scope.love.baseSpeed = [2, 4, 6, 8, 10, 12, 14, 16 18];
+    $scope.love.baseSpeed = [2, 4, 6, 8, 10, 12, 14, 16, 18];
     $scope.love.investments = [
       ['Choc Boxes', 1, false, 0, 0, 0, 0],
       ['Valentines', 0, false, 0, 0, 0, 0],
