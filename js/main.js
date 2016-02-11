@@ -1176,7 +1176,7 @@ advApp.controller('advController', ['$document', '$filter', '$scope', function($
     $scope.love.unlocks[8] = [[15, [18, 3.33]],[40, [18, 5.55]],[65, [18, 7.77]]];
     $scope.love.unlocks[9] = [[5, [1, 5]],[10, [3, 5]],[14, [18, 2]],[15, [5, 5]],[20, [7, 8]],[25, [9, 8]],[30, [11, 5]],[35, [13, 5]],[40, [15, 5]],[45, [17, 5]],[50, [1, 5]],[55, [3, 5]],[60, [5, 5]],[65, [7, 5]],[70, [9, 5]],[75, [11, 5]],[80, [13, 5]],[85, [15, 5]],[90, [17, 5]]];
     $scope.love.cashUpgrades = [[12345, [0, 2], false],[67890, [2, 2], false],[123456, [4, 2], false],[789012, [6, 2], false],[1234567, [8, 2], false],[8901234, [10, 2], false],[12345678, [12, 2], false],[90123456, [14, 2], false],[123456789, [16, 2], false],[1.234e+9, [18, 2], false],[24.681e+9, [0, 5], false]];
-    $scope.love.angelUpgrades = [[1111, [18, 3], false, false]],[222222, [18, 4], false, false],[33000000, [18, 7], false, false],[22e+9, [18, 7], false, false],[55e+12, [18, 7], false, false],[77e+15, [18, 7], false, false]];
+    $scope.love.angelUpgrades = [[1111, [18, 3], false, false],[222222, [18, 4], false, false],[33000000, [18, 7], false, false],[22e+9, [18, 7], false, false],[55e+12, [18, 7], false, false],[77e+15, [18, 7], false, false]];
     $scope.love.managerUpgrades = [];
   };
   loadDefaults();
