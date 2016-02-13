@@ -1074,7 +1074,7 @@ advApp.controller('advController', ['$document', '$filter', '$scope', function($
       ['LIFE Pod', 0, false, 0, 0, 0, 0],
       ['Terrorformer', 0, false, 0, 0, 0, 0]
     ];
-    $scope.love.angelScale = 150;
+    $scope.love.angelScale = 45;
     $scope.love.baseCost = [2, 5, 10, 24, 50, 84, 126, 198, 272];
     $scope.love.basePower = [1.03, 1.07, 1.15, 1.35, 1.75, 2.2, 2.7, 3.2, 4];
     $scope.love.baseProfit = [1, 3, 6, 10, 15, 21, 28, 36, 45];
