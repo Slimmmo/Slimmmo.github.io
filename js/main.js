@@ -880,6 +880,49 @@ advApp.controller('advController', ['$document', '$filter', '$scope', function($
   $scope.isMoon = function() {
     return $scope.ref === $scope.moon;
   };
+  
+  function lzf_decode(str) {
+    var iidx = 0, oidx = 0, oLen = str.length,
+		temp = Array.apply(null, new Array(oLen)).map(Number.prototype.valueOf, 0);
+		do {
+			var ctrl = str.charCodeAt(iidx++);
+			if (ctrl < (1 << 5)) {
+				ctrl++;
+				while (oidx + ctrl > oLen) {
+					oLen++;
+					temp.push(String.fromCharCode(0));
+				}
+				do {
+					 temp[oidx++] = str.charAt(iidx++);
+				} while ((--ctrl) != 0);
+			} else {
+				var len = ctrl >> 5,
+				reference = oidx - ((ctrl & 0x1f) << 8) - 1;
+				if (len == 7) {
+					len += str.charCodeAt(iidx++);
+				}
+				reference -= str.charCodeAt(iidx++);
+				while (oidx + len + 2 > oLen) {
+					oLen++;
+					temp.push(String.fromCharCode(0));
+				}
+				if (reference < 0) {
+					console.log('error');
+					return 0;
+				}
+				temp[oidx++] = temp[reference++];
+				do {
+					temp[oidx++] = temp[reference++];
+				} while ((--len) >= 0);
+			}
+		} while (iidx < $scope.lzfData.length);
+		return temp.join("");
+  }
+  
+  $scope.loadGame = function(str) {
+    var obj = JSON.parse(lzf_decode(atob(str)));
+    // parse it somehow
+  };
 
   $scope.resetPlanet = function(loc) {
     var i = 0;
