@@ -309,7 +309,11 @@ advApp.controller('advController', ['$document', '$filter', '$scope', function($
       loc.angelCosts[val] = []
       loc.angelCosts[val][0] = loopVals[val][0];
       if (loopVals[val][1] !== 0) {
-        loc.angelCosts[val][1] = loopVals[val][1] * ((val !== '2') ? earnedNumAngels : loc.numAngels);
+        if (val !== '2') {
+          loc.angelCosts[val][1] = loopVals[val][1] * earnedNumAngels;
+        } else {
+          loc.angelCosts[val][1] = (loopVals[val][1] * loc.numAngels) + loc.sacAngels;
+        }
         loc.angelCosts[val][2] = calcAngelCost(loc.angelCosts[val][1], loc.angelScale);
         loc.angelCosts[val][3] = Math.max(loc.angelCosts[val][2] - loc.lifetimeEarnings, 0);
         loc.angelCosts[val][4] = loc.angelCosts[val][3] / loc.totalMoneyPerSecond;
