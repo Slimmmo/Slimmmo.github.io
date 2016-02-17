@@ -919,8 +919,25 @@ advApp.controller('advController', ['$document', '$filter', '$scope', function($
   }
   
   $scope.loadGame = function(str) {
-    var obj = JSON.parse(lzf_decode(atob(str)));
-    // parse it somehow
+    var obj = JSON.parse(lzf_decode(atob(str))), i, id = 0;
+    for (i in obj.ventures) {
+      id = 0; // find the correct id from short somehow
+      loc.investments[i][1] = i.numOwned;
+      loc.investments[i][2] = i.isBoosted;
+    }
+    for (i in obj.upgrades) {
+      if (i.id.indexOf("_angel_") != -1) {
+        id = 0; // find the correct id from short somehow
+        loc.angelUpgrades[i][3] = i.purchased;
+      } else {
+        id = 0; // find the correct id from short somehow
+        loc.cashUpgrades[i][2] = i.purchased;
+      }
+    }
+    // accountants but ignore managers?
+    loc.lifetimeEarnings = obj.cashOnHand;
+    loc.numAngels = obj.angelInvestors;
+    loc.sacAngels = obj.angelInvestorsSpent;
   };
 
   $scope.resetPlanet = function(loc) {
