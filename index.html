@@ -147,7 +147,7 @@
                   <tr data-ng-repeat="mupg in ref.managerUpgrades track by $index">
                     <td>{{ref.investments[$index][0]}}</td>
                     <td data-ng-repeat="mtup in mupg track by $index">
-                      <label class="strike-when-checked"><input type="checkbox" data-ng-model="mtup[1]"> <span>{{$index == 1 ? ' $' : ' '}}{{mtup[0] | num:raw}}{{$index == 0 ? ' AI' : ''}}</span></label>
+                      <label class="strike-when-checked"><input type="checkbox" data-ng-model="mtup[1]"> <span>{{(isMoon() || $index == 1) ? ' $' : ' '}}{{mtup[0] | num:raw}}{{(!isMoon && $index == 0) ? ' AI' : ''}}</span></label>
                     </td>
                   </tr>
                 </tbody>
