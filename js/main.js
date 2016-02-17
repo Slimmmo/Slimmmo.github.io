@@ -934,10 +934,16 @@ advApp.controller('advController', ['$document', '$filter', '$scope', function($
         loc.cashUpgrades[i][2] = i.purchased;
       }
     }
-    // accountants but ignore managers?
-    loc.lifetimeEarnings = obj.cashOnHand;
+    for (i in obj.upgrades) {
+      if (i.id.indexof("_accountant" != -1)) {
+        id = 0; // find the correct id from short somehow
+        loc.managerUpgrades[id][(i.id.charAt(i.id.length - 1) != '2') ? 0 : 1][1] = i.purchased;
+      }
+    }
+    loc.lifetimeEarnings = obj.totalCash || obj.sessionCash + obj.totalPreviousCash;
     loc.numAngels = obj.angelInvestors;
     loc.sacAngels = obj.angelInvestorsSpent;
+    // how to find gold multipliers, flux, bonus angel effectiveness (kong login etc), suits
   };
 
   $scope.resetPlanet = function(loc) {
