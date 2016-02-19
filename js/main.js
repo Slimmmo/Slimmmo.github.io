@@ -23,10 +23,10 @@ function numFilter(input, raw) {
         out = Math.round(input * 1000) / 1000;
       } else {
         out = Math.round(input * 100) / 100;
-        out = out.toLocaleString();
+        out = out.toLocaleString("en-US");
       }
     } else {
-      out = input.toLocaleString();
+      out = input.toLocaleString("en-US");
     }
   }
   return out + illionsArr[mCount];
