@@ -103,7 +103,7 @@ advApp.controller('advController', ['$document', '$filter', '$scope', function($
   $scope.mars = {};
   $scope.moon = {};
   $scope.raw = false;
-  $scope.ref = $scope.love;//$scope.earth;
+  $scope.ref = $scope.earth;
   $scope.reverse = true;
   $scope.selectAll = [false, false, false, false];
   $scope.showUpdate = false;
