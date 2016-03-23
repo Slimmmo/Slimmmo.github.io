@@ -1150,6 +1150,17 @@ advApp.controller('advController', ['$document', '$filter', '$scope', function($
     /* Unsure about exact values past 1 million, (most likely wrongly) assuming that, e.g. 1.244 million equals 1,244,000 */
     $scope.rain.baseSpeed = [2, 6, 10, 21, 30, 126, 216, 0, 0]
     /* Assuming that the investments are polite enough to use natural numbers */
+    $scope.rain.investments =[
+      ['Micro-Eggs', 1, false, 0, 0, 0, 0],
+      ['Sham-Rocks', 0, false, 0, 0, 0, 0],
+      ['Clover Fields', 0, false, 0, 0, 0, 0],
+      ['Bunny Ears', 0, false, 0, 0, 0, 0],
+      ['Pot O\' Golds', 0, false, 0, 0, 0, 0],
+      ['Di-egg-nostics', 0, false, 0, 0, 0, 0],
+      ['Rainbow Makers', 0, false, 0, 0, 0, 0],
+      ['Cruelty-Free Feet', 0, false, 0, 0, 0, 0],
+      ['Yucky Charms', 0, false, 0, 0, 0, 0],
+    ];
     for (var p in planets) {
       $scope[planets[p]].angelEffectiveness = 0.02;
       $scope[planets[p]].angelExclamation = false;
