@@ -108,7 +108,7 @@ advApp.controller('advController', ['$document', '$filter', '$scope', function($
   $scope.selectAll = [false, false, false, false];
   $scope.showUpdate = false;
   $scope.sortIndex = 2;
-  var planets = ['earth', 'moon', 'mars'/*, 'rain'*/];
+  var planets = ['earth', 'moon', 'mars', 'rain'];
 
   angular.element(document).ready(function() {
     var fileInput = document.getElementById('fileInput');
