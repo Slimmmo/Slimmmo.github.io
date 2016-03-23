@@ -1249,7 +1249,7 @@ advApp.controller('advController', ['$document', '$filter', '$scope', function($
     $scope.rain.unlocks[7] = [[5, [14, 55]],[20, [14, 55]],[40, [14, 55]],[80, [14, 555]]];
     $scope.rain.unlocks[8] = [[5, [16, 55]],[15, [16, 55]],[30, [16, 55]],[60, [16, 555]]];
     $scope.rain.unlocks[9] = [[1, [19, 2]],[2, [19, 2]],[3, [19, 2]],[4, [19, 2]],[5, [19, 2]],[7, [19, 2]],[10, [19, 2]],[15, [19, 2]],[20, [18, 7]],[25, [19, 2]],[35, [19, 2]],[45, [19, 2]],[55, [19, 2]]];
-    $scope.rain.cashUpgrades = [];
+    $scope.rain.cashUpgrades = [[35000, [0, 5], false],[1000000, [2, 5], false]];
     $scope.rain.angelUpgrades = [];
     $scope.rain.managerUpgrades = [];
     /* 35000, 1000000 */
