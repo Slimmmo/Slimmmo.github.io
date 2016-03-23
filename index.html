@@ -36,7 +36,7 @@
         <li role="presentation" data-ng-class="{active: !isCompare() && isEarth()}"><a data-ng-click="setEarth()">Earth</a></li>
         <li role="presentation" data-ng-class="{active: !isCompare() && isMoon()}"><a data-ng-click="setMoon()">Moon</a></li>
         <li role="presentation" data-ng-class="{active: !isCompare() && isMars()}"><a data-ng-click="setMars()">Mars</a></li>
-        <li role="presentation" data-ng-class="{active: !isCompare() && isRain()}"><a data-ng-click="setRain()">Making it Rain</a></li>
+        <li role="presentation" class="disabled" data-ng-class="{active: !isCompare() && isRain()}"><a data-ng-click="setRain()">Making it Rain</a></li>
       </ul>
       <div data-ng-show="!isCompare()">
         <div>
