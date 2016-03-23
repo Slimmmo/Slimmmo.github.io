@@ -1250,7 +1250,7 @@ advApp.controller('advController', ['$document', '$filter', '$scope', function($
     $scope.rain.unlocks[8] = [[5, [16, 55]],[15, [16, 55]],[30, [16, 55]],[60, [16, 555]]];
     $scope.rain.unlocks[9] = [[1, [19, 2]],[2, [19, 2]],[3, [19, 2]],[4, [19, 2]],[5, [19, 2]],[7, [19, 2]],[10, [19, 2]],[15, [19, 2]],[20, [18, 7]],[25, [19, 2]],[35, [19, 2]],[45, [19, 2]],[55, [19, 2]]];
     $scope.rain.cashUpgrades = [[3.5e+4, [0, 5], false],[1e+6, [2, 5], false],[2.5e+6, [4, 5], false],[1e+7, [6, 5], false],[2.5e+7, [8, 5], false],[2.5e+9, [10, 5], false],[1e+11, [12, 5], false],[5e+12, [14, 5], false],[1e+13, [16, 5], false],[5e+13, [18, 7], false]];
-    $scope.rain.angelUpgrades = [[654321, [0, 9], false, false],[7654321, [2, 9], false, false],[87654321, [4, 9], false, false],[987654321, [6, 9], false, false],[1e+9, [8, 9], false, false],[1.21e+11, [10, 9], false, false],[1e+12, [12, 9], false, false],[1.4e+13, [14, 9], false, false],[1.51e+14, [16, 9], false, false],[5.5e+16, [18, 9], false, false],[5.5e+16, [31, 111], false, false],[5.5e+16, [33, 100], false, false],[5.5e+16, [35, 75], false, false],[5.5e+16, [37, 50], false, false],[5.5e+16, [39, 40], false, false]];
+    $scope.rain.angelUpgrades = [[654321, [0, 9], false, false],[7e+6, [2, 9], false, false],[8e+7, [4, 9], false, false],[9e+8, [6, 9], false, false],[1e+9, [8, 9], false, false],[1.21e+11, [10, 9], false, false],[1e+12, [12, 9], false, false],[1.4e+13, [14, 9], false, false],[1.51e+14, [16, 9], false, false],[5.5e+16, [18, 9], false, false],[5.5e+16, [30, 111], false, false],[5.5e+16, [31, 100], false, false],[5.5e+16, [32, 75], false, false],[5.5e+16, [33, 50], false, false],[5.5e+16, [34, 40], false, false]];
     $scope.rain.managerUpgrades = [];
   };
   loadDefaults();
