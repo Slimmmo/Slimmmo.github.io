@@ -102,7 +102,6 @@ advApp.controller('advController', ['$document', '$filter', '$scope', function($
   $scope.illionsArray = illionsArr.slice(1);
   $scope.mars = {};
   $scope.moon = {};
-  $scope.rain = {};
   $scope.raw = false;
   $scope.ref = $scope.earth;
   $scope.reverse = true;
@@ -882,10 +881,6 @@ advApp.controller('advController', ['$document', '$filter', '$scope', function($
     return $scope.ref === $scope.moon;
   };
   
-  $scope.isRain = function() {
-    return $scope.ref === $scope.rain;
-  };
-  
   function lzf_decode(str) {
     var iidx = 0, oidx = 0, oLen = str.length,
     temp = Array.apply(null, new Array(oLen)).map(Number.prototype.valueOf, 0);
@@ -1031,10 +1026,6 @@ advApp.controller('advController', ['$document', '$filter', '$scope', function($
   $scope.setMoon = function() {
     setPlanet('moon')
   };
-  
-  $scope.setRain = function() {
-    setPlanet('rain')
-  }
 
   function setPlanet(planet) {
     $scope.clearAfter = [false, false];
