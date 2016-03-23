@@ -1144,14 +1144,15 @@ advApp.controller('advController', ['$document', '$filter', '$scope', function($
       ['Terrorformer', 0, false, 0, 0, 0, 0]
     ];
     $scope.rain.angelScale = 150;
+    /* this is a placeholder */
     $scope.rain.baseCost = [7, 83, 749, 24195, 402667, 98285656, 174429216, 5758901760, 33333333333];
-    $scope.rain.basePower = [1.025, 1.045, 1.085, 1.165, 1.325, 2.285, 3.565, 5, 10];
-    /* 5 and 10 are placeholders */
-    $scope.rain.baseProfit = [0.5, 10, 90, 720, 8640, 1244000, 14929000, 10, 10];
-    /* 10 and 10 at the end are placeholders */
+    $scope.rain.basePower = [1.025, 1.045, 1.085, 1.165, 1.325, 2.285, 3.565, 6.125, 10];
+    /* 10 at the end is a placeholder */
+    $scope.rain.baseProfit = [0.5, 10, 90, 720, 8640, 1244000, 14929000, 179159000, 10];
+    /* 10 at the end is a placeholder */
     /* Unsure about exact values past 1 million, (most likely wrongly) assuming that, e.g. 1.244 million equals 1,244,000 */
-    $scope.rain.baseSpeed = [2, 6, 10, 21, 30, 126, 216, 4000, 80000];
-    /* 4000 and 80000 are placeholders */
+    $scope.rain.baseSpeed = [2, 6, 10, 21, 30, 126, 216, 375, 80000];
+    /* 80000 at the end is a placeholder */
     /* Assuming that the investments are polite enough to use natural numbers */
     $scope.rain.investments =[
       ['Micro-Eggs', 1, false, 0, 0, 0, 0],
