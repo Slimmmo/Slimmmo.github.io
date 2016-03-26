@@ -1098,6 +1098,7 @@ advApp.controller('advController', ['$document', '$filter', '$scope', function($
     $scope.earth.basePower = [1.07, 1.15, 1.14, 1.13, 1.12, 1.11, 1.1, 1.09, 1.08, 1.07];
     $scope.earth.baseProfit = [1, 60, 540, 4320, 51840, 622080, 7464960, 89579520, 1074954240, 29668737024];
     $scope.earth.baseSpeed = [0.6, 3, 6, 12, 24, 96, 384, 1536, 6144, 36864];
+    $scope.earth.hasMegaTickets = true;
     $scope.earth.investments = [
       ['Lemon', 1, false, 0, 0, 0, 0],
       ['Newspaper', 0, false, 0, 0, 0, 0],
@@ -1115,6 +1116,7 @@ advApp.controller('advController', ['$document', '$filter', '$scope', function($
     $scope.moon.basePower = [1.05, 1.21, 1.07, 1.19, 1.09, 1.15, 1.13, 1.17, 1.11, 1.5];
     $scope.moon.baseProfit = [1, 21, 2001, 376, 98820, 1976400, 32940000, 1152900000, 11067840000, 332035000000];
     $scope.moon.baseSpeed = [2, 7, 28, 2, 45, 180, 600, 3000, 14400, 86400];
+    $scope.moon.hasMegaTickets = true;
     $scope.moon.investments = [
       ['Moon Shoe', 1, false, 0, 0, 0, 0],
       ['Gravity Booth', 0, false, 0, 0, 0, 0],
@@ -1132,6 +1134,7 @@ advApp.controller('advController', ['$document', '$filter', '$scope', function($
     $scope.mars.basePower = [1.01, 1.03, 1.05, 1.07, 1.11, 1.04, 1.07, 1.09, 1.25];
     $scope.mars.baseProfit = [0.011, 1, 4321, 4007310, 518783295, 500634321, 7543177325, 69263532485, 99760273916482500];
     $scope.mars.baseSpeed = [0.5, 3, 9, 32, 64, 4, 18, 42, 43200];
+    $scope.mars.hasMegaTickets = true;
     $scope.mars.investments = [
       ['Red Dirt', 1, false, 0, 0, 0, 0],
       ['Marsies', 0, false, 0, 0, 0, 0],
@@ -1148,6 +1151,7 @@ advApp.controller('advController', ['$document', '$filter', '$scope', function($
     $scope.rain.basePower = [1.025, 1.045, 1.085, 1.165, 1.325, 2.285, 3.565, 6.125, 12.25];
     $scope.rain.baseProfit = [0.5, 10, 90, 720, 8640, 1244150, 14929000, 179159000, 7979500000];
     $scope.rain.baseSpeed = [2, 6, 10, 21, 30, 126, 216, 375, 696];
+    $scope.rain.hasMegaTickets = false;
     $scope.rain.investments =[
       ['Micro-Eggs', 1, false, 0, 0, 0, 0],
       ['Sham-Rocks', 0, false, 0, 0, 0, 0],
