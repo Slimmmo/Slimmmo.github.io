@@ -1146,7 +1146,7 @@ advApp.controller('advController', ['$document', '$filter', '$scope', function($
     $scope.rain.angelScale = 45;
     $scope.rain.baseCost = [7, 83, 749, 24195, 402667, 98285656, 174429216, 5758901760, 33333333333];
     $scope.rain.basePower = [1.025, 1.045, 1.085, 1.165, 1.325, 2.285, 3.565, 6.125, 12.25];
-    $scope.rain.baseProfit = [0.5, 10, 90, 720, 8640, 1244000, 14929000, 179159000, 7979500000];
+    $scope.rain.baseProfit = [0.5, 10, 90, 720, 8640, 1244150, 14929000, 179159000, 7979500000];
     $scope.rain.baseSpeed = [2, 6, 10, 21, 30, 126, 216, 375, 696];
     $scope.rain.investments =[
       ['Micro-Eggs', 1, false, 0, 0, 0, 0],
