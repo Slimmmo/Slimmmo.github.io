@@ -103,7 +103,7 @@ advApp.controller('advController', ['$document', '$filter', '$scope', function($
   $scope.mars = {};
   $scope.moon = {};
   $scope.raw = false;
-  $scope.ref = $scope.earth;
+  $scope.ref = $scope.rain;
   $scope.reverse = true;
   $scope.selectAll = [false, false, false, false];
   $scope.showUpdate = false;
@@ -1098,6 +1098,7 @@ advApp.controller('advController', ['$document', '$filter', '$scope', function($
     $scope.earth.basePower = [1.07, 1.15, 1.14, 1.13, 1.12, 1.11, 1.1, 1.09, 1.08, 1.07];
     $scope.earth.baseProfit = [1, 60, 540, 4320, 51840, 622080, 7464960, 89579520, 1074954240, 29668737024];
     $scope.earth.baseSpeed = [0.6, 3, 6, 12, 24, 96, 384, 1536, 6144, 36864];
+    $scope.earth.hasMegaTickets = true;
     $scope.earth.investments = [
       ['Lemon', 1, false, 0, 0, 0, 0],
       ['Newspaper', 0, false, 0, 0, 0, 0],
@@ -1115,6 +1116,7 @@ advApp.controller('advController', ['$document', '$filter', '$scope', function($
     $scope.moon.basePower = [1.05, 1.21, 1.07, 1.19, 1.09, 1.15, 1.13, 1.17, 1.11, 1.5];
     $scope.moon.baseProfit = [1, 21, 2001, 376, 98820, 1976400, 32940000, 1152900000, 11067840000, 332035000000];
     $scope.moon.baseSpeed = [2, 7, 28, 2, 45, 180, 600, 3000, 14400, 86400];
+    $scope.moon.hasMegaTickets = true;
     $scope.moon.investments = [
       ['Moon Shoe', 1, false, 0, 0, 0, 0],
       ['Gravity Booth', 0, false, 0, 0, 0, 0],
@@ -1132,6 +1134,7 @@ advApp.controller('advController', ['$document', '$filter', '$scope', function($
     $scope.mars.basePower = [1.01, 1.03, 1.05, 1.07, 1.11, 1.04, 1.07, 1.09, 1.25];
     $scope.mars.baseProfit = [0.011, 1, 4321, 4007310, 518783295, 500634321, 7543177325, 69263532485, 99760273916482500];
     $scope.mars.baseSpeed = [0.5, 3, 9, 32, 64, 4, 18, 42, 43200];
+    $scope.mars.hasMegaTickets = true;
     $scope.mars.investments = [
       ['Red Dirt', 1, false, 0, 0, 0, 0],
       ['Marsies', 0, false, 0, 0, 0, 0],
@@ -1143,17 +1146,12 @@ advApp.controller('advController', ['$document', '$filter', '$scope', function($
       ['LIFE Pod', 0, false, 0, 0, 0, 0],
       ['Terrorformer', 0, false, 0, 0, 0, 0]
     ];
-    $scope.rain.angelScale = 150;
-    /* placeholder number, 0 angels at 7.15 billion */
+    $scope.rain.angelScale = 45;
     $scope.rain.baseCost = [7, 83, 749, 24195, 402667, 98285656, 174429216, 5758901760, 33333333333];
     $scope.rain.basePower = [1.025, 1.045, 1.085, 1.165, 1.325, 2.285, 3.565, 6.125, 12.25];
-    /* maybe the 12.25 is inaccurate */
-    $scope.rain.baseProfit = [0.5, 10, 90, 720, 8640, 1244000, 14929000, 179159000, 7979500000];
-    /* last number has a 99% chance of being inaccurate */
-    /* Unsure about exact values past 1 million, (most likely wrongly) assuming that, e.g. 1.244 million equals 1,244,000 */
+    $scope.rain.baseProfit = [0.5, 10, 90, 720, 8640, 1244150, 14929000, 179159000, 7979500000];
     $scope.rain.baseSpeed = [2, 6, 10, 21, 30, 126, 216, 375, 696];
-    /* last number has a 99% chance of being inaccurate */
-    /* Assuming that the investments are polite enough to use natural numbers */
+    $scope.rain.hasMegaTickets = false;
     $scope.rain.investments =[
       ['Micro-Eggs', 1, false, 0, 0, 0, 0],
       ['Sham-Rocks', 0, false, 0, 0, 0, 0],
@@ -1243,15 +1241,15 @@ advApp.controller('advController', ['$document', '$filter', '$scope', function($
     $scope.rain.unlocks[0] = [[100, [0, 25]],[1000, [0, 50]],[2000, [0, 75]],[3000, [0, 100]],[4000, [0, 125]],[5000, [0, 150]],[6000, [0, 175]]];
     $scope.rain.unlocks[1] = [[100, [2, 200]],[600, [2, 225]],[1500, [2, 250]],[3000, [2, 275]]];
     $scope.rain.unlocks[2] = [[60, [4, 25]],[400, [4, 250]],[1200, [4, 2500]],[1800, [4, 25000]]];
-    $scope.rain.unlocks[3] = [[50, [6, 25]],[200, [6, 250]],[500, [6, 2500]],[1000, [6, 250000]]];
+    $scope.rain.unlocks[3] = [[50, [6, 25]],[200, [6, 250]],[500, [6, 2500]],[1000, [6, 25000]]];
     $scope.rain.unlocks[4] = [[25, [8, 99]],[100, [8, 99]],[250, [8, 99]],[500, [8, 99]]];
     $scope.rain.unlocks[5] = [[5, [10, 55]],[25, [10, 55]],[75, [10, 55]],[125, [10, 55]],[175, [10, 555]]];
     $scope.rain.unlocks[6] = [[5, [12, 55]],[20, [12, 55]],[60, [12, 55]],[120, [12, 555]]];
     $scope.rain.unlocks[7] = [[5, [14, 55]],[20, [14, 55]],[40, [14, 55]],[80, [14, 555]]];
     $scope.rain.unlocks[8] = [[5, [16, 55]],[15, [16, 55]],[30, [16, 55]],[60, [16, 555]]];
-    $scope.rain.unlocks[9] = [[1, [19, 2]],[2, [19, 2]],[3, [19, 2]],[4, [19, 2]],[5, [19, 2]],[7, [19, 2]],[10, [19, 2]],[15, [19, 2]],[20, [18, 7]],[25, [19, 2]],[35, [19, 2]],[45, [19, 2]],[55, [19, 2]]];
-    $scope.rain.cashUpgrades = [[3.5e+4, [0, 5], false],[1e+6, [2, 5], false],[2.5e+6, [4, 5], false],[1e+7, [6, 5], false],[2.5e+7, [8, 5], false],[2.5e+9, [10, 5], false],[1e+11, [12, 5], false],[5e+12, [14, 5], false],[1e+13, [16, 5], false],[5e+13, [18, 7], false],[2.5e+14, [0, 5], false],[1e+15, [2, 5], false],[2.5e+15, [4, 5], false],[5e+15, [6, 5], false],[1e+16, [8, 5], false],[5e+16, [10, 5], false],[7.5e+16, [12, 5],false],[5e+17, [14, 5], false],[2.5e+18, [16, 5], false],[1e+19, [18, 9], false]];
-    $scope.rain.angelUpgrades = [[654321, [0, 9], false, false],[7e+6, [2, 9], false, false],[8e+7, [4, 9], false, false],[9e+8, [6, 9], false, false],[1e+9, [8, 9], false, false],[1.21e+11, [10, 9], false, false],[1e+12, [12, 9], false, false],[1.4e+13, [14, 9], false, false],[1.51e+14, [16, 9], false, false],[5.5e+16, [18, 9], false, false],[5.5e+16, [30, 111], false, false],[5.5e+16, [31, 100], false, false],[5.5e+16, [32, 75], false, false],[5.5e+16, [33, 50], false, false],[5.5e+16, [34, 40], false, false]];
+    $scope.rain.unlocks[9] = [[1, [19, 2]],[2, [19, 2]],[3, [19, 2]],[4, [19, 2]],[5, [19, 2]],[7, [19, 2]],[10, [19, 2]],[15, [19, 2]],[20, [18, 7]],[25, [19, 2]],[35, [19, 2]],[45, [19, 2]],[55, [18, 2]]];
+    $scope.rain.cashUpgrades = [[3.5e+5, [0, 5], false],[1e+6, [2, 5], false],[2.5e+6, [4, 5], false],[1e+7, [6, 5], false],[2.5e+7, [8, 5], false],[2.5e+9, [10, 5], false],[1e+11, [12, 5], false],[5e+12, [14, 5], false],[1e+13, [16, 5], false],[5e+13, [18, 7], false],[2.5e+14, [0, 5], false],[1e+15, [2, 5], false],[2.5e+15, [4, 5], false],[5e+15, [6, 5], false],[1e+16, [8, 5], false],[5e+16, [10, 5], false],[7.5e+16, [12, 5],false],[5e+17, [14, 5], false],[2.5e+18, [16, 5], false],[1e+19, [18, 9], false],[5e+19, [20, 1], false],[5e+22, [0, 7], false],[1e+23, [2, 7], false],[2e+23, [4, 7], false],[8e+23, [6, 7], false],[3.2e+24, [8, 7], false],[15.1e+24, [10, 7], false],[32.5e+24, [12, 7], false],[56.7e+24, [14, 7], false],[75e+24, [16, 7], false],[100e+24, [18, 8], false], [400e+27, [0, 9], false],[1.6e+30, [2, 9], false],[6.4e+30, [4, 9], false],[12.8e+30, [6, 9], false],[25e+30, [8, 9], false],[88.8e+30, [10, 9], false],[300e+30, [12, 9], false],[2e+33, [14, 9], false],[10e+33, [16, 9], false],[50e+33, [18, 10], false],[1e+36, [0, 11], false],[2e+36, [2, 11], false],[3e+36, [4, 11], false],[4e+36, [6, 11], false],[5e+36, [8, 11], false],[7e+36, [10, 11], false],[8e+36, [12, 11], false],[9e+36, [14, 11], false],[10e+36, [16, 11], false],[100e+36, [18, 12], false],[3.33e+39, [0, 13], false],[6.66e+39, [2, 13], false],[9.99e+39, [4, 13], false],[24e+39, [6, 13], false],[48e+39, [8, 13], false],[128e+39, [10, 13], false],[200e+39, [12, 13], false],[355e+39, [14, 13], false],[500e+39, [16, 13], false],[1e+42, [18, 14], false],[5.555e+45, [0, 15], false],[55.555e+45, [2, 15], false],[555.555e+45, [4, 15], false],[5.555e+48, [6, 15], false],[55.555e+48, [8, 15], false],[5.555e+51, [10, 15], false],[55.555e+51, [12, 15], false],[555.555e+51, [14, 15], false],[5.555e+54, [16, 15], false],[55.555e+54, [18, 16], false]];
+    $scope.rain.angelUpgrades = [[654321, [0, 9], false, false],[7e+6, [2, 9], false, false],[8.7e+7, [4, 9], false, false],[9.87e+8, [6, 9], false, false],[1e+9, [8, 9], false, false],[1.21e+11, [10, 9], false, false],[1e+12, [12, 9], false, false],[1.4e+13, [14, 9], false, false],[1.51e+14, [16, 9], false, false],[5.5e+16, [18, 9], false, false],[5.5e+16, [30, 111], false, false],[5.5e+16, [31, 100], false, false],[5.5e+16, [32, 75], false, false],[5.5e+16, [33, 50], false, false],[5.5e+16, [34, 40], false, false],[5.5e+16, [35, 20], false, false],[5.5e+16, [36, 15], false, false],[5.5e+16, [37, 10], false, false],[5.5e+16, [38, 5], false, false],[5.5e+16, [0, 9], false, false],[100e+15, [2, 9], false, false],[1e+18, [4, 9], false, false],[10e+18, [6, 9], false, false],[100e+18, [8, 9], false, false],[10e+21, [10, 9], false, false],[100e+21, [12, 9], false, false],[1e+24, [14, 9], false, false],[10e+24, [16, 9], false, false],[1e+27, [18, 9], false, false]];
     $scope.rain.managerUpgrades = [];
   };
   loadDefaults();
