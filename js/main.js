@@ -101,6 +101,7 @@ advApp.controller('advController', ['$document', '$filter', '$scope', function($
   $scope.filterTime = {'days': null, 'hours': null, 'minutes': null, 'percentage': null};
   $scope.illionsArray = illionsArr.slice(1);
   $scope.mars = {};
+  $scope.mobilePage = 'Investments';
   $scope.moon = {};
   $scope.raw = false;
   $scope.ref = $scope.earth;
@@ -108,7 +109,8 @@ advApp.controller('advController', ['$document', '$filter', '$scope', function($
   $scope.selectAll = [false, false, false, false];
   $scope.showUpdate = false;
   $scope.sortIndex = 2;
-  var planets = ['earth', 'moon', 'mars'/*, 'evil'*/];
+  $scope.scopePlanets = ['earth', 'moon', 'mars'/*, 'evil'*/];
+  var planets = $scope.scopePlanets;
 
   angular.element(document).ready(function() {
     var fileInput = document.getElementById('fileInput');
@@ -625,6 +627,10 @@ advApp.controller('advController', ['$document', '$filter', '$scope', function($
     return temp;
   }
 
+  $scope.displayNameForPlanet = function(planet) {
+    return $scope[planet].displayName;
+  }
+
   $scope.export = function() {
     var blob = new Blob([getJsonForExport()], {type: "application/json"});
     var title = "AdvCapCalc.json";
@@ -880,6 +886,10 @@ advApp.controller('advController', ['$document', '$filter', '$scope', function($
   $scope.isMoon = function() {
     return $scope.ref === $scope.moon;
   };
+
+  $scope.isPlanet = function(planet) {
+    return $scope.ref === $scope[planet];
+  }
   
   function lzf_decode(str) {
     var iidx = 0, oidx = 0, oLen = str.length,
@@ -945,6 +955,14 @@ advApp.controller('advController', ['$document', '$filter', '$scope', function($
     loc.sacAngels = obj.angelInvestorsSpent;
     // how to find gold multipliers, flux, bonus angel effectiveness (kong login etc), suits
   };
+
+  $scope.mobileIsPage = function(page) {
+    return $scope.mobilePage === page;
+  }
+
+  $scope.mobileSetPage = function(page) {
+    $scope.mobilePage = page;
+  }
 
   $scope.resetPlanet = function(loc) {
     var i = 0;
@@ -1027,6 +1045,10 @@ advApp.controller('advController', ['$document', '$filter', '$scope', function($
     setPlanet('moon')
   };
 
+  $scope.setPlanet = function(planet) {
+    setPlanet(planet);
+  }
+
   function setPlanet(planet) {
     $scope.clearAfter = [false, false];
     $scope.fillBefore = [false, false];
@@ -1098,6 +1120,7 @@ advApp.controller('advController', ['$document', '$filter', '$scope', function($
     $scope.earth.basePower = [1.07, 1.15, 1.14, 1.13, 1.12, 1.11, 1.1, 1.09, 1.08, 1.07];
     $scope.earth.baseProfit = [1, 60, 540, 4320, 51840, 622080, 7464960, 89579520, 1074954240, 29668737024];
     $scope.earth.baseSpeed = [0.6, 3, 6, 12, 24, 96, 384, 1536, 6144, 36864];
+    $scope.earth.displayName = "Earth";
     $scope.earth.hasMegaTickets = true;
     $scope.earth.investments = [
       ['Lemon', 1, false, 0, 0, 0, 0],
@@ -1116,6 +1139,7 @@ advApp.controller('advController', ['$document', '$filter', '$scope', function($
     $scope.moon.basePower = [1.05, 1.21, 1.07, 1.19, 1.09, 1.15, 1.13, 1.17, 1.11, 1.5];
     $scope.moon.baseProfit = [1, 21, 2001, 376, 98820, 1976400, 32940000, 1152900000, 11067840000, 332035000000];
     $scope.moon.baseSpeed = [2, 7, 28, 2, 45, 180, 600, 3000, 14400, 86400];
+    $scope.moon.displayName = "Moon";
     $scope.moon.hasMegaTickets = true;
     $scope.moon.investments = [
       ['Moon Shoe', 1, false, 0, 0, 0, 0],
@@ -1134,6 +1158,7 @@ advApp.controller('advController', ['$document', '$filter', '$scope', function($
     $scope.mars.basePower = [1.01, 1.03, 1.05, 1.07, 1.11, 1.04, 1.07, 1.09, 1.25];
     $scope.mars.baseProfit = [0.011, 1, 4321, 4007310, 518783295, 500634321, 7543177325, 69263532485, 99760273916482500];
     $scope.mars.baseSpeed = [0.5, 3, 9, 32, 64, 4, 18, 42, 43200];
+    $scope.mars.displayName = "Mars";
     $scope.mars.hasMegaTickets = true;
     $scope.mars.investments = [
       ['Red Dirt', 1, false, 0, 0, 0, 0],
