@@ -356,10 +356,6 @@ advApp.controller('advController', ['$document', '$filter', '$scope', function($
   };
   
   $scope.$watch('accOpen[2]', function(newVal, oldVal, $scope){
-    if (newVal) {
-        console.log("Angel Accordian Opened");
-    }
-    
     if (newVal && $scope.ref.angelExclamation && !$scope.ref.hasSeenAngelExclamation) {
         $scope.ref.hasSeenAngelExclamation = true;
         $scope.ref.angelExclamation = false;
@@ -594,10 +590,6 @@ advApp.controller('advController', ['$document', '$filter', '$scope', function($
   };
   
   $scope.$watch('accOpen[4]', function(newVal, oldVal, $scope){
-    if (newVal) {
-        console.log("Suit Accordian Opened");
-    }
-    
     if (newVal && $scope.ref.suitExclamation && !$scope.ref.hasSeenSuitExclamation) {
         $scope.ref.hasSeenSuitExclamation = true;
         $scope.ref.suitExclamation = false;
