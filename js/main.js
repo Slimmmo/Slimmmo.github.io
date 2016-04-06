@@ -228,7 +228,7 @@ advApp.controller('advController', ['$document', '$filter', '$scope', function($
             }
           }
         } else if (applyRow === loc.investments.length + 1) {
-          loc.angelEffectiveness += row[i][1] / 100;
+          loc.angelEffectiveness += row[i][1];
         } else if (row[i][0] < 30 || row[i][0] > 29 + loc.investments.length) {
           throw 'Tuple not dealt with: ' + row;
         }
@@ -527,10 +527,10 @@ advApp.controller('advController', ['$document', '$filter', '$scope', function($
       j++;
     }
     if (loc.bonusAngelEffectiveness > 0) {
-      loc.angelEffectiveness += loc.bonusAngelEffectiveness / 100;
+      loc.angelEffectiveness += loc.bonusAngelEffectiveness;
     }
     for (i = 0; i < loc.investments.length; i++) {
-      loc.investments[i][3] *= (1 + (loc.angelEffectiveness * loc.numAngels));
+      loc.investments[i][3] *= (1 + (loc.angelEffectiveness * loc.numAngels / 100));
       loc.investments[i][5] = loc.investments[i][3] / loc.investments[i][4]
       loc.totalMoneyPerSecond += loc.investments[i][5];
     }
@@ -797,7 +797,7 @@ advApp.controller('advController', ['$document', '$filter', '$scope', function($
         loc.managerUpgrades[i][1][loc.managerUpgrades[i][1].length - 1] = false;
       }
     }
-    loc.angelEffectiveness = 0.02;
+    loc.angelEffectiveness = 2;
     loc.angelExclamation = false;
     loc.bonusAngelEffectiveness = 0;
     loc.bonusMultiplier = 0;
@@ -1025,7 +1025,7 @@ advApp.controller('advController', ['$document', '$filter', '$scope', function($
         loc.managerUpgrades[i][1][loc.managerUpgrades[i][1].length - 1] = false;
       }
     }
-    loc.angelEffectiveness = 0.02;
+    loc.angelEffectiveness = 2;
     loc.angelExclamation = false;
     loc.bonusAngelEffectiveness = 0;
     loc.bonusMultiplier = 0;
@@ -1222,7 +1222,7 @@ advApp.controller('advController', ['$document', '$filter', '$scope', function($
       ['Terrorformer', 0, false, 0, 0, 0, 0]
     ];
     for (var p in planets) {
-      $scope[planets[p]].angelEffectiveness = 0.02;
+      $scope[planets[p]].angelEffectiveness = 2;
       $scope[planets[p]].angelExclamation = false;
       $scope[planets[p]].angelIllions = '';
       $scope[planets[p]].bestSuit = null;
