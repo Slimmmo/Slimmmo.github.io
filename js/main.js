@@ -476,9 +476,9 @@ advApp.controller('advController', ['$document', '$filter', '$scope', function($
       }
     }
     if (j === true) {
-      selectAll[0] = true;
+      $scope.selectAll[0] = true;
     } else {
-      selectAll[0] = false;
+      $scope.selectAll[0] = false;
     }
     j = 0;
     for (i = 0; i < loc.investments.length; i++) {
