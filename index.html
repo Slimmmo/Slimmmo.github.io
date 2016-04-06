@@ -153,12 +153,19 @@
                 </tbody>
               </table>
             </uib-accordion-group>
-            <uib-accordion-group is-open="accOpen[4]">
+            <uib-accordion-group is-open="accOpen[4]" class="form-inline">
               <uib-accordion-heading>
-                Gold Upgrades<span class="pull-right fa" ng-class="{'fa-chevron-down': accOpen[4], 'fa-chevron-right': !accOpen[4]}"></span>
+                Gold Upgrades + Suits<i data-ng-show="ref.suitExclamation" class="fa fa-exclamation"></i><span class="pull-right fa" ng-class="{'fa-chevron-down': accOpen[4], 'fa-chevron-right': !accOpen[4]}"></span>
               </uib-accordion-heading>
-              <label class="col-xs-6"><input type="number" class="form-control" min="0" data-ng-model="ref.triples"> # 3x Multipliers</label>
-              <label class="col-xs-6"><input type="number" class="form-control" min="0" data-ng-model="ref.flux"> # Flux Capitalors</label>
+              <div class="row">
+                <label class="col-xs-6"><input type="number" class="form-control" min="0" data-ng-model="ref.triples"> # 3x Multipliers</label>
+                <label class="col-xs-6"><input type="number" class="form-control" min="0" data-ng-model="ref.flux"> # Flux Capitalors</label>
+              </div>
+              <div class="multicolumn">
+                <div data-ng-repeat="suit in ref.suits track by $index">
+                  <label class="strike-when-checked checkbox-inline"><input type="checkbox" data-ng-model="ref.suits[$index][0]" data-ng-change="changeSuits(ref, $index)"> <span>{{suitList[$index][0]}} Suit<i data-ng-show="ref.suits[$index][1]" title="{{ref.suits[$index][1] | percentage}} increase in $ / second" data-ng-class="{best_suit: $index == ref.bestSuit}" class="fa fa-exclamation"></i></span></label>
+                </div>
+              </div>
             </uib-accordion-group>
             <uib-accordion-group is-open="accOpen[5]">
               <uib-accordion-heading>

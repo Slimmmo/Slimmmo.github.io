@@ -108,6 +108,13 @@ advApp.controller('advController', ['$document', '$filter', '$scope', function($
   $scope.selectAll = [false, false, false, false];
   $scope.showUpdate = false;
   $scope.sortIndex = 2;
+  $scope.suitList = [
+    ['Blue', 3],
+    ['Gold', 2],
+    ['Green', 10],
+    ['Red', 2],
+    ['White', 2]
+  ];
   var planets = ['earth', 'moon', 'mars'/*, 'evil'*/];
 
   angular.element(document).ready(function() {
@@ -293,6 +300,7 @@ advApp.controller('advController', ['$document', '$filter', '$scope', function($
   $scope.calc = function(loc) {
     calcState(loc);
     calcAngels(loc);
+    calcSuits(loc);
     calcRecommendations(loc);
     localStorage.setItem('planets', getJsonForExport());
   };
@@ -457,24 +465,39 @@ advApp.controller('advController', ['$document', '$filter', '$scope', function($
   };
 
   function calcState(loc) {
-    var i = 0, j = 0,
+    var i = 0, j = true,
     highestSharedLevel = loc.investments[0][1];
     loc.totalMoneyPerSecond = 0;
-    loc.angelEffectiveness = 0.02;
+    loc.angelEffectiveness = 2 + (loc.suits[suitFromName('red')][0] ? $scope.suitList[suitFromName('red')][1] : 0) + (loc.suits[suitFromName('green')][0] ? $scope.suitList[suitFromName('green')][1] : 0);
     for (; i < loc.investments.length; i++) {
+      if (loc.investments[i][2] === false) {
+        j = false;
+        break;
+      }
+    }
+    if (j === true) {
+      selectAll[0] = true;
+    } else {
+      selectAll[0] = false;
+    }
+    j = 0;
+    for (i = 0; i < loc.investments.length; i++) {
       if (loc.investments[i][1] < highestSharedLevel) {
         highestSharedLevel = loc.investments[i][1];
       }
       loc.investments[i][3] = loc.investments[i][1] * loc.baseProfit[i];
-      if (loc.triples > 0 || loc.bonusMultiplier > 0) {
-        loc.investments[i][3] *= (3 * loc.triples) + loc.bonusMultiplier;
+      if (loc.triples > 0 || loc.bonusMultiplier > 0 || loc.suits[suitFromName('gold')][0] || loc.suits[suitFromName('blue')][0]) {
+        loc.investments[i][3] *= (3 * loc.triples) + loc.bonusMultiplier + (loc.suits[suitFromName('gold')][0] ? $scope.suitList[suitFromName('gold')][1] : 0) + (loc.suits[suitFromName('blue')][0] ? $scope.suitList[suitFromName('blue')][1] : 0);
       }
       if (loc.investments[i][2]) {
-        loc.investments[i][3] *= 7.77;
+        loc.investments[i][3] *= selectAll[0] ? 17.77 : 7.77;
       }
       loc.investments[i][4] = loc.baseSpeed[i];
       if (loc.flux > 0) {
         loc.investments[i][4] /= (1 + loc.flux * 1.21);
+      }
+      if (loc.suits[suitFromName('white')][0]) {
+        loc.investments[i][4] /= 2;
       }
       loc.upgradeCosts[i][0] = calcUnlockCost(loc, i, loc.investments[i][1], 1);
       loc.upgradeCosts[i][2] = calcUnlockCost(loc, i, loc.investments[i][1], 10);
@@ -522,6 +545,37 @@ advApp.controller('advController', ['$document', '$filter', '$scope', function($
     }
   };
 
+  function calcSuits(loc) {
+    var i = 0, max = [-1, 0],
+    tempPlanet = null;
+    loc.suitExclamation = false;
+    for (; i < loc.suits.length; i++) {
+      if (loc.suits[i][0] === false) {
+        tempPlanet = deepCopy(loc);
+        tempPlanet.suits[i][0] = true;
+        $scope.changeSuits(tempPlanet, i);
+        calcState(tempPlanet);
+        var delta = tempPlanet.totalMoneyPerSecond - loc.totalMoneyPerSecond;
+        var percent = delta / loc.totalMoneyPerSecond;
+        if (delta > 0) {
+          loc.suits[i][1] = percent;
+          loc.suitExclamation = true;
+          if (percent > max[1]) {
+            max[0] = i;
+            max[1] = percent;
+          }
+        } else {
+          loc.suits[i][1] = false;
+        }
+      }
+    }
+    if (max[0] !== -1) {
+      loc.bestSuit = max[0];
+    } else {
+      loc.bestSuit = null;
+    }
+  };
+
   function calcUpgradeScore(planet, loc, unlockCost) {
     var overflowPotential = planet.totalMoneyPerSecond * unlockCost,
     divNum = 0,
@@ -538,6 +592,16 @@ advApp.controller('advController', ['$document', '$filter', '$scope', function($
       retVal *= Number('1e+' + divNum);
     }
     return retVal;
+  };
+
+  $scope.changeSuits = function(loc, index) {
+    for (var i = 0; i < loc.suits.length; i++) {
+      if (i !== index) {
+        loc.suits[i][0] = false;
+      } else {
+        loc.suits[i][1] = false;
+      }
+    }
   };
 
   $scope.checkAngel = function(loc, index) {
@@ -751,6 +815,7 @@ advApp.controller('advController', ['$document', '$filter', '$scope', function($
     loc.rec = null;
     loc.recTable = [];
     loc.recommendation = '';
+    loc.suitExclamation = false;
     loc.totalMoneyPerSecond = 0;
     loc.triples = 0;
     loc.upgradeCosts = [];
@@ -887,32 +952,32 @@ advApp.controller('advController', ['$document', '$filter', '$scope', function($
     do {
       var ctrl = str.charCodeAt(iidx++);
       if (ctrl < (1 << 5)) {
-      	ctrl++;
-      	while (oidx + ctrl > oLen) {
-      	  oLen++;
-      	  temp.push(String.fromCharCode(0));
-      	}
-      	do {
-      	  temp[oidx++] = str.charAt(iidx++);
-      	} while ((--ctrl) != 0);
+        ctrl++;
+        while (oidx + ctrl > oLen) {
+          oLen++;
+          temp.push(String.fromCharCode(0));
+        }
+        do {
+          temp[oidx++] = str.charAt(iidx++);
+        } while ((--ctrl) != 0);
       } else {
-      	var len = ctrl >> 5, reference = oidx - ((ctrl & 0x1f) << 8) - 1;
-      	if (len == 7) {
-      	  len += str.charCodeAt(iidx++);
-      	}
-      	reference -= str.charCodeAt(iidx++);
-      	while (oidx + len + 2 > oLen) {
-      	  oLen++;
-      	  temp.push(String.fromCharCode(0));
-      	}
-      	if (reference < 0) {
-      	  console.log('error');
-      	  return 0;
-      	}
-      	temp[oidx++] = temp[reference++];
-      	do {
-      	  temp[oidx++] = temp[reference++];
-      	} while ((--len) >= 0);
+        var len = ctrl >> 5, reference = oidx - ((ctrl & 0x1f) << 8) - 1;
+        if (len == 7) {
+          len += str.charCodeAt(iidx++);
+        }
+        reference -= str.charCodeAt(iidx++);
+        while (oidx + len + 2 > oLen) {
+          oLen++;
+          temp.push(String.fromCharCode(0));
+        }
+        if (reference < 0) {
+          console.log('error');
+          return 0;
+        }
+        temp[oidx++] = temp[reference++];
+        do {
+          temp[oidx++] = temp[reference++];
+        } while ((--len) >= 0);
       }
     } while (iidx < $scope.lzfData.length);
     return temp.join("");
@@ -1034,6 +1099,16 @@ advApp.controller('advController', ['$document', '$filter', '$scope', function($
     $scope.ref = $scope[planet];
   };
 
+  function suitFromName(name) {
+    var i = 0;
+    for (; i < $scope.suitList.length; i++) {
+      if ($scope.suitList[i][0].toLowerCase() === name) {
+        return i;
+      }
+    }
+    return null;
+  }
+
   $scope.toggleManagers = function(row, index) {
     if ($scope.isEarth()) {
       if (row[index][1] === true) {
@@ -1150,6 +1225,7 @@ advApp.controller('advController', ['$document', '$filter', '$scope', function($
       $scope[planets[p]].angelEffectiveness = 0.02;
       $scope[planets[p]].angelExclamation = false;
       $scope[planets[p]].angelIllions = '';
+      $scope[planets[p]].bestSuit = null;
       $scope[planets[p]].bonusAngelEffectiveness = 0;
       $scope[planets[p]].bonusMultiplier = 0;
       $scope[planets[p]].filterTime = null;
@@ -1165,6 +1241,10 @@ advApp.controller('advController', ['$document', '$filter', '$scope', function($
       $scope[planets[p]].recommendation = '';
       $scope[planets[p]].sacAngels = 0;
       $scope[planets[p]].sacIllions = '';
+      $scope[planets[p]].suits = [];
+      for (i = 0; i < $scope.suitList.length; i++) {
+        $scope[planets[p]].suits.push([false, false]);
+      }
       $scope[planets[p]].totalMoneyPerSecond = 0;
       $scope[planets[p]].triples = 0;
       $scope[planets[p]].unlocks = [];
