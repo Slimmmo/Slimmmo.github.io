@@ -33,10 +33,10 @@
         <strong>Update!</strong> The Root of All Evil event Calculations are here!
       </uib-alert>
       <ul class="nav nav-tabs nav-justified">
-        <li role="presentation" data-ng-class="{active: !isCompare() && isEarth()}"><a data-ng-click="setEarth()">Earth</a></li>
-        <li role="presentation" data-ng-class="{active: !isCompare() && isMoon()}"><a data-ng-click="setMoon()">Moon</a></li>
-        <li role="presentation" data-ng-class="{active: !isCompare() && isMars()}"><a data-ng-click="setMars()">Mars</a></li>
-        <li role="presentation" class="disabled" data-ng-class="{active: !isCompare() && isEvil()}"><a data-ng-click="setEvil()">The Root of All Evil</a></li>
+        <li role="presentation" data-ng-class="{active: !isCompare() && isWorld('earth')}"><a data-ng-click="setWorld('earth')">Earth</a></li>
+        <li role="presentation" data-ng-class="{active: !isCompare() && isWorld('moon')}"><a data-ng-click="setWorld('moon')">Moon</a></li>
+        <li role="presentation" data-ng-class="{active: !isCompare() && isWorld('mars')}"><a data-ng-click="setWorld('mars')">Mars</a></li>
+        <li role="presentation" class="disabled" data-ng-class="{active: !isCompare() && isWorld('evil')}"><a data-ng-click="setWorld('evil')">The Root of All Evil</a></li>
       </ul>
       <div data-ng-show="!isCompare()">
         <div>
@@ -138,16 +138,16 @@
                 <thead>
                   <tr>
                     <th>Business</th>
-                    <th data-ng-show="isEarth()"><label><input type="checkbox" class="form-control" data-ng-model="selectAll[1]" data-ng-change="selectedAll(ref, 1)"> 10% off</label></th>
-                    <th data-ng-show="isEarth()"><label><input type="checkbox" class="form-control" data-ng-model="selectAll[2]" data-ng-change="selectedAll(ref, 2)"> 99.999% off</label></th>
-                    <th data-ng-show="isMoon()"><label><input type="checkbox" class="form-control" data-ng-model="selectAll[3]" data-ng-change="selectedAll(ref, 3)"> 25% off</label></th>
+                    <th data-ng-show="isWorld('earth')"><label><input type="checkbox" class="form-control" data-ng-model="selectAll[1]" data-ng-change="selectedAll(ref, 1)"> 10% off</label></th>
+                    <th data-ng-show="isWorld('earth')"><label><input type="checkbox" class="form-control" data-ng-model="selectAll[2]" data-ng-change="selectedAll(ref, 2)"> 99.999% off</label></th>
+                    <th data-ng-show="isWorld('moon')"><label><input type="checkbox" class="form-control" data-ng-model="selectAll[3]" data-ng-change="selectedAll(ref, 3)"> 25% off</label></th>
                   </tr>
                 </thead>
                 <tbody>
                   <tr data-ng-repeat="mupg in ref.managerUpgrades track by $index">
                     <td>{{ref.investments[$index][0]}}</td>
                     <td data-ng-repeat="mtup in mupg track by $index">
-                      <label class="strike-when-checked"><input type="checkbox" data-ng-model="mtup[1]"> <span>{{(isMoon() || $index == 1) ? ' $' : ' '}}{{mtup[0] | num:raw}}{{(!isMoon() && $index == 0) ? ' AI' : ''}}</span></label>
+                      <label class="strike-when-checked"><input type="checkbox" data-ng-model="mtup[1]"> <span>{{(isWorld('moon') || $index == 1) ? ' $' : ' '}}{{mtup[0] | num:raw}}{{(!isWorld('moon') && $index == 0) ? ' AI' : ''}}</span></label>
                     </td>
                   </tr>
                 </tbody>
