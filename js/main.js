@@ -1242,9 +1242,10 @@ advApp.controller('advController', ['$document', '$filter', '$scope', function($
       $scope[planets[p]].sacAngels = 0;
       $scope[planets[p]].sacIllions = '';
       $scope[planets[p]].suits = [];
-      for (i = 0; i < $scope.suitList.length; i++) {
+      for (var i = 0; i < $scope.suitList.length; i++) {
         $scope[planets[p]].suits.push([false, false]);
       }
+      console.log($scope[planets[p]].suits);
       $scope[planets[p]].totalMoneyPerSecond = 0;
       $scope[planets[p]].triples = 0;
       $scope[planets[p]].unlocks = [];
