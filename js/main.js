@@ -246,7 +246,7 @@ advApp.controller('advController', ['$document', '$filter', '$scope', function($
     for (; i < numLevels; i++) {
       retVal += Math.pow(loc.basePower[index], i);
     };
-    if (index === 0 && $scope.isEarth()) {
+    if (index === 0 && $scope.isWorld('earth')) {
       fromLevel -= 1;
     }
     for (i = 0; i < loc.angelUpgrades.length; i++) {
@@ -376,7 +376,7 @@ advApp.controller('advController', ['$document', '$filter', '$scope', function($
       while (inc.length > 3 - (loc.noSingles ? 1 : 0) - (loc.noTens ? 1 : 0)) {
         inc.pop();
       }
-      if (i === 1 && $scope.isEarth()) {
+      if (i === 1 && $scope.isWorld('earth')) {
         for (j = 1; j < 4; j++) {
           k = getDifferenceNBonus(loc, i, j);
           if (k !== null) {
@@ -935,24 +935,12 @@ advApp.controller('advController', ['$document', '$filter', '$scope', function($
     return input[$scope.sortIndex];
   };
 
-  $scope.isEvil = function() {
-    return $scope.ref === $scope.evil;
-  };
-
   $scope.isCompare = function() {
     return $scope.compare;
   };
 
-  $scope.isEarth = function() {
-    return $scope.ref === $scope.earth;
-  };
-
-  $scope.isMars = function() {
-    return $scope.ref === $scope.mars;
-  };
-
-  $scope.isMoon = function() {
-    return $scope.ref === $scope.moon;
+  $scope.isWorld = function(world) {
+    return $scope.ref == $scope[world];
   };
   
   function lzf_decode(str) {
@@ -1085,23 +1073,7 @@ advApp.controller('advController', ['$document', '$filter', '$scope', function($
     }
   };
 
-  $scope.setEvil = function() {
-    setPlanet('evil');
-  };
-
-  $scope.setEarth = function() {
-    setPlanet('earth');
-  };
-
-  $scope.setMars = function() {
-    setPlanet('mars');
-  };
-
-  $scope.setMoon = function() {
-    setPlanet('moon')
-  };
-
-  function setPlanet(planet) {
+  $scope.setWorld = function(planet) {
     $scope.clearAfter = [false, false];
     $scope.fillBefore = [false, false];
     $scope.compare = false;
@@ -1119,7 +1091,7 @@ advApp.controller('advController', ['$document', '$filter', '$scope', function($
   }
 
   $scope.toggleManagers = function(row, index) {
-    if ($scope.isEarth()) {
+    if ($scope.isWorld('earth')) {
       if (row[index][1] === true) {
         row[(index + 1) % 2][1] = false;
       }
