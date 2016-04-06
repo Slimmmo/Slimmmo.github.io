@@ -553,6 +553,7 @@ advApp.controller('advController', ['$document', '$filter', '$scope', function($
       if (loc.suits[i][0] === false) {
         tempPlanet = deepCopy(loc);
         console.log(loc);
+        console.log(tempPlanet);
         tempPlanet.suits[i][0] = true;
         $scope.changeSuits(tempPlanet, i);
         calcState(tempPlanet);
