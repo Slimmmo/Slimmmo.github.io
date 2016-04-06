@@ -102,6 +102,11 @@ advApp.controller('advController', ['$document', '$filter', '$scope', function($
   $scope.illionsArray = illionsArr.slice(1);
   $scope.mars = {};
   $scope.moon = {};
+  $scope.profiles = ['Default'];
+  $scope.profileName = 'Default';
+  $scope.profileSelector = {
+    isopen: false
+  };
   $scope.raw = false;
   $scope.ref = $scope.earth;
   $scope.reverse = true;
@@ -127,11 +132,35 @@ advApp.controller('advController', ['$document', '$filter', '$scope', function($
       }
       reader.readAsText(file);
     });
-    var saved = localStorage.getItem('planets');
-    if (saved) {
-      loadExportedJson(saved);
+
+    var profiles = localStorage.getItem('profiles');
+    if (profiles) {
+    	loadProfiles(profiles);
+    	loadProfile('Default');
+    } else {
+    	var oldSave = localStorage.getItem('planets');
+    	if (oldSave) {
+    		loadExportedJson(saved);
+    	}
     }
   });
+
+  function loadProfiles(str) {
+  	var obj = JSON.parse(str);
+  	for (var i = 0; i < obj.length; i ++) {
+      if ($scope.profiles.indexOf(obj[i]) == -1) {
+  		  $scope.profiles.push(obj[i]);
+      }
+  	}
+  }
+
+  function loadProfile(profileName) {
+    var profile = localStorage.getItem(profileName);
+    if (profile) {
+      $scope.profileName = profileName;
+      loadExportedJson(profile);
+    }
+  }
 
   function loadExportedJson(str) {
     var i = 0, j = 0, k = 0,
@@ -305,7 +334,8 @@ advApp.controller('advController', ['$document', '$filter', '$scope', function($
     calcAngels(loc);
     calcSuits(loc);
     calcRecommendations(loc);
-    localStorage.setItem('planets', getJsonForExport());
+    localStorage.setItem('profiles', getProfilesForExport());
+    localStorage.setItem($scope.profileName, getJsonForExport());
   };
 
   function calcAngelCost(numAngels, mul) {
@@ -692,6 +722,20 @@ advApp.controller('advController', ['$document', '$filter', '$scope', function($
     return temp;
   }
 
+  $scope.deleteProfile = function() {
+    if ($scope.profileName == 'Default') {
+      alert("You cannot delete the default profile.");
+    } else {
+      var reallyDelete = confirm("Are you sure you want to delete profile: " + $scope.profileName);
+      if (reallyDelete) {
+        $scope.profiles = $scope.profiles.filter(function (el) { return el != $scope.profileName; });
+        localStorage.removeItem($scope.profileName);
+        loadDefaults();
+        loadProfile('Default');
+      }
+    }
+  }
+
   $scope.export = function() {
     var blob = new Blob([getJsonForExport()], {type: "application/json"});
     var title = "AdvCapCalc.json";
@@ -860,6 +904,10 @@ advApp.controller('advController', ['$document', '$filter', '$scope', function($
     return retString + '}';
   };
 
+  function getProfilesForExport() {
+  	return JSON.stringify($scope.profiles);;
+  }
+
   $scope.getNamedType = function(loc, tuple) {
     var i, j, k = '', l = 1, num;
     for (; l < tuple.length - 1; l++) {
@@ -1008,6 +1056,20 @@ advApp.controller('advController', ['$document', '$filter', '$scope', function($
     // how to find gold multipliers, flux, bonus angel effectiveness (kong login etc), suits
   };
 
+  $scope.newProfile = function() {
+    var newProfile = prompt("Enter new profile name.", "");
+    var contains = $scope.profiles.indexOf(newProfile);
+    if (contains == -1) {
+      localStorage.setItem($scope.profileName, getJsonForExport());
+      $scope.profiles.push(newProfile);
+      loadDefaults();
+      localStorage.setItem(newProfile, getJsonForExport());
+      loadProfile(newProfile);
+    } else {
+      alert("Profile '" + newProfile + "' already exists!");
+    }
+  }
+
   $scope.resetPlanet = function(loc) {
     var i = 0;
     for (; i < loc.cashUpgrades.length; i++) {
@@ -1089,6 +1151,18 @@ advApp.controller('advController', ['$document', '$filter', '$scope', function($
     }
     return null;
   }
+
+  $scope.switchProfile = function(switchedProfile) {
+    localStorage.setItem($scope.profileName, getJsonForExport());
+    loadDefaults();
+    loadProfile(switchedProfile);
+  }
+
+  $scope.toggleDropdown = function($event) {
+    $event.preventDefault();
+    $event.stopPropagation();
+    $scope.status.isopen = !$scope.status.isopen;
+  };
 
   $scope.toggleManagers = function(row, index) {
     if ($scope.isWorld('earth')) {
