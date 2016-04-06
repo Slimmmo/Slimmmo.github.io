@@ -14,7 +14,7 @@ thead th {
   margin-top: 10px;
 }
 
-.best_suit.fa-exclamation {
+.best_suit.fa-plus {
   color: purple;
 }
 
@@ -22,7 +22,7 @@ thead th {
   cursor: pointer;
 }
 
-.fa-exclamation {
+.fa-plus {
   color: green;
   padding-left: 10px;
 }
