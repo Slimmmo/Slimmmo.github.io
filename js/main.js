@@ -547,13 +547,11 @@ advApp.controller('advController', ['$document', '$filter', '$scope', function($
 
   function calcSuits(loc) {
     var i = 0, max = [-1, 0],
-    tempPlanet = null;
+    tempPlanet = {};
     loc.suitExclamation = false;
     for (; i < loc.suits.length; i++) {
       if (loc.suits[i][0] === false) {
-        tempPlanet = deepCopy(loc);
-        console.log(loc);
-        console.log(tempPlanet);
+        tempPlanet = JSON.parse(JSON.stringify(loc));
         tempPlanet.suits[i][0] = true;
         $scope.changeSuits(tempPlanet, i);
         calcState(tempPlanet);
