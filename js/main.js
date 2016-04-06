@@ -490,7 +490,7 @@ advApp.controller('advController', ['$document', '$filter', '$scope', function($
         loc.investments[i][3] *= (3 * loc.triples) + loc.bonusMultiplier + (loc.suits[suitFromName('gold')][0] ? $scope.suitList[suitFromName('gold')][1] : 0) + (loc.suits[suitFromName('blue')][0] ? $scope.suitList[suitFromName('blue')][1] : 0);
       }
       if (loc.investments[i][2]) {
-        loc.investments[i][3] *= selectAll[0] ? 17.77 : 7.77;
+        loc.investments[i][3] *= $scope.selectAll[0] ? 17.77 : 7.77;
       }
       loc.investments[i][4] = loc.baseSpeed[i];
       if (loc.flux > 0) {
