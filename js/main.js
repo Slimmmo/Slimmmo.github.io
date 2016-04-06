@@ -168,6 +168,9 @@ advApp.controller('advController', ['$document', '$filter', '$scope', function($
         }
         $scope[planets[k]].noSingles = obj[planets[k]].noSingles || false;
         $scope[planets[k]].noTens = obj[planets[k]].noTens || false;
+        if ('suit' in obj[planets[k]]) {
+          $scope[planets[k]].suits[obj[planets[k].suit]][0] = true;
+        }
         $scope[planets[k]].triples = obj[planets[k]].triples;
         $scope[planets[k]].flux = obj[planets[k]].flux;
         $scope[planets[k]].bonusAngelEffectiveness = obj[planets[k]].bonusAngelEffectiveness;
@@ -766,6 +769,12 @@ advApp.controller('advController', ['$document', '$filter', '$scope', function($
       }
     }
     string += '\r\n  ], \r\n  "noSingles": ' + loc.noSingles + ',\r\n  "noTens": ' + loc.noTens;
+    for (i = 0; i < loc.suits.length; i++) {
+      if (loc.suits[i][0] === true) {
+        string += ',\r\n  "suit": ' + i;
+        break;
+      }
+    }
     string += ',\r\n  "triples": ' + loc.triples + ',\r\n  "flux": ' + loc.flux + ',\r\n  "bonusAngelEffectiveness": ' + loc.bonusAngelEffectiveness + ',\r\n  "bonusMultiplier": ' + loc.bonusMultiplier + ',\r\n  "megaTicket": [';
     first = true;
     for (i = 0; i < loc.investments.length; i++) {
