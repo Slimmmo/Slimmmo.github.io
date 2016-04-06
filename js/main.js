@@ -347,12 +347,24 @@ advApp.controller('advController', ['$document', '$filter', '$scope', function($
         if (delta > 0) {
           loc.angelUpgrades[i][loc.angelUpgrades[i].length - 2] = percent;
           loc.angelExclamation = true;
+          loc.hasSeenAngelExclamation = false;
         } else {
           loc.angelUpgrades[i][loc.angelUpgrades[i].length - 2] = false;
         }
       }
     }
   };
+  
+  $scope.$watch('accOpen[2]', function(newVal, oldVal, $scope){
+    if (newVal) {
+        console.log("Angel Accordian Opened");
+    }
+    
+    if (newVal && $scope.ref.angelExclamation && !$scope.ref.hasSeenAngelExclamation) {
+        $scope.ref.hasSeenAngelExclamation = true;
+        $scope.ref.angelExclamation = false;
+    }
+  });
 
   function calcRecommendations(loc) {
     var i = 0, j = 0, k = 0,
@@ -562,7 +574,9 @@ advApp.controller('advController', ['$document', '$filter', '$scope', function($
         var percent = delta / loc.totalMoneyPerSecond;
         if (delta > 0) {
           loc.suits[i][1] = percent;
-          loc.suitExclamation = true;
+          if (!loc.hasSeenSuitExclamation) {
+            loc.suitExclamation = true;
+          }
           if (percent > max[1]) {
             max[0] = i;
             max[1] = percent;
@@ -578,6 +592,18 @@ advApp.controller('advController', ['$document', '$filter', '$scope', function($
       loc.bestSuit = null;
     }
   };
+  
+  $scope.$watch('accOpen[4]', function(newVal, oldVal, $scope){
+    if (newVal) {
+        console.log("Suit Accordian Opened");
+    }
+    
+    if (newVal && $scope.ref.suitExclamation && !$scope.ref.hasSeenSuitExclamation) {
+        $scope.ref.hasSeenSuitExclamation = true;
+        $scope.ref.suitExclamation = false;
+        console.log("Suit Accordion Opened");
+    }
+  });
 
   function calcUpgradeScore(planet, loc, unlockCost) {
     var overflowPotential = planet.totalMoneyPerSecond * unlockCost,
@@ -808,6 +834,7 @@ advApp.controller('advController', ['$document', '$filter', '$scope', function($
     }
     loc.angelEffectiveness = 2;
     loc.angelExclamation = false;
+    loc.hasSeenAngelExclamation
     loc.bonusAngelEffectiveness = 0;
     loc.bonusMultiplier = 0;
     loc.flux = 0;
@@ -825,6 +852,7 @@ advApp.controller('advController', ['$document', '$filter', '$scope', function($
     loc.recTable = [];
     loc.recommendation = '';
     loc.suitExclamation = false;
+    loc.hasSeenSuitExclamation = false;
     loc.totalMoneyPerSecond = 0;
     loc.triples = 0;
     loc.upgradeCosts = [];
@@ -1036,6 +1064,7 @@ advApp.controller('advController', ['$document', '$filter', '$scope', function($
     }
     loc.angelEffectiveness = 2;
     loc.angelExclamation = false;
+    loc.hasSeenAngelExclamation = false;
     loc.bonusAngelEffectiveness = 0;
     loc.bonusMultiplier = 0;
     for (i = 0; i < loc.investments.length; i++) {
@@ -1183,6 +1212,8 @@ advApp.controller('advController', ['$document', '$filter', '$scope', function($
     $scope.earth.baseProfit = [1, 60, 540, 4320, 51840, 622080, 7464960, 89579520, 1074954240, 29668737024];
     $scope.earth.baseSpeed = [0.6, 3, 6, 12, 24, 96, 384, 1536, 6144, 36864];
     $scope.earth.hasMegaTickets = true;
+    $scope.earth.hasSeenAngelExclamation = false;
+    $scope.earth.hasSeenSuitExclamation = false;
     $scope.earth.investments = [
       ['Lemon', 1, false, 0, 0, 0, 0],
       ['Newspaper', 0, false, 0, 0, 0, 0],
@@ -1201,6 +1232,8 @@ advApp.controller('advController', ['$document', '$filter', '$scope', function($
     $scope.moon.baseProfit = [1, 21, 2001, 376, 98820, 1976400, 32940000, 1152900000, 11067840000, 332035000000];
     $scope.moon.baseSpeed = [2, 7, 28, 2, 45, 180, 600, 3000, 14400, 86400];
     $scope.moon.hasMegaTickets = true;
+    $scope.moon.hasSeenAngelExclamation = false;
+    $scope.moon.hasSeenSuitExclamation = false;
     $scope.moon.investments = [
       ['Moon Shoe', 1, false, 0, 0, 0, 0],
       ['Gravity Booth', 0, false, 0, 0, 0, 0],
@@ -1219,6 +1252,8 @@ advApp.controller('advController', ['$document', '$filter', '$scope', function($
     $scope.mars.baseProfit = [0.011, 1, 4321, 4007310, 518783295, 500634321, 7543177325, 69263532485, 99760273916482500];
     $scope.mars.baseSpeed = [0.5, 3, 9, 32, 64, 4, 18, 42, 43200];
     $scope.mars.hasMegaTickets = true;
+    $scope.mars.hasSeenAngelExclamation = false;
+    $scope.mars.hasSeenSuitExclamation = false;
     $scope.mars.investments = [
       ['Red Dirt', 1, false, 0, 0, 0, 0],
       ['Marsies', 0, false, 0, 0, 0, 0],
