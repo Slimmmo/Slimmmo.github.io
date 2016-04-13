@@ -169,7 +169,7 @@ advApp.controller('advController', ['$document', '$filter', '$scope', function($
         $scope[planets[k]].noSingles = obj[planets[k]].noSingles || false;
         $scope[planets[k]].noTens = obj[planets[k]].noTens || false;
         if ('suit' in obj[planets[k]]) {
-          $scope[planets[k]].suits[obj[planets[k].suit]][0] = true;
+          $scope[planets[k]].suits[obj[planets[k]].suit][0] = true;
         }
         $scope[planets[k]].triples = obj[planets[k]].triples;
         $scope[planets[k]].flux = obj[planets[k]].flux;
