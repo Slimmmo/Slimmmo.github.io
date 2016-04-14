@@ -844,7 +844,9 @@ advApp.controller('advController', ['$document', '$filter', '$scope', function($
   function getDifferenceNBonus(loc, index, n) {
     var i = 0,
     retVal = null;
-    console.log(n);
+    if (n === null) {
+      return null;
+    }
     for (; i < loc.unlocks[index].length; i++) {
       if (loc.investments[index][1] < loc.unlocks[index][i][0]) {
         if (i + n - 1 < loc.unlocks[index].length) {
