@@ -391,7 +391,7 @@ advApp.controller('advController', ['$document', '$filter', '$scope', function($
       }
       if (!loc.hasMegaTickets) {
         k = getDifferenceNBonus(loc, i, getNextPositiveUnlock(loc));
-        if (k !== null) {
+        if (k !== null && inc.indexOf(k) === -1) {
           inc.push(k);
         }
       }
