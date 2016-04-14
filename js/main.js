@@ -834,7 +834,7 @@ advApp.controller('advController', ['$document', '$filter', '$scope', function($
     }
     loc.angelEffectiveness = 2;
     loc.angelExclamation = false;
-    loc.hasSeenAngelExclamation
+    loc.hasSeenAngelExclamation = false;
     loc.bonusAngelEffectiveness = 0;
     loc.bonusMultiplier = 0;
     loc.flux = 0;
@@ -1125,6 +1125,7 @@ advApp.controller('advController', ['$document', '$filter', '$scope', function($
 
   function suitFromName(name) {
     var i = 0;
+    
     for (; i < $scope.suitList.length; i++) {
       if ($scope.suitList[i][0].toLowerCase() === name) {
         return i;
