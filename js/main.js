@@ -383,13 +383,14 @@ advApp.controller('advController', ['$document', '$filter', '$scope', function($
             inc.push(k);
           }
         }
-      } else if (!loc.hasMegaTickets) {
-        k = getDifferenceNBonus(loc, i, getNextPositiveUnlock(loc));
+      } else {
+        k = getDifferenceNBonus(loc, i, 1);
         if (k !== null) {
           inc.push(k);
         }
-      } else {
-        k = getDifferenceNBonus(loc, i, 1);
+      }
+      if (!loc.hasMegaTickets) {
+        k = getDifferenceNBonus(loc, i, getNextPositiveUnlock(loc));
         if (k !== null) {
           inc.push(k);
         }
