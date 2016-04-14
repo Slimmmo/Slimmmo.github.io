@@ -351,6 +351,8 @@ advApp.controller('advController', ['$document', '$filter', '$scope', function($
         } else if (delta <= 0) {
           loc.angelUpgrades[i][loc.angelUpgrades[i].length - 2] = false;
         }
+      } else if (loc.angelUpgrades[i][0] >= loc.numAngels && typeof loc.angelUpgrades[i][loc.angelUpgrades[i].length - 2] !== 'boolean') {
+        loc.angelUpgrades[i][loc.angelUpgrades[i].length - 2] = false;
       }
     }
   };
