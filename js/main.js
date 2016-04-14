@@ -376,7 +376,7 @@ advApp.controller('advController', ['$document', '$filter', '$scope', function($
       while (inc.length > 3 - (loc.noSingles ? 1 : 0) - (loc.noTens ? 1 : 0)) {
         inc.pop();
       }
-      if (i === 1 && $scope.isWorld('earth')) {
+      if ((i === 1 && $scope.isWorld('earth')) || !loc.hasMegaTickets) {
         for (j = 1; j < 4; j++) {
           k = getDifferenceNBonus(loc, i, j);
           if (k !== null) {
