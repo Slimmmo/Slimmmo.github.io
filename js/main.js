@@ -335,7 +335,7 @@ advApp.controller('advController', ['$document', '$filter', '$scope', function($
   function calcAngels(loc) {
     var i = 0,
     tempPlanet = null;
-    loc.angelExclamation = false;
+    //loc.angelExclamation = false;
     for (; i < loc.angelUpgrades.length; i++) {
       if (!tupleIsActive(loc.angelUpgrades[i]) && loc.angelUpgrades[i][0] < loc.numAngels) {
         tempPlanet = JSON.parse(JSON.stringify(loc));
@@ -344,11 +344,11 @@ advApp.controller('advController', ['$document', '$filter', '$scope', function($
         calcState(tempPlanet);
         var delta = tempPlanet.totalMoneyPerSecond - loc.totalMoneyPerSecond;
         var percent = delta / loc.totalMoneyPerSecond;
-        if (delta > 0) {
+        if (delta > 0 && typeof loc.angelUpgrades[i][loc.angelUpgrades[i].length - 2] === 'boolean') {
           loc.angelUpgrades[i][loc.angelUpgrades[i].length - 2] = percent;
           loc.angelExclamation = true;
           loc.hasSeenAngelExclamation = false;
-        } else {
+        } else if (delta <= 0) {
           loc.angelUpgrades[i][loc.angelUpgrades[i].length - 2] = false;
         }
       }
