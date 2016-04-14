@@ -376,12 +376,17 @@ advApp.controller('advController', ['$document', '$filter', '$scope', function($
       while (inc.length > 3 - (loc.noSingles ? 1 : 0) - (loc.noTens ? 1 : 0)) {
         inc.pop();
       }
-      if ((i === 1 && $scope.isWorld('earth')) || !loc.hasMegaTickets) {
+      if (i === 1 && $scope.isWorld('earth')) {
         for (j = 1; j < 4; j++) {
           k = getDifferenceNBonus(loc, i, j);
           if (k !== null) {
             inc.push(k);
           }
+        }
+      } else if (!loc.hasMegaTickets) {
+        k = getDifferenceNBonus(loc, i, getNextPositiveUnlock(loc));
+        if (k !== null) {
+          inc.push(k);
         }
       } else {
         k = getDifferenceNBonus(loc, i, 1);
@@ -893,6 +898,20 @@ advApp.controller('advController', ['$document', '$filter', '$scope', function($
       index = null;
     }
     return index;
+  };
+
+  function getNextPositiveUnlock(loc, index) {
+    var i = 0,
+    retVal = 0;
+    for (; i < loc.unlocks[index].length; i++) {
+      if (loc.investments[index][1] < loc.unlocks[index][i][0]) {
+        retVal++;
+        if (loc.unlocks[index][i][1][1] > 1) {
+          return retVal;
+        }
+      }
+    }
+    return null;
   };
 
   $scope.hideUpdate = function() {
