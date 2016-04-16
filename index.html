@@ -15,7 +15,7 @@
     </script>
     <script src="js/angular.min.js"></script>
     <script src="js/angular-animate.min.js"></script>
-    <script src="js/ui-bootstrap-custom-tpls-0.14.3.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/angular-ui-bootstrap/1.3.1/ui-bootstrap-tpls.min.js"></script>
     <script src="js/main.js"></script>
     <title>AdVenture Capitalist Calculator</title>
     <base href="/">
@@ -25,8 +25,20 @@
       <div class="page-header">
         <h1>AdVenture Capitalist Calculator </h1> v0.1<a class="pull-right" href="https://www.reddit.com/r/AdventureCapitalist/comments/4djl15/suit_calculation_platinum/">Feedback</a>
       </div>
-      <div>
-        Load a saved state: <input type="file" id="fileInput"><button type="button" class="btn btn-primary pull-right" data-ng-click="export()">Save State</button>
+      <div class="btn-group" uib-dropdown is-open="profileSelector.isopen">
+        <button id="single-button" type="button" class="btn btn-primary" uib-dropdown-toggle ng-disabled="disabled">
+        Loaded Profile: {{profileName}} <span class="caret"></span>
+        </button>
+        <ul class="dropdown-menu" uib-dropdown-menu role="menu" aria-labelledby="single-button">
+          <li role="menuitem" data-ng-repeat="profile in profiles track by $index"><a data-ng-click="switchProfile(profile)">{{profile}}</a></li>
+          <li class="divider"></li>
+          <li role="menuitem"><a data-ng-click="newProfile()">New Profile</a></li>
+          <li role="menuitem"><a data-ng-click="deleteProfile()">Delete Profile</a></li>
+        </ul>
+
+        <button type="button" class="btn btn-primary pull-right" data-ng-click="export()">Export State</button>
+        <input class="ng-hide" id="fileInput" type="file" />
+        <label for="fileInput" class="btn btn-primary pull-right">Import State</label>
       </div>
       <br>
       <uib-alert data-ng-if="showUpdate" type="success" close="hideUpdate()">
