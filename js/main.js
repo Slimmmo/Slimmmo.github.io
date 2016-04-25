@@ -499,7 +499,7 @@ advApp.controller('advController', ['$document', '$filter', '$scope', function($
         loc.investments[i][3] *= (3 * loc.triples) + loc.bonusMultiplier + (loc.suits[suitFromName('gold')][0] ? $scope.suitList[suitFromName('gold')][1] : 0) + (loc.suits[suitFromName('blue')][0] ? $scope.suitList[suitFromName('blue')][1] : 0);
       }
       if (loc.investments[i][2]) {
-        loc.investments[i][3] *= $scope.selectAll[0] ? 17.77 : 7.77;
+        loc.investments[i][3] *= $scope.selectAll[0] ? loc.platinumboost : 7.77;
       }
       loc.investments[i][4] = loc.baseSpeed[i];
       if (loc.flux > 0) {
@@ -1258,6 +1258,7 @@ advApp.controller('advController', ['$document', '$filter', '$scope', function($
       $scope[planets[p]].noSingles = false;
       $scope[planets[p]].noTens = false;
       $scope[planets[p]].numAngels = 0;
+      $scope[planets[p]].platinumboost = 17.77;
       $scope[planets[p]].rec = null;
       $scope[planets[p]].recTable = [];
       $scope[planets[p]].recommendation = '';

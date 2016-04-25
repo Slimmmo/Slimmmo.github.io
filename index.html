@@ -155,11 +155,12 @@
             </uib-accordion-group>
             <uib-accordion-group is-open="accOpen[4]" class="form-inline">
               <uib-accordion-heading>
-                Gold Upgrades + Suits<i data-ng-show="ref.suitExclamation" class="fa fa-plus"></i><span class="pull-right fa" ng-class="{'fa-chevron-down': accOpen[4], 'fa-chevron-right': !accOpen[4]}"></span>
+                Gold/Platinum Upgrades + Suits<i data-ng-show="ref.suitExclamation" class="fa fa-plus"></i><span class="pull-right fa" ng-class="{'fa-chevron-down': accOpen[4], 'fa-chevron-right': !accOpen[4]}"></span>
               </uib-accordion-heading>
               <div class="row">
                 <label class="col-xs-6"><input type="number" class="form-control" min="0" data-ng-model="ref.triples"> # 3x Multipliers</label>
                 <label class="col-xs-6"><input type="number" class="form-control" min="0" data-ng-model="ref.flux"> # Flux Capitalors</label>
+                <label class="col-xs-6"><input type="number" class="form-control" min="0" data-ng-model="ref.platinumboost"> Platinum Boost</label>
               </div>
               <div class="multicolumn">
                 <div data-ng-repeat="suit in ref.suits track by $index">
