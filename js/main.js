@@ -102,6 +102,7 @@ advApp.controller('advController', ['$document', '$filter', '$scope', function($
   $scope.liverich = {};
   $scope.mars = {};
   $scope.moon = {};
+  $scope.platinumboosts = [17.77, 77.77, 777.77, 7777.77];
   $scope.raw = false;
   $scope.ref = $scope.earth;
   $scope.reverse = true;
@@ -601,6 +602,17 @@ advApp.controller('advController', ['$document', '$filter', '$scope', function($
       retVal *= Number('1e+' + divNum);
     }
     return retVal;
+  };
+
+  $scope.changePlatinum = function(loc, index) {
+    for (var i = 0; i < loc.platinum.length; i++) {
+      if (i !== index) {
+        loc.platinum[i][0] = false;
+      } else {
+        loc.platinum[i][0] = true;
+      }
+    }
+    loc.platinumboost = $scope.platinumboosts[index];
   };
 
   $scope.changeSuits = function(loc, index) {
@@ -1258,6 +1270,10 @@ advApp.controller('advController', ['$document', '$filter', '$scope', function($
       $scope[planets[p]].noSingles = false;
       $scope[planets[p]].noTens = false;
       $scope[planets[p]].numAngels = 0;
+      $scope[planets[p]].platinum = [];
+      for (var i = 0; i < $scope.platinumboosts.length; i++) {
+        $scope[planets[p]].platinum.push(i === 0 ? [true] : [false]);
+      }
       $scope[planets[p]].platinumboost = 17.77;
       $scope[planets[p]].rec = null;
       $scope[planets[p]].recTable = [];
