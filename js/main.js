@@ -182,6 +182,8 @@ advApp.controller('advController', ['$document', '$filter', '$scope', function($
         }
         $scope[planets[k]].hasSeenSuitExclamation = obj[planets[k]].seenSuit;
         $scope[planets[k]].hasSeenAngelExclamation = obj[planets[k]].seenAngel;
+        $scope[planets[k]].suitExclamation = obj[planets[k]].suitExclamation;
+        $scope[planets[k]].angelExclamation = obj[planets[k]].angelExclamation;
       }
       $scope.calc($scope[planets[k]]);
     }
@@ -816,7 +818,9 @@ advApp.controller('advController', ['$document', '$filter', '$scope', function($
         string += '    ' + i;
       }
     }
-    string += '\r\n  ], \r\n "seenSuit": ' + (typeof loc.hasSeenSuitExclamation === 'undefined' ? 'false' : loc.hasSeenSuitExclamation);
+    string += '\r\n  ],\r\n "suitExclamation": ' + (typeof loc.suitExclamation === 'undefined' ? false : loc.suitExclamation);
+    string += ',\r\n "seenSuit": ' + (typeof loc.hasSeenSuitExclamation === 'undefined' ? false : loc.hasSeenSuitExclamation);
+    string += ',\r\n "angelExclamation": ' + (typeof loc.angelExclamation === 'undefined' ? false : loc.angelExclamation);
     string += ',\r\n "seenAngel": ' + (typeof loc.hasSeenAngelExclamation === 'undefined' ? false : loc.hasSeenAngelExclamation);
     string += '\r\n}';
     return string;
@@ -1066,6 +1070,7 @@ advApp.controller('advController', ['$document', '$filter', '$scope', function($
     }
     for (i = 0; i < loc.angelUpgrades.length; i++) {
       loc.angelUpgrades[i][loc.angelUpgrades[i].length - 1] = false;
+      loc.angelUpgrades[i][loc.angelUpgrades[i].length] = false;
     }
     for (i = 0; i < loc.managerUpgrades.length; i++) {
       loc.managerUpgrades[i][0][loc.managerUpgrades[i][0].length - 1] = false;
@@ -1156,8 +1161,32 @@ advApp.controller('advController', ['$document', '$filter', '$scope', function($
   };
 
   $scope.updateAngels = function() {
+    var prevAngels = $scope.ref.numAngels;
+    var i = 0;
+    
     updateIllionize('numAngels', 'viewNumAngels', 'illions');
+    
+    // re-enables the notification
+    if ($scope.ref.numAngels != prevAngels) {
+        if ($scope.ref.hasSeenAngelExclamation) {
+          for (i = 0; i < $scope.ref.angelUpgrades.length; i++) {
+            $scope.ref.angelUpgrades[i][$scope.ref.angelUpgrades[i].length] = false;
+          }
+        }
+        $scope.ref.hasSeenAngelExclamation = false;
+        calcAngels($scope.ref);
+    }
   };
+  
+  $scope.changeAngels = function() {
+    // re-enables the notification
+    if ($scope.ref.hasSeenAngelExclamation) {
+      for (i = 0; i < loc.angelUpgrades.length; i++) {
+        loc.angelUpgrades[i][loc.angelUpgrades[i].length] = false;
+      }
+    }
+    $scope.ref.hasSeenAngelExclamation = false;
+  }
 
   $scope.updateEarnings = function() {
     updateIllionize('lifetimeEarnings', 'viewLifetimeEarnings', 'angelIllions');

@@ -40,3 +40,6 @@ Events are loaded from a Google Sheet url so if I can get the URL or the file it
   1. The cost.
   2. Which business the manager effects.
   3. The amount of the manager discount.
+
+12. The angel/suit exclamation state
+  Allows for us to track whether the user has seen the angel and suit exclamation notification for dismissal
