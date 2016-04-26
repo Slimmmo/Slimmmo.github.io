@@ -180,6 +180,8 @@ advApp.controller('advController', ['$document', '$filter', '$scope', function($
             $scope[planets[k]].investments[obj[planets[k]].megaTicket[i]][2] = true;
           }
         }
+        $scope[planets[k]].hasSeenSuitExclamation = obj[planets[k]].seenSuit;
+        $scope[planets[k]].hasSeenAngelExclamation = obj[planets[k]].seenAngel;
       }
       $scope.calc($scope[planets[k]]);
     }
@@ -814,7 +816,9 @@ advApp.controller('advController', ['$document', '$filter', '$scope', function($
         string += '    ' + i;
       }
     }
-    string += '\r\n  ]\r\n}';
+    string += '\r\n  ], \r\n "seenSuit": ' + (typeof loc.hasSeenSuitExclamation === 'undefined' ? 'false' : loc.hasSeenSuitExclamation);
+    string += ',\r\n "seenAngel": ' + (typeof loc.hasSeenAngelExclamation === 'undefined' ? false : loc.hasSeenAngelExclamation);
+    string += '\r\n}';
     return string;
   };
 
@@ -1050,6 +1054,8 @@ advApp.controller('advController', ['$document', '$filter', '$scope', function($
     loc.lifetimeEarnings = obj.totalCash || obj.sessionCash + obj.totalPreviousCash;
     loc.numAngels = obj.angelInvestors;
     loc.sacAngels = obj.angelInvestorsSpent;
+    loc.hasSeenSuitExclamation = obj.seenSuit;
+    loc.hasSeenAngelExclamation = obj.seenAngel;
     // how to find gold multipliers, flux, bonus angel effectiveness (kong login etc), suits
   };
 
@@ -1222,6 +1228,8 @@ advApp.controller('advController', ['$document', '$filter', '$scope', function($
     $scope.liverich.baseProfit = [2, 25, 77, 189, 3333, 13, 110, 412, 2900, 666666]; // Figure out when event starts
     $scope.liverich.baseSpeed = [1, 3, 5, 7, 9, 10, 19, 25, 42, 96]; // Figure out when event starts
     $scope.liverich.hasMegaTickets = false;
+    $scope.liverich.hasSeenAngelExclamation = false;
+    $scope.liverich.hasSeenSuitExclamation = false;
     $scope.liverich.investments = [
       ['Investment 1', 1, false, 0, 0, 0, 0],
       ['Investment 2', 0, false, 0, 0, 0, 0],
