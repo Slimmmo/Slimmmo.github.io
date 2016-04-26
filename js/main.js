@@ -589,6 +589,7 @@ advApp.controller('advController', ['$document', '$filter', '$scope', function($
           loc.suits[i][1] = percent;
           if (!loc.hasSeenSuitExclamation) {
             loc.suitExclamation = true;
+            loc.hasSeenSuitExclamation = false;
           }
           if (percent > max[1]) {
             max[0] = i;
@@ -1175,23 +1176,13 @@ advApp.controller('advController', ['$document', '$filter', '$scope', function($
     if ($scope.ref.numAngels != prevAngels) {
         if ($scope.ref.hasSeenAngelExclamation) {
           for (i = 0; i < $scope.ref.angelUpgrades.length; i++) {
-            $scope.ref.angelUpgrades[i][$scope.ref.angelUpgrades[i].length] = false;
+            $scope.ref.angelUpgrades[i][$scope.ref.angelUpgrades[i].length - 2] = false;
           }
         }
         $scope.ref.hasSeenAngelExclamation = false;
-        calcAngels($scope.ref);
+        $scope.calc($scope.ref);
     }
   };
-  
-  $scope.changeAngels = function() {
-    // re-enables the notification
-    if ($scope.ref.hasSeenAngelExclamation) {
-      for (i = 0; i < loc.angelUpgrades.length; i++) {
-        loc.angelUpgrades[i][loc.angelUpgrades[i].length] = false;
-      }
-    }
-    $scope.ref.hasSeenAngelExclamation = false;
-  }
 
   $scope.updateEarnings = function() {
     updateIllionize('lifetimeEarnings', 'viewLifetimeEarnings', 'angelIllions');
