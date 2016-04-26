@@ -180,12 +180,17 @@ advApp.controller('advController', ['$document', '$filter', '$scope', function($
             $scope[planets[k]].investments[obj[planets[k]].megaTicket[i]][2] = true;
           }
         }
+      }
+      
+      $scope.calc($scope[planets[k]]);
+      
+      // set notification properties after calculating to prevent calculation from overriding
+      if (obj.hasOwnProperty(planets[k])) {
         $scope[planets[k]].hasSeenSuitExclamation = obj[planets[k]].seenSuit;
         $scope[planets[k]].hasSeenAngelExclamation = obj[planets[k]].seenAngel;
         $scope[planets[k]].suitExclamation = obj[planets[k]].suitExclamation;
         $scope[planets[k]].angelExclamation = obj[planets[k]].angelExclamation;
       }
-      $scope.calc($scope[planets[k]]);
     }
     $scope.$digest();
   }
