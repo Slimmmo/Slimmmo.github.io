@@ -167,6 +167,18 @@ advApp.controller('advController', ['$document', '$filter', '$scope', function($
         for (i = 0; i < obj[planets[k]].managersBought.length; i++) {
           $scope[planets[k]].managerUpgrades[Math.floor(obj[planets[k]].managersBought[i] / 2)][obj[planets[k]].managersBought[i] % 2][1] = true;
         }
+        if (obj[planets[k]].platinumboost != null) {
+          console.log("Has platinum boost saved.");
+          for (i = 0; i < $scope.platinumboosts.length; i++) {
+            if (obj[planets[k]].platinumboost == $scope.platinumboosts[i]) {
+              console.log("Compares to " + i + ".");
+              $scope.changePlatinum($scope[planets[k]], i);
+            }
+          }
+        } else {
+          console.log("Does not have platinum boost saved.");
+          $scope.changePlatinum($scope[planets[k]], 0);
+        }
         $scope[planets[k]].noSingles = obj[planets[k]].noSingles || false;
         $scope[planets[k]].noTens = obj[planets[k]].noTens || false;
         if ('suit' in obj[planets[k]]) {
@@ -786,7 +798,7 @@ advApp.controller('advController', ['$document', '$filter', '$scope', function($
         }
       }
     }
-    string += '\r\n  ], \r\n  "noSingles": ' + loc.noSingles + ',\r\n  "noTens": ' + loc.noTens;
+    string += '\r\n  ], \r\n  "noSingles": ' + loc.noSingles + ',\r\n  "noTens": ' + loc.noTens + ',\r\n  "platinumboost": ' + loc.platinumboost;
     for (i = 0; i < loc.suits.length; i++) {
       if (loc.suits[i][0] === true) {
         string += ',\r\n  "suit": ' + i;
@@ -839,6 +851,8 @@ advApp.controller('advController', ['$document', '$filter', '$scope', function($
       loc.investments[i][2] = false;
     }
     loc.numAngels = 0;
+    loc.platinumboost = 17.77;
+    $scope.changePlatinum(loc, 0);
     loc.rec = null;
     loc.recTable = [];
     loc.recommendation = '';
