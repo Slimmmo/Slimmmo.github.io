@@ -102,6 +102,7 @@ advApp.controller('advController', ['$document', '$filter', '$scope', function($
   $scope.liverich = {};
   $scope.mars = {};
   $scope.moon = {};
+  $scope.platinumboosts = [17.77, 77.77, 777.77, 7777.77];
   $scope.raw = false;
   $scope.ref = $scope.earth;
   $scope.reverse = true;
@@ -165,6 +166,18 @@ advApp.controller('advController', ['$document', '$filter', '$scope', function($
         }
         for (i = 0; i < obj[planets[k]].managersBought.length; i++) {
           $scope[planets[k]].managerUpgrades[Math.floor(obj[planets[k]].managersBought[i] / 2)][obj[planets[k]].managersBought[i] % 2][1] = true;
+        }
+        if (obj[planets[k]].platinumboost != null) {
+          console.log("Has platinum boost saved.");
+          for (i = 0; i < $scope.platinumboosts.length; i++) {
+            if (obj[planets[k]].platinumboost == $scope.platinumboosts[i]) {
+              console.log("Compares to " + i + ".");
+              $scope.changePlatinum($scope[planets[k]], i);
+            }
+          }
+        } else {
+          console.log("Does not have platinum boost saved.");
+          $scope.changePlatinum($scope[planets[k]], 0);
         }
         $scope[planets[k]].noSingles = obj[planets[k]].noSingles || false;
         $scope[planets[k]].noTens = obj[planets[k]].noTens || false;
@@ -499,7 +512,7 @@ advApp.controller('advController', ['$document', '$filter', '$scope', function($
         loc.investments[i][3] *= (3 * loc.triples) + loc.bonusMultiplier + (loc.suits[suitFromName('gold')][0] ? $scope.suitList[suitFromName('gold')][1] : 0) + (loc.suits[suitFromName('blue')][0] ? $scope.suitList[suitFromName('blue')][1] : 0);
       }
       if (loc.investments[i][2]) {
-        loc.investments[i][3] *= $scope.selectAll[0] ? 17.77 : 7.77;
+        loc.investments[i][3] *= $scope.selectAll[0] ? loc.platinumboost : 7.77;
       }
       loc.investments[i][4] = loc.baseSpeed[i];
       if (loc.flux > 0) {
@@ -601,6 +614,17 @@ advApp.controller('advController', ['$document', '$filter', '$scope', function($
       retVal *= Number('1e+' + divNum);
     }
     return retVal;
+  };
+
+  $scope.changePlatinum = function(loc, index) {
+    for (var i = 0; i < loc.platinum.length; i++) {
+      if (i !== index) {
+        loc.platinum[i][0] = false;
+      } else {
+        loc.platinum[i][0] = true;
+      }
+    }
+    loc.platinumboost = $scope.platinumboosts[index];
   };
 
   $scope.changeSuits = function(loc, index) {
@@ -774,7 +798,7 @@ advApp.controller('advController', ['$document', '$filter', '$scope', function($
         }
       }
     }
-    string += '\r\n  ], \r\n  "noSingles": ' + loc.noSingles + ',\r\n  "noTens": ' + loc.noTens;
+    string += '\r\n  ], \r\n  "noSingles": ' + loc.noSingles + ',\r\n  "noTens": ' + loc.noTens + ',\r\n  "platinumboost": ' + loc.platinumboost;
     for (i = 0; i < loc.suits.length; i++) {
       if (loc.suits[i][0] === true) {
         string += ',\r\n  "suit": ' + i;
@@ -827,6 +851,8 @@ advApp.controller('advController', ['$document', '$filter', '$scope', function($
       loc.investments[i][2] = false;
     }
     loc.numAngels = 0;
+    loc.platinumboost = 17.77;
+    $scope.changePlatinum(loc, 0);
     loc.rec = null;
     loc.recTable = [];
     loc.recommendation = '';
@@ -1258,6 +1284,11 @@ advApp.controller('advController', ['$document', '$filter', '$scope', function($
       $scope[planets[p]].noSingles = false;
       $scope[planets[p]].noTens = false;
       $scope[planets[p]].numAngels = 0;
+      $scope[planets[p]].platinum = [];
+      for (var i = 0; i < $scope.platinumboosts.length; i++) {
+        $scope[planets[p]].platinum.push(i === 0 ? [true] : [false]);
+      }
+      $scope[planets[p]].platinumboost = 17.77;
       $scope[planets[p]].rec = null;
       $scope[planets[p]].recTable = [];
       $scope[planets[p]].recommendation = '';
