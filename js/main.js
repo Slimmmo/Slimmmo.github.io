@@ -1218,9 +1218,9 @@ advApp.controller('advController', ['$document', '$filter', '$scope', function($
     ];
     $scope.liverich.angelScale = 150;
     $scope.liverich.baseCost = [0.1, 11111, 1111111111, 11111111111111, 111111111111111111, 11111111111111111111111, 1111111111111111111111111111, 111111111111111111111111111111111, 1111111111111111111111111111111111111111];
-    $scope.liverich.basePower = [];/*[1.03, 1.05, 1.07, 1.09, 1.12, 1.15, ?, ?, ?];*/
+    $scope.liverich.basePower = [];/*[1.03, 1.05, 1.07, 1.09, 1.12, 1.15, 1.18, ?, ?];*/
     $scope.liverich.baseProfit = [];/*[0.1, 1111, 111111111, 111111111111, 7777777777777777, 777777777777777777, ?, ?, ?];*/
-    $scope.liverich.baseSpeed = [];/*[2, 10, 15, 25, 30, 60, ?, ?, ?];*/
+    $scope.liverich.baseSpeed = [];/*[2, 10, 15, 25, 30, 60, 75, ?, ?];*/
     $scope.liverich.hasMegaTickets = false;
     $scope.liverich.investments = [
       ['XO Skeleton', 1, false, 0, 0, 0, 0],
