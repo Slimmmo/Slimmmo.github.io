@@ -104,7 +104,7 @@ advApp.controller('advController', ['$document', '$filter', '$scope', function($
   $scope.moon = {};
   $scope.platinumboosts = [17.77, 77.77, 777.77, 7777.77];
   $scope.raw = false;
-  $scope.ref = $scope.earth;
+  $scope.ref = $scope.liverich;
   $scope.reverse = true;
   $scope.selectAll = [false, false, false, false];
   $scope.showUpdate = false;
