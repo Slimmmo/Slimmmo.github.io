@@ -1218,9 +1218,9 @@ advApp.controller('advController', ['$document', '$filter', '$scope', function($
     ];
     $scope.liverich.angelScale = 150;
     $scope.liverich.baseCost = [0.1, 11111, 1111111111, 11111111111111, 111111111111111111, 11111111111111111111111, 1111111111111111111111111111, 111111111111111111111111111111111, 1111111111111111111111111111111111111111];
-    $scope.liverich.basePower = [1.03, 1.05, ?, ?, ?, ?, ?, ?, ?];
-    $scope.liverich.baseProfit = [0.1, 2222, ?, ?, ?, ?, ?, ?, ?];
-    $scope.liverich.baseSpeed = [2, 10, ?, ?, ?, ?, ?, ?, ?];
+    $scope.liverich.basePower = [];/*[1.03, 1.05, 1.07, 1.09, ?, ?, ?, ?, ?];*/
+    $scope.liverich.baseProfit = [];/*[0.1, 2222, 555555555, 555555555555, ?, ?, ?, ?, ?];*/
+    $scope.liverich.baseSpeed = [];/*[2, 10, 15, 25, ?, ?, ?, ?, ?];*/
     $scope.liverich.hasMegaTickets = false;
     $scope.liverich.investments = [
       ['XO Skeleton', 1, false, 0, 0, 0, 0],
@@ -1336,7 +1336,7 @@ advApp.controller('advController', ['$document', '$filter', '$scope', function($
     $scope.liverich.unlocks[7] = [[1, [14, 5]],[25, [15, 2]],[75, [15, 2]],[150, [15, 2]],[300, [15, 2]]];
     $scope.liverich.unlocks[8] = [[1, [16, 5]],[25, [17, 2]],[75, [17, 2]],[150, [17, 2]]];
     $scope.liverich.unlocks[9] = [];
-    $scope.liverich.cashUpgrades = [[1111111, [0, 10], false],[11111111, [2, 10], false],[111111111, [0, 10], false],[1111111111, [2, 10], false],[11111111111, [4, 10], false],[111111111111, [0, 10], false],[1111111111111, [2, 10], false],[11111111111111, [4, 10], false],[111111111111111, [18, 10], false],[1111111111111111, [6, 10], false],[11111111111111111, [0, 10], false],[111111111111111111, [2, 10], false],[1111111111111111111, [4, 10], false]];
+    $scope.liverich.cashUpgrades = [[1111111, [0, 10], false],[11111111, [2, 10], false],[111111111, [0, 10], false],[1111111111, [2, 10], false],[11111111111, [4, 10], false],[111111111111, [0, 10], false],[1111111111111, [2, 10], false],[11111111111111, [4, 10], false],[111111111111111, [18, 10], false],[1111111111111111, [6, 10], false],[11111111111111111, [0, 10], false],[111111111111111111, [2, 10], false],[1111111111111111111, [4, 10], false],[11111111111111111111, [6, 10], false],[111111111111111111111, [8, 10], false],[1111111111111111111111, [0, 10], false]];
     $scope.liverich.angelUpgrades = [[111111, [18, 2], false, false],[1e+9, [18, 2], false, false],[11e+12, [18, 2], false, false],[111e+15, [18, 2], false, false],[1e+21, [18, 2], false, false]];
     $scope.liverich.managerUpgrades = [];
     $scope.moon.unlocks[0] = [[10, [0, 3.5]],[20, [0, 4]],[40, [0, 4.5]],[80, [0, 5]],[160, [0, 5.5]],[320, [0, 6]],[640, [0, 6.5]],[1280, [0, 7]],[2560, [0, 7.5]],[5120, [0, 999999999]],[10000, [0, 3.5]]];
