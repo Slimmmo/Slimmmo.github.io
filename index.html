@@ -30,13 +30,13 @@
       </div>
       <br>
       <uib-alert data-ng-if="showUpdate" type="success" close="hideUpdate()">
-        <strong>Update!</strong> The Root of All Evil event Calculations are here!
+        <strong>Update!</strong> Live Rich and Profit event Calculations are here!
       </uib-alert>
       <ul class="nav nav-tabs nav-justified">
         <li role="presentation" data-ng-class="{active: !isCompare() && isWorld('earth')}"><a data-ng-click="setWorld('earth')">Earth</a></li>
         <li role="presentation" data-ng-class="{active: !isCompare() && isWorld('moon')}"><a data-ng-click="setWorld('moon')">Moon</a></li>
         <li role="presentation" data-ng-class="{active: !isCompare() && isWorld('mars')}"><a data-ng-click="setWorld('mars')">Mars</a></li>
-        <li role="presentation" class="disabled" data-ng-class="{active: !isCompare() && isWorld('liverich')}"><a <!--data-ng-click="setWorld('liverich')"-->Live Rich and Profit</a></li>
+        <li role="presentation" data-ng-class="{active: !isCompare() && isWorld('liverich')}"><a data-ng-click="setWorld('liverich')">Live Rich and Profit</a></li>
       </ul>
       <div data-ng-show="!isCompare()">
         <div>
