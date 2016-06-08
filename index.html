@@ -29,16 +29,14 @@
         Load a saved state: <input type="file" id="fileInput"><button type="button" class="btn btn-primary pull-right" data-ng-click="export()">Save State</button>
       </div>
       <br>
-      <!--
       <uib-alert data-ng-if="showUpdate" type="success" close="hideUpdate()">
-        <strong>Update!</strong> Live Rich and Profit event Calculations are here!
+        <strong>Update!</strong> Insert Coincs to Continue event Calculations are here!
       </uib-alert>
-      -->
       <ul class="nav nav-tabs nav-justified">
         <li role="presentation" data-ng-class="{active: !isCompare() && isWorld('earth')}"><a data-ng-click="setWorld('earth')">Earth</a></li>
         <li role="presentation" data-ng-class="{active: !isCompare() && isWorld('moon')}"><a data-ng-click="setWorld('moon')">Moon</a></li>
         <li role="presentation" data-ng-class="{active: !isCompare() && isWorld('mars')}"><a data-ng-click="setWorld('mars')">Mars</a></li>
-        <li role="presentation" class="disabled" data-ng-class="{active: !isCompare() && isWorld('insertcoin')}"><a><!--data-ng-click="setWorld('insertcoin')"-->Insert Coin to Continue</a></li>
+        <li role="presentation" data-ng-class="{active: !isCompare() && isWorld('insertcoin')}"><a data-ng-click="setWorld('insertcoin')">Insert Coin to Continue</a></li>
       </ul>
       <div data-ng-show="!isCompare()">
         <div>
