@@ -30,7 +30,7 @@
       </div>
       <br>
       <uib-alert data-ng-if="showUpdate" type="success" close="hideUpdate()">
-        <strong>Update!</strong> Live Rich and Profit event Calculations are here!
+        <strong>Update!</strong> Insert Coins to Continue event Calculations are here!
       </uib-alert>
       <ul class="nav nav-tabs nav-justified">
         <li role="presentation" data-ng-class="{active: !isCompare() && isWorld('earth')}"><a data-ng-click="setWorld('earth')">Earth</a></li>
@@ -155,19 +155,19 @@
             </uib-accordion-group>
             <uib-accordion-group is-open="accOpen[4]" class="form-inline">
               <uib-accordion-heading>
-                Gold/Platinum Upgrades + Suits<i data-ng-show="ref.suitExclamation" class="fa fa-plus"></i><span class="pull-right fa" ng-class="{'fa-chevron-down': accOpen[4], 'fa-chevron-right': !accOpen[4]}"></span>
+                Gold/Platinum Upgrades + Suits<i data-ng-show="ref.suitExclamation && !isEvent()" class="fa fa-plus"></i><span class="pull-right fa" ng-class="{'fa-chevron-down': accOpen[4], 'fa-chevron-right': !accOpen[4]}"></span>
               </uib-accordion-heading>
               <div class="row">
                 <label class="col-xs-6"><input type="number" class="form-control" min="0" data-ng-model="ref.triples"> # 3x Multipliers</label>
                 <label class="col-xs-6"><input type="number" class="form-control" min="0" data-ng-model="ref.flux"> # Flux Capitalors</label>
               </div>
-              <div class="multicolumn">
+              <div class="multicolumn" data-ng-show="!isEvent()">
                 Platinum Boost: 
                 <div data-ng-repeat="boost in platinumboosts track by $index">
                   <label class="strike-when-checked checkbox-inline"><input type="checkbox" data-ng-model="ref.platinum[$index][0]" data-ng-change="changePlatinum(ref, $index)"> <span>{{boost}}</span></label>
                 </div>
               </div>
-              <div class="multicolumn">
+              <div class="multicolumn" data-ng-show="!isEvent()">
                 <div data-ng-repeat="suit in ref.suits track by $index">
                   <label class="strike-when-checked checkbox-inline"><input type="checkbox" data-ng-model="ref.suits[$index][0]" data-ng-change="changeSuits(ref, $index)"> <span>{{suitList[$index][0]}} Suit<i data-ng-show="ref.suits[$index][1]" title="{{ref.suits[$index][1] | percentage}} increase in $ / second" data-ng-class="{best_suit: $index == ref.bestSuit}" class="fa fa-plus"></i></span></label>
                 </div>

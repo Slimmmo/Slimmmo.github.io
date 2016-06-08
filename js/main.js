@@ -988,6 +988,10 @@ advApp.controller('advController', ['$document', '$filter', '$scope', function($
     return $scope.compare;
   };
 
+  $scope.isEvent = function() {
+    return $scope.ref == $scope.coins;
+  };
+
   $scope.isWorld = function(world) {
     return $scope.ref == $scope[world];
   };
