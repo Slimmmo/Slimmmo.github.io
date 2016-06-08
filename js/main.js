@@ -1198,8 +1198,8 @@ advApp.controller('advController', ['$document', '$filter', '$scope', function($
   };
 
   function loadDefaults() {
-  	$scope.coins.angelScale = 3; // ?
-    $scope.coins.baseCost = [2.5, 5, 7.5, 10, 12.5, 32.7, 58.3, 70, 125];
+    $scope.coins.angelScale = 3; // ?
+    $scope.coins.baseCost = [2.5, 5, 7.5, 10, 12.5, 30, 50, 70, 125];
     $scope.coins.basePower = [1.75, 2, 2.25, 2.5, 2.75, 3, 3.5, 4, 4.5];
     $scope.coins.baseProfit = [0.25, 0.75, 1.25, 1.75, 5.25, 15, 36.25, 67.50, 131.25];
     $scope.coins.baseSpeed = [5, 8, 11, 14, 17, 20, 35, 45, 60];
@@ -1212,7 +1212,7 @@ advApp.controller('advController', ['$document', '$filter', '$scope', function($
       ['Fightingfrogs', 1, false, 0, 0, 0, 0],
       ['Crow & Jack', 1, false, 0, 0, 0, 0],
       ['Street Skid 2', 1, false, 0, 0, 0, 0],
-      ['Red Cap', 1, false, 0, 0, 0, 0],
+      ['Rad Cap', 1, false, 0, 0, 0, 0],
       ['Space Worm Ted', 1, false, 0, 0, 0, 0]
     ];
     $scope.earth.angelScale = 150;
@@ -1356,7 +1356,7 @@ advApp.controller('advController', ['$document', '$filter', '$scope', function($
     $scope.coins.unlocks[7] = [[5, [14, 9]],  [10, [14, 11]], [20, [14, 13]], [25, [15, 2]], [40, [14, 15]], [60, [14, 17]], [70, [15, 2]], [80, [14, 18]], [100, [14, 9]], [120, [14, 9]]];
     $scope.coins.unlocks[8] = [[5, [16, 10]], [10, [16, 12]], [20, [16, 14]], [25, [17, 2]], [40, [16, 16]], [60, [16, 18]], [70, [17, 2]], [80, [16, 19]], [100, [16, 10]]];
     $scope.coins.unlocks[9] = [[6, [0, 50]], [12, [2, 50]], [18, [4, 50]], [24, [6, 50]], [30, [8, 50]], [36, [10, 50]], [42, [12, 50]], [48, [14, 50]], [54, [16, 50]], [60, [19, 2]], [75, [18, 50]], [100, [18, 50]]];
-    $scope.coins.cashUpgrades = [[25700, [18, 13.37], false], [2680000, [18, 13.37], false], [279e+8, [18, 13.37], false], [281e+12, [18, 13.37], false], [292e+16, [18, 13.37], false], [303e+20, [18, 13.37], false], [314e+24, [18, 13.37], false], [325e+28, [18, 13.37], false], [336e+32, [18, 13.37], false], [347e+36, [18, 13.37], false], [358e+40, [18, 13.37], false], [369e+44, [18, 13.37], false], [371e+48, [18, 13.37], false]];
+    $scope.coins.cashUpgrades = [[25700, [18, 13.37], false], [2680000, [18, 13.37], false], [279e+8, [18, 13.37], false], [281e+12, [18, 13.37], false], [292e+16, [18, 13.37], false], [303e+20, [18, 13.37], false], [314e+24, [18, 13.37], false], [325e+28, [18, 13.37], false], [336e+32, [18, 13.37], false], [347e+36, [18, 13.37], false], [358e+40, [18, 13.37], false], [369e+44, [18, 13.37], false], [371e+48, [18, 13.37], false], [382e+51, [18, 13.37], false], [393e+55, [18, 13.37], false], [404e+59, [18, 13.37], false], [415e+63, [18, 13.37], false], [426e+67, [18, 13.37], false], [437e+71, [18, 13.37], false]];
     $scope.coins.angelUpgrades = [[25e+7, [20, 1], false, false], [27e+13, [20, 2], false, false], [29e+18, [20, 3], false, false], [3e+24, [20, 4], false, false], [33e+27, [20, 5], false, false]];
     $scope.coins.managerUpgrades = [];
     $scope.moon.unlocks[0] = [[10, [0, 3.5]],[20, [0, 4]],[40, [0, 4.5]],[80, [0, 5]],[160, [0, 5.5]],[320, [0, 6]],[640, [0, 6.5]],[1280, [0, 7]],[2560, [0, 7.5]],[5120, [0, 999999999]],[10000, [0, 3.5]]];
