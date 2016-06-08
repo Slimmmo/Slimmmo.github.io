@@ -1198,6 +1198,23 @@ advApp.controller('advController', ['$document', '$filter', '$scope', function($
   };
 
   function loadDefaults() {
+  	$scope.coins.angelScale = 3; // ?
+    $scope.coins.baseCost = [2.5, 5, 7.5, 10, 12.5, 32.7, 58.3, 70, 125];
+    $scope.coins.basePower = [1.75, 2, 2.25, 2.5, 2.75, 3, 3.5, 4, 4.5];
+    $scope.coins.baseProfit = [0.25, 0.75, 1.25, 1.75, 5.25, 15, 36.25, 67.50, 131.25];
+    $scope.coins.baseSpeed = [5, 8, 11, 14, 17, 20, 35, 45, 60];
+    $scope.coins.hasMegaTickets = false;
+    $scope.coins.investments = [
+      ['Explosive Dude', 1, false, 0, 0, 0, 0],
+      ['Silver Blade', 1, false, 0, 0, 0, 0],
+      ['Primate Paradise', 1, false, 0, 0, 0, 0],
+      ['Flemmings', 1, false, 0, 0, 0, 0],
+      ['Fightingfrogs', 1, false, 0, 0, 0, 0],
+      ['Crow & Jack', 1, false, 0, 0, 0, 0],
+      ['Street Skid 2', 1, false, 0, 0, 0, 0],
+      ['Red Cap', 1, false, 0, 0, 0, 0],
+      ['Space Worm Ted', 1, false, 0, 0, 0, 0]
+    ];
     $scope.earth.angelScale = 150;
     $scope.earth.baseCost = [4, 60, 720, 8640, 103680, 1244160, 14929920, 179159040, 2149908480, 25798901760];
     $scope.earth.basePower = [1.07, 1.15, 1.14, 1.13, 1.12, 1.11, 1.1, 1.09, 1.08, 1.07];
@@ -1215,23 +1232,6 @@ advApp.controller('advController', ['$document', '$filter', '$scope', function($
       ['Movies', 0, false, 0, 0, 0, 0],
       ['Bank', 0, false, 0, 0, 0, 0],
       ['Oil', 0, false, 0, 0, 0, 0]
-    ];
-    $scope.coins.angelScale = 3; // ?
-    $scope.coins.baseCost = [4.38, 10, 16.88, 25, 34.38, 90, 175, 280, 562.50];
-    $scope.coins.basePower = [1.75, 2, 2.25, 2.5, 2.75, 3, 3.5, 4, 4.5];
-    $scope.coins.baseProfit = [0.25, 0.75, 1.25, 1.75, 5.25, 15, 36.25, 67.50, 131.25];
-    $scope.coins.baseSpeed = [5, 8, 11, 14, 17, 20, 35, 45, 60];
-    $scope.coins.hasMegaTickets = false;
-    $scope.coins.investments = [
-      ['Explosive Dude', 1, false, 0, 0, 0, 0],
-      ['Silver Blade', 1, false, 0, 0, 0, 0],
-      ['Primate Paradise', 1, false, 0, 0, 0, 0],
-      ['Flemmings', 1, false, 0, 0, 0, 0],
-      ['Fightingfrogs', 1, false, 0, 0, 0, 0],
-      ['Crow & Jack', 1, false, 0, 0, 0, 0],
-      ['Street Skid 2', 1, false, 0, 0, 0, 0],
-      ['Red Cap', 1, false, 0, 0, 0, 0],
-      ['Space Worm Ted', 1, false, 0, 0, 0, 0]
     ];
     $scope.moon.angelScale = 165;
     $scope.moon.baseCost = [5, 105, 2929, 42525, 493025, 18753525, 393824025, 8270304525, 173676395025, 1000000000000];
