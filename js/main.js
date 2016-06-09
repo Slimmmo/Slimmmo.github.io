@@ -133,6 +133,7 @@ advApp.controller('advController', ['$document', '$filter', '$scope', function($
     uppInput.addEventListener('change', function(e) {
       file = uppInput.files[0],
       reader = new FileReader();
+      $scope.uppFile = file;
       reader.onload = function(e) {
         loadUppFile(e.target.result);
       }
@@ -239,7 +240,11 @@ advApp.controller('advController', ['$document', '$filter', '$scope', function($
     planetObj.sacAngels = obj.angelInvestorsSpent;
     planetObj.lifetimeEarnings = obj.totalPreviousCash;
     
-    $scope.calc(planetObj);
+    calcState(planetObj);
+    calcAngels(planetObj);
+    calcSuits(planetObj);
+    calcRecommendations(planetObj);
+    localStorage.setItem('planets', getJsonForExport());
   }
 
   function loadExportedJson(str) {
@@ -422,12 +427,23 @@ advApp.controller('advController', ['$document', '$filter', '$scope', function($
   }
 
   $scope.calc = function(loc) {
+    calcUpdatefile();
     calcState(loc);
     calcAngels(loc);
     calcSuits(loc);
     calcRecommendations(loc);
     localStorage.setItem('planets', getJsonForExport());
   };
+  
+  function calcUpdatefile() {
+    var reader = new FileReader();
+    if ($scope.uppFile != null) {
+      reader.onload = function(e) {
+        loadUppFile(e.target.result);
+      }
+      reader.readAsText($scope.uppFile);
+    }
+  }
 
   function calcAngelCost(numAngels, mul) {
     return (1e+15 * Math.pow(numAngels / mul, 2));
