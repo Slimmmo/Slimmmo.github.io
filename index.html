@@ -180,9 +180,17 @@
               <p>Please only input the bonus you have.<br>
               For example, if you have a 30% Angel Investor increase from a Christmas event, so now your base Angel Investor bonus is 32%, but with upgrades it could easily be above 40%, please only input 30 or the calculations will be off.
               </p>
-              <label class="col-xs-6"><input type="number" class="form-control" min="0" data-ng-model="ref.bonusAngelEffectiveness">% Angel Investor bonus</label>
+              <label class="col-xs-6"><input type="number" class="form-control" min="0" step="0.1" data-ng-model="ref.bonusAngelEffectiveness">% Angel Investor bonus</label>
               <label class="col-xs-6"><input type="number" class="form-control" min="0" data-ng-model="ref.bonusMultiplier">x multiplier</label>
-              <label class="col-xs-6">Total Angel Investor % = {{ref.angelEffectiveness | number:0}}%</label>
+              <label class="col-xs-6">Total Angel Investor % = {{ref.angelEffectiveness | number}}%</label>
+            </uib-accordion-group>
+            <uib-accordion-group is-open="accOpen[6]">
+              <uib-accordion-heading>
+                Badges<span class="pull-right fa" ng-class="{'fa-chevron-down': accOpen[6], 'fa-chevron-right': !accOpen[6]}"></span>
+              </uib-accordion-heading>
+              <p>
+              <b>IN PROGRESS!!!</b>
+              </p>
             </uib-accordion-group>
           </uib-accordion>
         </div>
