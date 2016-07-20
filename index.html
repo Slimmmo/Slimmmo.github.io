@@ -186,11 +186,13 @@
             </uib-accordion-group>
             <uib-accordion-group is-open="accOpen[6]">
               <uib-accordion-heading>
-                Badges<span class="pull-right fa" ng-class="{'fa-chevron-down': accOpen[6], 'fa-chevron-right': !accOpen[6]}"></span>
+                Super Badges<span class="pull-right fa" ng-class="{'fa-chevron-down': accOpen[6], 'fa-chevron-right': !accOpen[6]}"></span>
               </uib-accordion-heading>
-              <p>
-              <b>IN PROGRESS!!!</b>
-              </p>
+              <div class="multicolumn" data-ng-show="!isEvent()">
+                  <div data-ng-repeat="badge in ref.badges track by $index">
+                      <label class="strike-when-checked checkbox-inline"><input type="checkbox" data-ng-model="ref.badges[$index][0]" data-ng-change="changeBadge(ref, $index)"> <span>{{superbadgeList[$index][0]}} ({{getBadgeBonusInfo(ref,superbadgeList[$index])}})</span></label>
+                  </div>
+              </div>
             </uib-accordion-group>
           </uib-accordion>
         </div>
