@@ -1424,7 +1424,7 @@ advApp.controller('advController', ['$document', '$filter', '$scope', function($
 
     "All profits" upgrades [previous ones in square parentheses, I think]:
         DONE:
-        These Are The Outcomes. Of The System. They Call Capitalism. And It's Neverending Pursuit (sic). To Profit At Any Cost. 
+        Earth. The Final Frontier. These Are The Outcomes. Of The System. They Call Capitalism. And It's Neverending Pursuit (sic). To Profit At Any Cost. 
         TODO:
         To Destroy New Worlds. [Actual Fortune Cookies.] [Extinct Life.] And Enslave Civilization. To Boldly Grow. (To no End). [Deregulation.] As No System. Has Ever Grown. Before. Live Rich. And Profit!
     */
