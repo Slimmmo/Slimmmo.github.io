@@ -1014,7 +1014,7 @@ advApp.controller('advController', ['$document', '$filter', '$scope', function($
     }
     return null;
   };
-  
+
   $scope.getBadgeBonusInfo = function (loc, badge) {
       var ret = '';
       ret += badge[2][1]+'x on ';
