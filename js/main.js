@@ -1024,15 +1024,6 @@ advApp.controller('advController', ['$document', '$filter', '$scope', function($
       return ret;
   }
 
-  $scope.getBadgeBonusInfo = function (loc, badge) {
-      var ret = '';
-      ret += badge[2][1]+'x on ';
-      ret += $scope[planets[badge[1]]].investments[badge[2][0] / 2][0];
-      if (badge[2][0] % 2 === 1)
-          ret += ' Speed';
-      return ret;
-  }
-
   $scope.hideUpdate = function() {
     $scope.showUpdate = false;
   };
