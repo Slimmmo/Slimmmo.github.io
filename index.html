@@ -30,13 +30,13 @@
       </div>
       <br>
       <uib-alert data-ng-if="showUpdate" type="success" close="hideUpdate()">
-        <strong>Update!</strong> Insert Coins to Continue event Calculations are here!
+        <strong>Update!</strong> Cashella event Calculations are here!
       </uib-alert>
       <ul class="nav nav-tabs nav-justified">
         <li role="presentation" data-ng-class="{active: !isCompare() && isWorld('earth')}"><a data-ng-click="setWorld('earth')">Earth</a></li>
         <li role="presentation" data-ng-class="{active: !isCompare() && isWorld('moon')}"><a data-ng-click="setWorld('moon')">Moon</a></li>
         <li role="presentation" data-ng-class="{active: !isCompare() && isWorld('mars')}"><a data-ng-click="setWorld('mars')">Mars</a></li>
-        <li role="presentation" data-ng-class="{active: !isCompare() && isWorld('coins')}"><a data-ng-click="setWorld('coins')">Insert Coins to Continue</a></li>
+        <li role="presentation" data-ng-class="{active: !isCompare() && isWorld('cashella')}"><a data-ng-click="setWorld('cashella')">Cashella</a></li>
       </ul>
       <div data-ng-show="!isCompare()">
         <div>
@@ -115,7 +115,7 @@
                 <label><input type="checkbox" class="form-control col-xs-offset-3" data-ng-model="clearAfter[0]"> Clear all after (inclusive)</label>
               </div>
               <div class="multicolumn">
-				<div data-ng-repeat="cupg in ref.cashUpgrades track by $index"><label class="strike-when-checked"><input type="checkbox" class="form-control" data-ng-model="cupg[2]" data-ng-change="checkCash(ref, $index)"> <span>{{getNamedType(ref, cupg)}} (${{cupg[0] | num:raw}})</span></label></div>
+                <div data-ng-repeat="cupg in ref.cashUpgrades track by $index"><label class="strike-when-checked"><input type="checkbox" class="form-control" data-ng-model="cupg[2]" data-ng-change="checkCash(ref, $index)"> <span>{{getNamedType(ref, cupg)}} (${{cupg[0] | num:raw}})</span></label></div>
               </div>
             </uib-accordion-group>
             <uib-accordion-group is-open="accOpen[2]">
@@ -188,7 +188,6 @@
               <uib-accordion-heading>
                 Super Badges<span class="pull-right fa" ng-class="{'fa-chevron-down': accOpen[6], 'fa-chevron-right': !accOpen[6]}"></span>
               </uib-accordion-heading>
-              <div class="multicolumn">
               <div class="multicolumn" data-ng-show="!isEvent()">
                   <div data-ng-repeat="badge in ref.badges track by $index">
                       <label class="strike-when-checked checkbox-inline"><input type="checkbox" data-ng-model="ref.badges[$index][0]" data-ng-change="changeBadge(ref, $index)"> <span>{{superbadgeList[$index][0]}} ({{getBadgeBonusInfo(ref,superbadgeList[$index])}})</span></label>
@@ -282,7 +281,7 @@
                 <td><a ng-click="incrementPercentage(ref)" class="btn btn-link"><span class="fa fa-chevron-up"></span></a></td>
               </tr>
               <tr class="form-group">
-				<td class="form-group">
+                <td class="form-group">
                   <input style="width:50px;" data-ng-model="filterTime.percentage" class="form-control text-center" type="text" pattern="[0-9]*" placeholder="%">
                 </td>
               </tr>
