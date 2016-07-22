@@ -119,21 +119,18 @@ advApp.controller('advController', ['$document', '$filter', '$scope', function($
   $scope.superbadgeList = [
     /*
     The structure is as follows:
-    ['Name',Planet ID,[Investiment,x Profit]]
+    ['Name',Planet ID,[Investment,x Profit]]
     */
-    /*
-    Certainly there's one for:
-    - Gates of Heck
-    - Black & Blue Friday
-    - A Capitalist Carol
-    - New You Resolutions
-    Please fill in the missing super badges
-    */
+    ['Basket Case', 0, [6, 25]],
+    ['Buy-It Shield', 0, [2, 30]],
+    ['Candy Canes', 0, [10, 20]],
+    ['Burger', 0, [12, 20]],
     ['Unicorn', 0, [16, 15]],
     ['Rainbow Machine', 1, [0, 30]],
     ['Villain Mask', 1, [6, 25]],
     ['Space Buddies', 1, [8, 20]],
-    ['Silver Blade', 1, [12, 20]]
+    ['Silver Blade', 1, [12, 20]]/*
+    ['Speaker',]*/
   ];
   var planets = ['earth', 'moon', 'mars', 'cashella'];
 
