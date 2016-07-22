@@ -197,6 +197,7 @@ advApp.controller('advController', ['$document', '$filter', '$scope', function($
         }
         $scope[planets[k]].noSingles = obj[planets[k]].noSingles || false;
         $scope[planets[k]].noTens = obj[planets[k]].noTens || false;
+        $scope[planets[k]].noHundreds = obj[planets[k]].noHundreds || false;
         if ('suit' in obj[planets[k]]) {
           $scope[planets[k]].suits[obj[planets[k]].suit][0] = true;
         }
@@ -402,10 +403,12 @@ advApp.controller('advController', ['$document', '$filter', '$scope', function($
     if (!loc.noTens) {
       inc.push(10);
     }
-    inc.push(100);
+    if (!loc.noHundreds) {
+      inc.push(100);
+    }
     $scope.updateFilterTime(loc);
     for (; i < loc.investments.length; i++) {
-      while (inc.length > 3 - (loc.noSingles ? 1 : 0) - (loc.noTens ? 1 : 0)) {
+      while (inc.length > 3 - (loc.noSingles ? 1 : 0) - (loc.noTens ? 1 : 0) - (loc.noHundreds ? 1 : 0)) {
         inc.pop();
       }
       if (i === 1 && $scope.isWorld('earth')) {
@@ -864,7 +867,7 @@ advApp.controller('advController', ['$document', '$filter', '$scope', function($
         }
       }
     }
-    string += '\r\n  ], \r\n  "noSingles": ' + loc.noSingles + ',\r\n  "noTens": ' + loc.noTens + ',\r\n  "platinumboost": ' + loc.platinumboost;
+    string += '\r\n  ], \r\n  "noSingles": ' + loc.noSingles + ',\r\n  "noTens": ' + loc.noTens + ',\r\n "noHundreds": ' + loc.noHundreds + ',\r\n  "platinumboost": ' + loc.platinumboost;
     for (i = 0; i < loc.suits.length; i++) {
       if (loc.suits[i][0] === true) {
         string += ',\r\n  "suit": ' + i;
@@ -1366,6 +1369,7 @@ advApp.controller('advController', ['$document', '$filter', '$scope', function($
       $scope[planets[p]].name = planets[p];
       $scope[planets[p]].noSingles = false;
       $scope[planets[p]].noTens = false;
+      $scope[planets[p]].noHundreds = false;
       $scope[planets[p]].numAngels = 0;
       $scope[planets[p]].platinum = [];
       for (var i = 0; i < $scope.platinumboosts.length; i++) {

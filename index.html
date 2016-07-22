@@ -239,6 +239,7 @@
             </uib-accordion-heading>
             <label><input type="checkbox" class="form-control" data-ng-model="ref.noSingles"> Don't show +1 upgrades</label>
             <label><input type="checkbox" class="form-control" data-ng-model="ref.noTens"> Don't show +10 upgrades</label>
+            <label><input type="checkbox" class="form-control" data-ng-model="ref.noHundreds"> Don't show +100 upgrades</label>
             <br>
             <br>
             <div>
@@ -282,7 +283,7 @@
               </tr>
               <tr class="form-group">
                 <td class="form-group">
-                  <input style="width:50px;" data-ng-model="filterTime.percentage" class="form-control text-center" type="text" pattern="[0-9]*" placeholder="%">
+                  <input style="width:50px;" data-ng-model="filterTime.percentage" class="form-control text-center" type="text" pattern="[0-9]*[.]?[0-9]{0,3}" placeholder="%">
                 </td>
               </tr>
               <tr class="text-center">
