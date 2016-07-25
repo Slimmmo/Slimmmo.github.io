@@ -82,8 +82,13 @@ advApp.filter('rec', function() {
       retVal = loc.investments[input[1]][0];
     } else if (input[0] === 'cash') {
       var index = Math.floor(loc.cashUpgrades[input[1]][1][0] / 2);
-      retVal = (index < loc.investments.length) ? loc.investments[index][0] : 'All';
-      retVal += (loc.cashUpgrades[input[1]][1][0] % 2 === 0) ? ' Profit' : ' Speed';
+      if (index === loc.investments.length + 1) {
+        retVal = 'Angel Investor';
+      }
+      else {
+        retVal = (index < loc.investments.length) ? loc.investments[index][0] : 'All';
+        retVal += (loc.cashUpgrades[input[1]][1][0] % 2 === 0) ? ' Profit' : ' Speed';
+      }
       retVal += ' ' + loc.cashUpgrades[input[1]][1][1];
     }
     return retVal;
@@ -167,7 +172,7 @@ advApp.controller('advController', ['$document', '$filter', '$scope', function($
           }
         }
         $scope[planets[k]].numAngels = obj[planets[k]].numAngels;
-        $scope[planets[k]].viewNumAngels = $scope[planets[k]].numAngels;
+        $scope.updateViewNumAngels($scope[planets[k]]);
         for (i = 0; i < obj[planets[k]].upgradeIndexUpTo; i++) {
           $scope[planets[k]].cashUpgrades[i][$scope[planets[k]].cashUpgrades[i].length - 1] = true;
         }
@@ -623,38 +628,38 @@ advApp.controller('advController', ['$document', '$filter', '$scope', function($
   };
 
   function applySuperBadge(loc) {
-      var i;
-      for (i = 0; i < loc.badges.length; i++) {
-          if (loc.badges[i][0] === true) {
-              if (loc.name === $scope[planets[$scope.superbadgeList[i][1]]].name) {
-                  var row = $scope.superbadgeList[i][2];
-                  var applyRow = Math.floor(row[0] / 2);
-                  var applyType = row[0] % 2;
-                  if (applyRow < loc.investments.length) {
-                      if (applyType === 0) {
-                          loc.investments[applyRow][3] *= row[1];
-                      } else {
-                          loc.investments[applyRow][4] /= row[1];
-                      }
-                  } else if (applyRow === loc.investments.length) {
-                      if (applyType === 0) {
-                          for (j = 0; j < loc.investments.length; j++) {
-                              loc.investments[j][3] *= row[1];
-                          }
-                      } else {
-                          for (j = 0; j < loc.investments.length; j++) {
-                              loc.investments[j][4] /= row[1];
-                          }
-                      }
-                  } else if (applyRow === loc.investments.length + 1) {
-                      loc.angelEffectiveness += row[1];
-                  } else if (row[0] < 30 || row[0] > 29 + loc.investments.length) {
-                      throw 'Pair not dealt with: ' + row;
-                  }
+    var i;
+    for (i = 0; i < loc.badges.length; i++) {
+      if (loc.badges[i][0] === true) {
+        if (loc.name === $scope[planets[$scope.superbadgeList[i][1]]].name) {
+          var row = $scope.superbadgeList[i][2];
+          var applyRow = Math.floor(row[0] / 2);
+          var applyType = row[0] % 2;
+          if (applyRow < loc.investments.length) {
+            if (applyType === 0) {
+              loc.investments[applyRow][3] *= row[1];
+            } else {
+              loc.investments[applyRow][4] /= row[1];
+            }
+          } else if (applyRow === loc.investments.length) {
+            if (applyType === 0) {
+              for (j = 0; j < loc.investments.length; j++) {
+                loc.investments[j][3] *= row[1];
               }
-              break;
+            } else {
+              for (j = 0; j < loc.investments.length; j++) {
+                loc.investments[j][4] /= row[1];
+              }
+            }
+          } else if (applyRow === loc.investments.length + 1) {
+            loc.angelEffectiveness += row[1];
+          } else if (row[0] < 30 || row[0] > 29 + loc.investments.length) {
+            throw 'Pair not dealt with: ' + row;
           }
+        }
+        break;
       }
+    }
   };
 
   function calcUpgradeScore(planet, loc, unlockCost) {
@@ -867,7 +872,7 @@ advApp.controller('advController', ['$document', '$filter', '$scope', function($
         }
       }
     }
-    string += '\r\n  ], \r\n  "noSingles": ' + loc.noSingles + ',\r\n  "noTens": ' + loc.noTens + ',\r\n "noHundreds": ' + loc.noHundreds + ',\r\n  "platinumboost": ' + loc.platinumboost;
+    string += '\r\n  ], \r\n  "noSingles": ' + loc.noSingles + ',\r\n  "noTens": ' + loc.noTens + ',\r\n  "noHundreds": ' + loc.noHundreds + ',\r\n  "platinumboost": ' + loc.platinumboost;
     for (i = 0; i < loc.suits.length; i++) {
       if (loc.suits[i][0] === true) {
         string += ',\r\n  "suit": ' + i;
@@ -1270,6 +1275,20 @@ advApp.controller('advController', ['$document', '$filter', '$scope', function($
     }
   };
 
+  $scope.updateViewNumAngels = function (loc) {
+    updateView(loc,'numAngels', 'viewNumAngels', 'illions');
+  };
+
+  function updateView(loc,varName, viewName, illionsName) {
+    var filtered = numFilter(loc[varName],false).split(' ');
+    loc[viewName] = Number(filtered[0]);
+    if (loc[varName] < Number(1e+6)) {
+      loc[illionsName] = '';
+    } else {
+      loc[illionsName] = filtered[1];
+    }
+  }
+
   function updateRecString(loc) {
     if (loc.rec[0] === 'all') {
       loc.recommendation = 'Buy all to level ' + loc.rec[1];
@@ -1359,6 +1378,7 @@ advApp.controller('advController', ['$document', '$filter', '$scope', function($
       $scope[planets[p]].angelEffectiveness = 2;
       $scope[planets[p]].angelExclamation = false;
       $scope[planets[p]].angelIllions = '';
+      $scope[planets[p]].badges = [];
       $scope[planets[p]].bestSuit = null;
       $scope[planets[p]].bonusAngelEffectiveness = 0;
       $scope[planets[p]].bonusMultiplier = 0;
@@ -1385,7 +1405,6 @@ advApp.controller('advController', ['$document', '$filter', '$scope', function($
       for (var i = 0; i < $scope.suitList.length; i++) {
         $scope[planets[p]].suits.push([false, false]);
       }
-      $scope[planets[p]].badges = [];
       for (var i = 0; i < $scope.superbadgeList.length; i++) {
           $scope[planets[p]].badges.push([false, false]);
       }
