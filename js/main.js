@@ -239,6 +239,41 @@ advApp.controller('advController', ['$document', '$filter', '$scope', function($
     $scope.calc(loc);
   };
 
+  function applySuperBadge(loc) {
+    var i;
+    for (i = 0; i < loc.badges.length; i++) {
+      if (loc.badges[i][0] === true) {
+        if (loc.name === $scope[planets[$scope.superbadgeList[i][1]]].name) {
+          var row = $scope.superbadgeList[i][2];
+          var applyRow = Math.floor(row[0] / 2);
+          var applyType = row[0] % 2;
+          if (applyRow < loc.investments.length) {
+            if (applyType === 0) {
+              loc.investments[applyRow][3] *= row[1];
+            } else {
+              loc.investments[applyRow][4] /= row[1];
+            }
+          } else if (applyRow === loc.investments.length) {
+            if (applyType === 0) {
+              for (j = 0; j < loc.investments.length; j++) {
+                loc.investments[j][3] *= row[1];
+              }
+            } else {
+              for (j = 0; j < loc.investments.length; j++) {
+                loc.investments[j][4] /= row[1];
+              }
+            }
+          } else if (applyRow === loc.investments.length + 1) {
+            loc.angelEffectiveness += row[1];
+          } else if (row[0] < 30 || row[0] > 29 + loc.investments.length) {
+            throw 'Pair not dealt with: ' + row;
+          }
+        }
+        break;
+      }
+    }
+  };
+
   function applyTuple(loc, row) {
     var i = 0, j = 0,
     applyRow = -1,
@@ -337,6 +372,7 @@ advApp.controller('advController', ['$document', '$filter', '$scope', function($
     calcState(loc);
     calcAngels(loc);
     calcSuits(loc);
+    calcSuperBadges(loc);
     calcRecommendations(loc);
     localStorage.setItem('planets', getJsonForExport());
   };
@@ -554,7 +590,6 @@ advApp.controller('advController', ['$document', '$filter', '$scope', function($
       }
     }
     applySuperBadge(loc);
-
     for (i = 0; i < loc.angelUpgrades.length; i++) {
       if (tupleIsActive(loc.angelUpgrades[i])) {
         applyTuple(loc, loc.angelUpgrades[i]);
@@ -622,39 +657,35 @@ advApp.controller('advController', ['$document', '$filter', '$scope', function($
     }
   };
 
-  function applySuperBadge(loc) {
-      var i;
-      for (i = 0; i < loc.badges.length; i++) {
-          if (loc.badges[i][0] === true) {
-              if (loc.name === $scope[planets[$scope.superbadgeList[i][1]]].name) {
-                  var row = $scope.superbadgeList[i][2];
-                  var applyRow = Math.floor(row[0] / 2);
-                  var applyType = row[0] % 2;
-                  if (applyRow < loc.investments.length) {
-                      if (applyType === 0) {
-                          loc.investments[applyRow][3] *= row[1];
-                      } else {
-                          loc.investments[applyRow][4] /= row[1];
-                      }
-                  } else if (applyRow === loc.investments.length) {
-                      if (applyType === 0) {
-                          for (j = 0; j < loc.investments.length; j++) {
-                              loc.investments[j][3] *= row[1];
-                          }
-                      } else {
-                          for (j = 0; j < loc.investments.length; j++) {
-                              loc.investments[j][4] /= row[1];
-                          }
-                      }
-                  } else if (applyRow === loc.investments.length + 1) {
-                      loc.angelEffectiveness += row[1];
-                  } else if (row[0] < 30 || row[0] > 29 + loc.investments.length) {
-                      throw 'Pair not dealt with: ' + row;
-                  }
-              }
-              break;
+  function calcSuperBadges(loc) {
+    var i = 0, max = [-1, 0],
+    tempPlanet = {};
+    loc.badgeExclamation = false;
+    for (; i < loc.badges.length; i++) {
+      if (loc.badges[i][0] === false) {
+        tempPlanet = JSON.parse(JSON.stringify(loc));
+        tempPlanet.badges[i][0] = true;
+        $scope.changeBadge(tempPlanet, i);
+        calcState(tempPlanet);
+        var delta = tempPlanet.totalMoneyPerSecond - loc.totalMoneyPerSecond;
+        var percent = delta / loc.totalMoneyPerSecond;
+        if (delta > 0) {
+          loc.badges[i][1] = percent;
+          loc.badgeExclamation = true;
+          if (percent > max[1]) {
+            max[0] = i;
+            max[1] = percent;
           }
+        } else {
+          loc.badges[i][1] = false;
+        }
       }
+    }
+    if (max[0] !== -1) {
+      loc.bestBadge = max[0];
+    } else {
+      loc.bestBadge = null;
+    }
   };
 
   function calcUpgradeScore(planet, loc, unlockCost) {
@@ -912,6 +943,7 @@ advApp.controller('advController', ['$document', '$filter', '$scope', function($
     }
     loc.angelEffectiveness = 2;
     loc.angelExclamation = false;
+    loc.badgeExclamation = false;
     loc.bonusAngelEffectiveness = 0;
     loc.bonusMultiplier = 0;
     loc.flux = 0;
@@ -1359,6 +1391,7 @@ advApp.controller('advController', ['$document', '$filter', '$scope', function($
       $scope[planets[p]].angelEffectiveness = 2;
       $scope[planets[p]].angelExclamation = false;
       $scope[planets[p]].angelIllions = '';
+      $scope[planets[p]].bestBadge = null;
       $scope[planets[p]].bestSuit = null;
       $scope[planets[p]].bonusAngelEffectiveness = 0;
       $scope[planets[p]].bonusMultiplier = 0;
