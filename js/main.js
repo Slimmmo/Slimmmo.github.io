@@ -129,8 +129,8 @@ advApp.controller('advController', ['$document', '$filter', '$scope', function($
     ['Rainbow Machine', 1, [0, 30]],
     ['Villain Mask', 1, [6, 25]],
     ['Space Buddies', 1, [8, 20]],
-    ['Silver Blade', 1, [12, 20]]/*
-    ['Speaker',]*/
+    ['Silver Blade', 1, [12, 20]],
+    ['Speaker', 1, [16, 15]]
   ];
   var planets = ['earth', 'moon', 'mars', 'cashella'];
 
