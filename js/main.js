@@ -198,6 +198,9 @@ advApp.controller('advController', ['$document', '$filter', '$scope', function($
         $scope[planets[k]].noSingles = obj[planets[k]].noSingles || false;
         $scope[planets[k]].noTens = obj[planets[k]].noTens || false;
         $scope[planets[k]].noHundreds = obj[planets[k]].noHundreds || false;
+        if (obj[planets[k]].unlockAmounts != null) {
+          $scope[planets[k]].unlockAmounts = obj[planets[k]].unlockAmounts;
+        }
         if ('suit' in obj[planets[k]]) {
           $scope[planets[k]].suits[obj[planets[k]].suit][0] = true;
         }
@@ -447,17 +450,12 @@ advApp.controller('advController', ['$document', '$filter', '$scope', function($
       while (inc.length > 3 - (loc.noSingles ? 1 : 0) - (loc.noTens ? 1 : 0) - (loc.noHundreds ? 1 : 0)) {
         inc.pop();
       }
-      if (i === 1 && $scope.isWorld('earth')) {
-        for (j = 1; j < 4; j++) {
-          k = getDifferenceNBonus(loc, i, j);
-          if (k !== null) {
-            inc.push(k);
-          }
-        }
-      } else {
-        k = getDifferenceNBonus(loc, i, 1);
+      for (j = 1; j <= loc.unlockAmounts; j++) {
+        k = getDifferenceNBonus(loc, i, j);
         if (k !== null) {
           inc.push(k);
+        } else {
+          break;
         }
       }
       if (!loc.hasMegaTickets) {
@@ -465,6 +463,9 @@ advApp.controller('advController', ['$document', '$filter', '$scope', function($
         if (k !== null && inc.indexOf(k) === -1) {
           inc.push(k);
         }
+      }
+      if (loc.investments[i][1] < highestSharedLevel) {
+        highestSharedLevel = loc.investments[i][1];
       }
       for (j = 0; j < inc.length; j++) {
         tempPlanet.investments = deepCopy(loc.investments);
@@ -506,36 +507,36 @@ advApp.controller('advController', ['$document', '$filter', '$scope', function($
         break;
       }
     }
-    tempUnlock = 0;
-    tempPlanet.investments = deepCopy(loc.investments);
-    tempPlanet.cashUpgrades = deepCopy(loc.cashUpgrades);
-    for (i = 1; i < loc.investments.length; i++) {
-      if (loc.investments[i][1] < highestSharedLevel) {
-        highestSharedLevel = loc.investments[i][1];
+    for (i = 1; i <= loc.unlockAmounts; i++) {
+      tempUnlock = 0;
+      tempPlanet.investments = deepCopy(loc.investments);
+      tempPlanet.cashUpgrades = deepCopy(loc.cashUpgrades);
+      for (j = 0; j < loc.unlocks[loc.investments.length].length; j++) {
+        if (loc.unlocks[loc.investments.length][j][0] > highestSharedLevel) {
+          highestSharedLevel = loc.unlocks[loc.investments.length][j][0];
+          break;
+        }
       }
-    }
-    for (i = 0; i < loc.unlocks[loc.investments.length].length; i++) {
-      if (loc.unlocks[loc.investments.length][i][0] > highestSharedLevel) {
-        highestSharedLevel = loc.unlocks[loc.investments.length][i][0];
+      if (j == loc.unlocks[loc.investments.length].length) {
         break;
       }
-    }
-    for (i = 0; i < tempPlanet.investments.length; i++) {
-      if (tempPlanet.investments[i][1] < highestSharedLevel) {
-        tempUnlock += calcUnlockCost(loc, i, tempPlanet.investments[i][1], highestSharedLevel - tempPlanet.investments[i][1]);
-        tempPlanet.investments[i][1] = highestSharedLevel;
+      for (j = 0; j < tempPlanet.investments.length; j++) {
+        if (tempPlanet.investments[j][1] < highestSharedLevel) {
+          tempUnlock += calcUnlockCost(loc, j, tempPlanet.investments[j][1], highestSharedLevel - tempPlanet.investments[j][1]);
+          tempPlanet.investments[j][1] = highestSharedLevel;
+        }
       }
-    }
-    calcState(tempPlanet);
-    tempUnlockTime = tempUnlock / loc.totalMoneyPerSecond;
-    tempPercentageIncrease = (tempPlanet.totalMoneyPerSecond - loc.totalMoneyPerSecond) * 100 / loc.totalMoneyPerSecond;
-    if ((loc.filterTime === null || loc.filterTime > tempUnlockTime) && ($scope.filterTime.percentage === null || $scope.filterTime.percentage < tempPercentageIncrease)) {
-      upgradeScore = calcUpgradeScore(tempPlanet, loc, tempUnlockTime);
-      if (upgradeScore > max) {
-        max = upgradeScore;
-        maxObj = ['all', highestSharedLevel];
+      calcState(tempPlanet);
+      tempUnlockTime = tempUnlock / loc.totalMoneyPerSecond;
+      tempPercentageIncrease = (tempPlanet.totalMoneyPerSecond - loc.totalMoneyPerSecond) * 100 / loc.totalMoneyPerSecond;
+      if ((loc.filterTime === null || loc.filterTime > tempUnlockTime) && ($scope.filterTime.percentage === null || $scope.filterTime.percentage < tempPercentageIncrease)) {
+        upgradeScore = calcUpgradeScore(tempPlanet, loc, tempUnlockTime);
+        if (upgradeScore > max) {
+          max = upgradeScore;
+          maxObj = ['all', highestSharedLevel];
+        }
+        loc.recTable.push(['all', highestSharedLevel, upgradeScore, tempUnlock, tempUnlock / loc.totalMoneyPerSecond, tempPlanet.totalMoneyPerSecond - loc.totalMoneyPerSecond, tempPercentageIncrease]);
       }
-      loc.recTable.push(['all', highestSharedLevel, upgradeScore, tempUnlock, tempUnlock / loc.totalMoneyPerSecond, tempPlanet.totalMoneyPerSecond - loc.totalMoneyPerSecond, tempPercentageIncrease]);
     }
     loc.rec = maxObj;
     $scope.reverse = true;
@@ -898,7 +899,7 @@ advApp.controller('advController', ['$document', '$filter', '$scope', function($
         }
       }
     }
-    string += '\r\n  ], \r\n  "noSingles": ' + loc.noSingles + ',\r\n  "noTens": ' + loc.noTens + ',\r\n "noHundreds": ' + loc.noHundreds + ',\r\n  "platinumboost": ' + loc.platinumboost;
+    string += '\r\n  ], \r\n  "noSingles": ' + loc.noSingles + ',\r\n  "noTens": ' + loc.noTens + ',\r\n "noHundreds": ' + loc.noHundreds + ',\r\n  "unlockAmounts": ' + loc.unlockAmounts + ',\r\n  "platinumboost": ' + loc.platinumboost;
     for (i = 0; i < loc.suits.length; i++) {
       if (loc.suits[i][0] === true) {
         string += ',\r\n  "suit": ' + i;
@@ -1424,6 +1425,7 @@ advApp.controller('advController', ['$document', '$filter', '$scope', function($
       }
       $scope[planets[p]].totalMoneyPerSecond = 0;
       $scope[planets[p]].triples = 0;
+      $scope[planets[p]].unlockAmounts = 1;
       $scope[planets[p]].unlocks = [];
       $scope[planets[p]].viewLifetimeEarnings = 0;
       $scope[planets[p]].viewNumAngels = 0;

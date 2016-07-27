@@ -237,6 +237,9 @@
             <uib-accordion-heading>
               Filter recommendations<span class="pull-right fa" ng-class="{'fa-chevron-down': accOpen2[1], 'fa-chevron-right': !accOpen2[1]}"></span>
             </uib-accordion-heading>
+            <label>Show <input type="number" class="form-control" min="1" data-ng-model="ref.unlockAmounts"># unlocks</label>
+            <br>
+            <br>
             <label><input type="checkbox" class="form-control" data-ng-model="ref.noSingles"> Don't show +1 upgrades</label>
             <label><input type="checkbox" class="form-control" data-ng-model="ref.noTens"> Don't show +10 upgrades</label>
             <label><input type="checkbox" class="form-control" data-ng-model="ref.noHundreds"> Don't show +100 upgrades</label>
