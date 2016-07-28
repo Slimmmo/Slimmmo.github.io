@@ -82,8 +82,13 @@ advApp.filter('rec', function() {
       retVal = loc.investments[input[1]][0];
     } else if (input[0] === 'cash') {
       var index = Math.floor(loc.cashUpgrades[input[1]][1][0] / 2);
-      retVal = (index < loc.investments.length) ? loc.investments[index][0] : 'All';
-      retVal += (loc.cashUpgrades[input[1]][1][0] % 2 === 0) ? ' Profit' : ' Speed';
+      if (index === loc.investments.length + 1) {
+        retVal = 'Angel Investor';
+      }
+      else {
+        retVal = (index < loc.investments.length) ? loc.investments[index][0] : 'All';
+        retVal += (loc.cashUpgrades[input[1]][1][0] % 2 === 0) ? ' Profit' : ' Speed';
+      }
       retVal += ' ' + loc.cashUpgrades[input[1]][1][1];
     }
     return retVal;
@@ -898,7 +903,7 @@ advApp.controller('advController', ['$document', '$filter', '$scope', function($
         }
       }
     }
-    string += '\r\n  ], \r\n  "noSingles": ' + loc.noSingles + ',\r\n  "noTens": ' + loc.noTens + ',\r\n "noHundreds": ' + loc.noHundreds + ',\r\n  "platinumboost": ' + loc.platinumboost;
+    string += '\r\n  ], \r\n  "noSingles": ' + loc.noSingles + ',\r\n  "noTens": ' + loc.noTens + ',\r\n  "noHundreds": ' + loc.noHundreds + ',\r\n  "platinumboost": ' + loc.platinumboost;
     for (i = 0; i < loc.suits.length; i++) {
       if (loc.suits[i][0] === true) {
         string += ',\r\n  "suit": ' + i;
