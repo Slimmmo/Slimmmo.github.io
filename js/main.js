@@ -141,11 +141,22 @@ advApp.controller('advController', ['$document', '$filter', '$scope', function($
 
   angular.element(document).ready(function() {
     var fileInput = document.getElementById('fileInput');
+    var uppInput = document.getElementById('uppInput');
+    var file, reader;
     fileInput.addEventListener('change', function(e) {
-      var file = fileInput.files[0],
+      file = fileInput.files[0],
       reader = new FileReader();
       reader.onload = function(e) {
         loadExportedJson(e.target.result);
+      }
+      reader.readAsText(file);
+    });
+    uppInput.addEventListener('change', function(e) {
+      file = uppInput.files[0],
+      reader = new FileReader();
+      $scope.uppFile = file;
+      reader.onload = function(e) {
+        loadUppFile(e.target.result);
       }
       reader.readAsText(file);
     });
@@ -154,6 +165,108 @@ advApp.controller('advController', ['$document', '$filter', '$scope', function($
       loadExportedJson(saved);
     }
   });
+  
+  function loadUppFile(str) {
+    var RegEx = /([A-Za-z_?]+)(?:[\x00-\x7F]|[^.]{5})\.([A-Za-z0-9+=\/]+)\|[0-9abcdef]{32}/g;
+    var result;
+    while ((result = RegEx.exec(str)) != null) {
+      switch(result[1]) {
+        case "GameStateData_Earth":
+          parseSavegameInformation(result[2], 'earth');
+          break;
+          
+        case "GameStateData_Moon":
+          parseSavegameInformation(result[2], 'moon');
+          break;
+          
+        case "GameStateData_Mars":
+          parseSavegameInformation(result[2], 'mars');
+          break;
+		  }
+    }
+    $scope.$digest();
+  }
+  
+  
+  function parseSavegameInformation(str, planet) {
+    var planetObj = $scope[planet];
+    $scope.lzfData = str;
+    var obj = JSON.parse(lzf_decode(atob(str)));
+    
+    // Investments
+    for (var i = 0; i < planetObj.investments.length; i++) {
+      planetObj.investments[i][1] = obj.ventures[i].numOwned;
+      planetObj.investments[i][2] = obj.ventures[i].isBoosted;
+    }
+    
+    // Manager
+    switch (planet) {
+      case 'earth':
+        // I assume(/pray), that the array order in the save file is constant
+        planetObj.managerUpgrades[0][0][1] = obj.managers[20].purchased
+        planetObj.managerUpgrades[1][0][1] = obj.managers[19].purchased
+        planetObj.managerUpgrades[2][0][1] = obj.managers[18].purchased
+        planetObj.managerUpgrades[3][0][1] = obj.managers[17].purchased
+        planetObj.managerUpgrades[4][0][1] = obj.managers[16].purchased
+        planetObj.managerUpgrades[5][0][1] = obj.managers[15].purchased
+        planetObj.managerUpgrades[6][0][1] = obj.managers[14].purchased
+        planetObj.managerUpgrades[7][0][1] = obj.managers[13].purchased
+        planetObj.managerUpgrades[8][0][1] = obj.managers[12].purchased
+        planetObj.managerUpgrades[9][0][1] = obj.managers[11].purchased
+        
+        planetObj.managerUpgrades[0][1][1] = obj.managers[31].purchased
+        planetObj.managerUpgrades[1][1][1] = obj.managers[22].purchased
+        planetObj.managerUpgrades[2][1][1] = obj.managers[29].purchased
+        planetObj.managerUpgrades[3][1][1] = obj.managers[25].purchased
+        planetObj.managerUpgrades[4][1][1] = obj.managers[27].purchased
+        planetObj.managerUpgrades[5][1][1] = obj.managers[28].purchased
+        planetObj.managerUpgrades[6][1][1] = obj.managers[23].purchased
+        planetObj.managerUpgrades[7][1][1] = obj.managers[24].purchased
+        planetObj.managerUpgrades[8][1][1] = obj.managers[26].purchased
+        planetObj.managerUpgrades[9][1][1] = obj.managers[30].purchased
+        break;
+        
+      case 'moon':
+        for (var i=0; i<planetObj.managerUpgrades.length; i++) {
+          planetObj.managerUpgrades[i][0][1] = obj.managers[11+i].purchased
+        }
+        break;
+    }
+    
+    // Updates
+    // As the id is not saved in cashUpgrades, it's impossible to assign directly
+    // I will just assume, that every upgrade, that would be affordable with current cashOnHand is bought
+    for (var i = 0; i<planetObj.cashUpgrades.length; i++) {
+      if (planetObj.cashUpgrades[i][0] < obj.cashOnHand) {
+        planetObj.cashUpgrades[i][2] = true;
+      }
+    }
+    
+    // Similar for angelupgrades, but using 1% of current angels
+    for (var i = 0; i<planetObj.angelUpgrades.length; i++) {
+      if (planetObj.angelUpgrades[i][0] < 0.01*obj.angelInvestors) {
+        planetObj.angelUpgrades[i][3] = true;
+        // The savegame does not count investments bought with angels. Add them manually here.
+        if (planetObj.angelUpgrades[i][1][0] >= 30) {
+          planetObj.investments[planetObj.angelUpgrades[i][1][0] - 30][1] += planetObj.angelUpgrades[i][1][1];
+        }
+      }
+    }
+    
+    // Angels
+    planetObj.numAngels = obj.angelInvestors;
+    planetObj.viewNumAngels = obj.angelInvestors;
+    planetObj.viewSacAngels = obj.angelInvestorsSpent;
+    planetObj.viewLifetimeEarnings = obj.totalPreviousCash;
+    planetObj.sacAngels = obj.angelInvestorsSpent;
+    planetObj.lifetimeEarnings = obj.totalPreviousCash;
+    
+    calcState(planetObj);
+    calcAngels(planetObj);
+    calcSuits(planetObj);
+    calcRecommendations(planetObj);
+    localStorage.setItem('planets', getJsonForExport());
+  }
 
   function loadExportedJson(str) {
     var i = 0, j = 0, k = 0,
@@ -374,6 +487,7 @@ advApp.controller('advController', ['$document', '$filter', '$scope', function($
   }
 
   $scope.calc = function(loc) {
+    calcUpdatefile();
     calcState(loc);
     calcAngels(loc);
     calcSuits(loc);
@@ -381,6 +495,16 @@ advApp.controller('advController', ['$document', '$filter', '$scope', function($
     calcRecommendations(loc);
     localStorage.setItem('planets', getJsonForExport());
   };
+  
+  function calcUpdatefile() {
+    var reader = new FileReader();
+    if ($scope.uppFile != null) {
+      reader.onload = function(e) {
+        loadUppFile(e.target.result);
+      }
+      reader.readAsText($scope.uppFile);
+    }
+  }
 
   function calcAngelCost(numAngels, mul) {
     return (1e+15 * Math.pow(numAngels / mul, 2));
