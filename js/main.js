@@ -149,6 +149,16 @@ advApp.controller('advController', ['$document', '$filter', '$scope', function($
       }
       reader.readAsText(file);
     });
+    var refWorld = localStorage.getItem('refWorld');
+    if (refWorld) {
+      var i = 0;
+      for (i in planets) {
+        if (planets[i] === refWorld) {
+          $scope.setWorld(refWorld);
+          break;
+        }
+      }
+    }
     var saved = localStorage.getItem('planets');
     if (saved) {
       loadExportedJson(saved);
@@ -1255,6 +1265,7 @@ advApp.controller('advController', ['$document', '$filter', '$scope', function($
     $scope.fillBefore = [false, false];
     $scope.compare = false;
     $scope.ref = $scope[planet];
+    localStorage.setItem('refWorld', planet);
   };
 
   function suitFromName(name) {
