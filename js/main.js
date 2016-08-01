@@ -172,7 +172,7 @@ advApp.controller('advController', ['$document', '$filter', '$scope', function($
           }
         }
         $scope[planets[k]].numAngels = obj[planets[k]].numAngels;
-        $scope[planets[k]].viewNumAngels = $scope[planets[k]].numAngels;
+        $scope.updateViewNumAngels($scope[planets[k]]);
         for (i = 0; i < obj[planets[k]].upgradeIndexUpTo; i++) {
           $scope[planets[k]].cashUpgrades[i][$scope[planets[k]].cashUpgrades[i].length - 1] = true;
         }
@@ -1323,6 +1323,20 @@ advApp.controller('advController', ['$document', '$filter', '$scope', function($
 
   $scope.updateSacrificedAngels = function() {
     updateIllionize('sacAngels', 'viewSacAngels', 'sacIllions');
+  };
+
+  function updateView(loc,varName, viewName, illionsName) {
+    var filtered = numFilter(loc[varName],false).split(' ');
+    loc[viewName] = Number(filtered[0]);
+    if (loc[varName] < Number(1e+6)) {
+      loc[illionsName] = '';
+    } else {
+      loc[illionsName] = filtered[1];
+    }
+  }
+
+  $scope.updateViewNumAngels = function (loc) {
+    updateView(loc,'numAngels', 'viewNumAngels', 'illions');
   };
 
   function loadDefaults() {
