@@ -150,6 +150,16 @@ advApp.controller('advController', ['$document', '$filter', '$scope', function($
       }
       reader.readAsText(file);
     });
+    var refWorld = localStorage.getItem('refWorld');
+    if (refWorld) {
+      var i = 0;
+      for (i in planets) {
+        if (planets[i] === refWorld) {
+          $scope.setWorld(refWorld);
+          break;
+        }
+      }
+    }
     var saved = localStorage.getItem('planets');
     if (saved) {
       loadExportedJson(saved);
@@ -173,7 +183,7 @@ advApp.controller('advController', ['$document', '$filter', '$scope', function($
           }
         }
         $scope[planets[k]].numAngels = obj[planets[k]].numAngels;
-        $scope[planets[k]].viewNumAngels = $scope[planets[k]].numAngels;
+        $scope.updateViewNumAngels($scope[planets[k]]);
         for (i = 0; i < obj[planets[k]].upgradeIndexUpTo; i++) {
           $scope[planets[k]].cashUpgrades[i][$scope[planets[k]].cashUpgrades[i].length - 1] = true;
         }
@@ -654,6 +664,8 @@ advApp.controller('advController', ['$document', '$filter', '$scope', function($
         } else {
           loc.suits[i][1] = false;
         }
+      } else {
+        loc.suits[i][1] = false;
       }
     }
     if (max[0] !== -1) {
@@ -685,6 +697,8 @@ advApp.controller('advController', ['$document', '$filter', '$scope', function($
         } else {
           loc.badges[i][1] = false;
         }
+      } else {
+        loc.badges[i][1] = false;
       }
     }
     if (max[0] !== -1) {
@@ -1267,6 +1281,7 @@ advApp.controller('advController', ['$document', '$filter', '$scope', function($
     $scope.compare = false;
     $scope.ref = $scope[planet];
     $scope.buyMultiplier = 1;
+    localStorage.setItem('refWorld', planet);
   };
 
   function suitFromName(name) {
@@ -1335,6 +1350,20 @@ advApp.controller('advController', ['$document', '$filter', '$scope', function($
 
   $scope.updateSacrificedAngels = function() {
     updateIllionize('sacAngels', 'viewSacAngels', 'sacIllions');
+  };
+
+  function updateView(loc,varName, viewName, illionsName) {
+    var filtered = numFilter(loc[varName],false).split(' ');
+    loc[viewName] = Number(filtered[0]);
+    if (loc[varName] < Number(1e+6)) {
+      loc[illionsName] = '';
+    } else {
+      loc[illionsName] = filtered[1];
+    }
+  }
+
+  $scope.updateViewNumAngels = function (loc) {
+    updateView(loc,'numAngels', 'viewNumAngels', 'illions');
   };
 
   function loadDefaults() {
