@@ -653,6 +653,8 @@ advApp.controller('advController', ['$document', '$filter', '$scope', function($
         } else {
           loc.suits[i][1] = false;
         }
+      } else {
+        loc.suits[i][1] = false;
       }
     }
     if (max[0] !== -1) {
@@ -684,6 +686,8 @@ advApp.controller('advController', ['$document', '$filter', '$scope', function($
         } else {
           loc.badges[i][1] = false;
         }
+      } else {
+        loc.badges[i][1] = false;
       }
     }
     if (max[0] !== -1) {
