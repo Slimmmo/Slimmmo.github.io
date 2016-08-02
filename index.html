@@ -159,7 +159,7 @@
               </uib-accordion-heading>
               <div class="row">
                 <label class="col-xs-6"><input type="number" class="form-control" min="0" data-ng-model="ref.triples"> # 3x Multipliers</label>
-                <label class="col-xs-6"><input type="number" class="form-control" min="0" data-ng-model="ref.flux"> # Flux Capitalors</label>
+                <label class="col-xs-6" data-ng-show="!isWorld('mars')"><input type="number" class="form-control" min="0" data-ng-model="ref.flux"> # Flux Capitalors</label>
               </div>
               <div class="multicolumn" data-ng-show="!isEvent()">
                 Platinum Boost: 
