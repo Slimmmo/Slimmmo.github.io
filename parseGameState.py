@@ -29,11 +29,11 @@ def manageClose(obj):
 	global parsing
 	if parsing == 1:
 		temp = str(Decimal(regexObj['angelAccumulation'].findall(obj)[0]) * 150)
- 		parseObj['angelScale'] = formatOutput('angelScale', removeDecimal(temp))
- 	elif parsing == 2:
- 		if 'managers' not in parseObj:
- 			parseObj['managers'] = {}
- 		if obj['ventureName'] not in parseObj['managers']:
+		parseObj['angelScale'] = formatOutput('angelScale', removeDecimal(temp))
+	elif parsing == 2:
+		if 'managers' not in parseObj:
+			parseObj['managers'] = {}
+		if obj['ventureName'] not in parseObj['managers']:
 			parseObj['managers'][obj['ventureName']] = []
 		parseObj['managers'][obj['ventureName']].append('[' + removeDecimal(obj['cost']) + ', false]')
 	elif parsing == 3:
@@ -48,37 +48,37 @@ def manageClose(obj):
 		busIndex = parseObj['businessID'].index(reward[1]) if obj['ventureName'] != 'Every' else len(parseObj['businessID'])
 		index = busIndex * 2 if reward[0] == 'ProfitPer' else (busIndex * 2) + 1
 		parseObj['unlocks'][obj['ventureName']].append('[' + str(unHex(obj['amountToEarn'])) + ', [' + str(index) + ', ' + removeDecimal(mul) + ']]')
- 	elif parsing == 4:
- 		endString = ', false]'
- 		if 'currency' in obj and obj['currency'] == 'Upgrade.Currency.angelInvestors':
- 			if 'angelUpgrades' not in parseObj:
- 				parseObj['angelUpgrades'] = []
- 			endString = ', false' + endString
- 			pointer = parseObj['angelUpgrades']
- 		else:
- 			if 'cashUpgrades' not in parseObj:
- 				parseObj['cashUpgrades'] = []
- 			pointer = parseObj['cashUpgrades']
- 		if 'ventureName' not in obj:
- 			obj['ventureName'] = 'Every'
- 		busIndex = parseObj['businessName'].index(obj['ventureName']) if obj['ventureName'] != 'Every' else (len(parseObj['businessName']) if 'effectivenessAmount' not in obj else len(parseObj['businessName']) + 1)
+	elif parsing == 4:
+		endString = ', false]'
+		if 'currency' in obj and obj['currency'] == 'Upgrade.Currency.angelInvestors':
+			if 'angelUpgrades' not in parseObj:
+				parseObj['angelUpgrades'] = []
+			endString = ', false' + endString
+			pointer = parseObj['angelUpgrades']
+		else:
+			if 'cashUpgrades' not in parseObj:
+				parseObj['cashUpgrades'] = []
+			pointer = parseObj['cashUpgrades']
+		if 'ventureName' not in obj:
+			obj['ventureName'] = 'Every'
+		busIndex = parseObj['businessName'].index(obj['ventureName']) if obj['ventureName'] != 'Every' else (len(parseObj['businessName']) if 'effectivenessAmount' not in obj else len(parseObj['businessName']) + 1)
 		index = busIndex * 2 if 'purchaseAmount' not in obj else busIndex + 30
 		mul = obj['profitBonus'] if 'profitBonus' in obj else obj['purchaseAmount'] if 'purchaseAmount' in obj else removeDecimal(str(Decimal(obj['effectivenessAmount']) * 100))
- 		pointer.append('[' + removeDecimal(obj['cost']) + ', [' + str(index) + ', ' + removeDecimal(str(unHex(mul))) + ']' + endString)
- 	elif parsing == 5:
- 		nameArr = ['baseAmount', 'costPer', 'cooldownTime', 'expenseRate', 'name', 'profitPer']
- 		if 'businessName' not in parseObj:
- 			parseObj['businessName'] = []
- 			parseObj['businessID'] = []
- 		parseObj['businessName'].append(obj['name'])
- 		parseObj['businessID'].append(obj['id'])
+		pointer.append('[' + removeDecimal(obj['cost']) + ', [' + str(index) + ', ' + removeDecimal(str(unHex(mul))) + ']' + endString)
+	elif parsing == 5:
+		nameArr = ['baseAmount', 'costPer', 'cooldownTime', 'expenseRate', 'name', 'profitPer']
+		if 'businessName' not in parseObj:
+			parseObj['businessName'] = []
+			parseObj['businessID'] = []
+		parseObj['businessName'].append(obj['name'])
+		parseObj['businessID'].append(obj['id'])
 		if 'baseAmount' not in obj:
 			obj['baseAmount'] = '0'
 		for idx, val in enumerate(nameArr):
 			if val not in parseObj:
 				parseObj[val] = []
 			parseObj[val].append(removeDecimal(obj[val]))
- 	parsing = 0
+	parsing = 0
 
 def normalizeObj():
 	simpleConversion = [['baseCost', 'costPer'], ['basePower', 'expenseRate'], ['baseProfit', 'profitPer'], ['baseSpeed', 'cooldownTime']]
