@@ -1351,7 +1351,7 @@ advApp.controller('advController', ['$document', '$filter', '$scope', function($
   };
 
   function loadDefaults() {
-    $scope.lyp.angelScale = 1; //???
+    $scope.lyp.angelScale = 180;
     $scope.lyp.baseCost =   [5,     88,    777,   22222, 444444, 99999999, 222222222, 5555555555, 33333333333];
     $scope.lyp.basePower =  [1.023, 1.046, 1.083, 1.166, 1.323,  2.286,    3.563,     6.126,      12.26];
     $scope.lyp.baseProfit = [0.5,   9,     81,    729,   7777,   1.111e6,  1.212e6,   161.616e6,  8.181e9];
