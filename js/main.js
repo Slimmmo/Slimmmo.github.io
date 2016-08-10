@@ -1352,10 +1352,10 @@ advApp.controller('advController', ['$document', '$filter', '$scope', function($
 
   function loadDefaults() {
     $scope.lyp.angelScale = 1; //???
-    $scope.lyp.baseCost = [5, 88, 777, 22222, 444444, 99999999, 222222222, 5555555555, 33333333333];
-    $scope.lyp.basePower = [1.023, 1.046, 1.083, 1.166, 1, 1, 1, 1, 1];
-    $scope.lyp.baseProfit = [0.5, 9, 81, 729, 1, 1, 1, 1, 1];
-    $scope.lyp.baseSpeed = [1.5, 5, 8, 18, 1, 1, 1, 1, 1];
+    $scope.lyp.baseCost =   [5,     88,    777,   22222, 444444, 99999999, 222222222, 5555555555, 33333333333];
+    $scope.lyp.basePower =  [1.023, 1.046, 1.083, 1.166, 1.323,  1,        1,         1,          1];
+    $scope.lyp.baseProfit = [0.5,   9,     81,    729,   7777,   1,        1,         1,          1];
+    $scope.lyp.baseSpeed =  [1.5,   5,     8,     18,    28,     1,        1,         1,          1];
     $scope.lyp.hasMegaTickets = false;
     $scope.lyp.investments = [
       ['Belly Flopping', 1, false, 0, 0, 0, 0],
