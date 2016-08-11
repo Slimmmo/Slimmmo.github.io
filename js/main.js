@@ -135,7 +135,8 @@ advApp.controller('advController', ['$document', '$filter', '$scope', function($
     ['Villain Mask', 1, [6, 25]],
     ['Space Buddies', 1, [8, 20]],
     ['Silver Blade', 1, [12, 20]],
-    ['Speaker', 1, [16, 15]]
+    ['Speaker', 1, [16, 15]],
+    ['Boxing Bear', 2, [8, 20]]
   ];
   var planets = ['earth', 'moon', 'mars', 'lyp'];
 
@@ -1522,9 +1523,14 @@ advApp.controller('advController', ['$document', '$filter', '$scope', function($
     $scope.lyp.cashUpgrades = [[332500, [0, 4], false], [950000, [2, 4], false], [2375000, [4, 4], false], [9500000, [6, 4], false], [23750000, [8, 4], false], [2.375e9, [10, 4], false], [95e9, [12, 4], false], [4.75e12, [14, 4], false], [9.5e12, [16, 4], false], [47.5e12, [18, 9], false],
                                [237.5e12, [0, 5], false], [950e12, [2, 5], false], [2.375e15, [4, 5], false], [4.75e15, [6, 5], false], [9.5e15, [8, 5], false], [47.5e15, [10, 5], false], [71.25e15, [12, 5], false], [475e15, [14, 5], false], [2.375e18, [16, 5], false], [9.5e18, [18, 9], false], [47.5e18, [20, 1], false],
                                [47.5e21, [0, 6], false], [95e21, [2, 6], false], [190e21, [4, 6], false], [760e21, [6, 6], false], [3.04e24, [8, 6], false], [14.345e24, [10, 6], false], [30.875e24, [12, 6], false], [53.865e24, [14, 6], false], [71.25e24, [16, 6], false], [95e24, [18, 9], false],
-                               [380e27, [0, 9], false], [1.52e30, [2, 9], false], [6.08e30, [4, 9], false], [12.16e30, [6, 9], false], [23.75e30, [8, 9], false], [84.36e30, [10, 9], false], [285e30, [12, 9], false], [1.9e33, [14, 9], false], [9.5e33, [16, 9], false], [47.5e33, [18, 9], false]
+                               [380e27, [0, 9], false], [1.52e30, [2, 9], false], [6.08e30, [4, 9], false], [12.16e30, [6, 9], false], [23.75e30, [8, 9], false], [84.36e30, [10, 9], false], [285e30, [12, 9], false], [1.9e33, [14, 9], false], [9.5e33, [16, 9], false], [47.5e33, [18, 9], false],
+                               [950e33, [0, 10], false], [1.9e36, [2, 10], false], [2.85e36, [4, 10], false], [3.8e36, [6, 10], false], [4.75e36, [8, 10], false], [6.65e36, [10, 10], false], [7.6e36, [12, 10], false], [8.55e36, [14, 10], false], [9.5e36, [16, 10], false], [95e36, [18, 9], false],
+                               [3.163e39, [0, 11], false], [6.327e39, [2, 11], false], [9.49e39, [4, 11], false], [22.8e39, [6, 11], false], [45.6e39, [8, 11], false], [121.6e39, [10, 11], false], [190e39, [12, 11], false], [337.25e39, [14, 11], false], [475e39, [16, 11], false], [950e39, [18, 9], false],
+                               [5.277e45, [0, 13], false], [52.777e45, [2, 13], false], [527.777e45, [4, 13], false], [5.277e48, [6, 13], false], [52.777e48, [8, 13], false], [5.277e51, [10, 13], false], [52.777e51, [12, 13], false], [527.777e51, [14, 13], false], [5.277e54, [16, 13], false], [52.777e54, [18, 9], false]
                               ];
-    $scope.lyp.angelUpgrades = [[621605, [0, 9], false, false], [7e6, [2, 9], false, false], [83e6, [4, 9], false, false], [938e6, [6, 9], false, false], [1e9, [8, 9], false, false], [115e9, [10, 9], false, false], [1e12, [12, 9], false, false], [13e12, [14, 9], false, false], [143e12, [16, 9], false, false], [52e15, [18, 99], false, false]
+    $scope.lyp.angelUpgrades = [[621605, [0, 9], false, false], [7e6, [2, 9], false, false], [83e6, [4, 9], false, false], [938e6, [6, 9], false, false], [1e9, [8, 9], false, false], [115e9, [10, 9], false, false], [1e12, [12, 9], false, false], [13e12, [14, 9], false, false], [143e12, [16, 9], false, false], [52e15, [18, 99], false, false],
+                                [52e15, [30, 111], false, false], [52e15, [31, 100], false, false], [52e15, [32, 75], false, false], [52e15, [33, 50], false, false], [52e15, [34, 40], false, false], [52e15, [35, 20], false, false], [52e15, [36, 15], false, false], [52e15, [37, 10], false, false], [52e15, [38, 5], false, false],
+                                [52e15, [0, 9], false, false], [95e15, [2, 9], false, false], [950e15, [4, 9], false, false], [9e18, [6, 9], false, false], [95e18, [8, 9], false, false], [9e21, [10, 9], false, false], [95e21, [12, 9], false, false], [950e21, [14, 9], false, false], [9e24, [16, 9], false, false], [949e24, [18, 9], false, false]
                                ];
     $scope.lyp.managerUpgrades = [];
     $scope.moon.unlocks[0] = [[10, [0, 3.5]],[20, [0, 4]],[40, [0, 4.5]],[80, [0, 5]],[160, [0, 5.5]],[320, [0, 6]],[640, [0, 6.5]],[1280, [0, 7]],[2560, [0, 7.5]],[5120, [0, 999999999]],[10000, [0, 3.5]]];
