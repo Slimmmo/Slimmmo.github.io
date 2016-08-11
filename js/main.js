@@ -1355,7 +1355,7 @@ advApp.controller('advController', ['$document', '$filter', '$scope', function($
     $scope.lyp.baseCost =   [5,     88,    777,   22222, 444444, 99999999, 222222222, 5555555555, 33333333333];
     $scope.lyp.basePower =  [1.023, 1.046, 1.083, 1.166, 1.323,  2.286,    3.563,     6.126,      12.26];
     $scope.lyp.baseProfit = [0.5,   9,     81,    729,   7777,   1.111e6,  1.212e6,   161.616e6,  8.181e9];
-    $scope.lyp.baseSpeed =  [1.5,   5,     8,     18,    28,     120,      210,       370,        1400];
+    $scope.lyp.baseSpeed =  [1.5,   5,     8,     18,    28,     120,      210,       370,        700];
     $scope.lyp.hasMegaTickets = false;
     $scope.lyp.investments = [
       ['Belly Flopping', 1, false, 0, 0, 0, 0],
@@ -1519,7 +1519,8 @@ advApp.controller('advController', ['$document', '$filter', '$scope', function($
                              [15, [19, 2]], [17, [18, 7]], [19, [19, 2]], [23, [19, 2]], [29, [19, 2]], [35, [18, 2]]
                             ];
     $scope.lyp.cashUpgrades = [[332500, [0, 4], false], [950000, [2, 4], false], [2375000, [4, 4], false], [9500000, [6, 4], false], [23750000, [8, 4], false], [2.375e9, [10, 4], false], [95e9, [12, 4], false], [4.75e12, [14, 4], false], [9.5e12, [16, 4], false], [47.5e12, [18, 9], false],
-                               [237.5e12, [0, 5], false], [950e12, [2, 5], false], [2.375e15, [4, 5], false], [4.75e15, [6, 5], false], [9.5e15, [8, 5], false], [47.5e15, [10, 5], false], [71.25e15, [12, 5], false], [475e15, [14, 5], false], [2.375e18, [16, 5], false], [9.5e18, [18, 9], false], [47.5e18, [20, 1], false]
+                               [237.5e12, [0, 5], false], [950e12, [2, 5], false], [2.375e15, [4, 5], false], [4.75e15, [6, 5], false], [9.5e15, [8, 5], false], [47.5e15, [10, 5], false], [71.25e15, [12, 5], false], [475e15, [14, 5], false], [2.375e18, [16, 5], false], [9.5e18, [18, 9], false], [47.5e18, [20, 1], false],
+                               [47.5e21, [0, 6], false], [95e21, [2, 6], false], [190e21, [4, 6], false], [760e21, [6, 6], false], [3.04e24, [8, 6], false], [14.345e24, [10, 6], false], [30.875e24, [12, 6], false], [53.865e24, [14, 6], false], [71.25e24, [16, 6], false], [95e24, [18, 9], false]
                               ];
     $scope.lyp.angelUpgrades = [[621605, [0, 9], false, false], [7e6, [2, 9], false, false], [83e6, [4, 9], false, false], [938e6, [6, 9], false, false], [1e9, [8, 9], false, false], [115e9, [10, 9], false, false], [1e12, [12, 9], false, false], [13e12, [14, 9], false, false], [143e12, [16, 9], false, false], [52e15, [18, 99], false, false]
                                ];
