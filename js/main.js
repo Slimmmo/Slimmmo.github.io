@@ -1337,11 +1337,12 @@ advApp.controller('advController', ['$document', '$filter', '$scope', function($
   };
 
   function updateView(loc,varName, viewName, illionsName) {
-    var filtered = numFilter(loc[varName],false).split(' ');
-    loc[viewName] = Number(filtered[0]);
     if (loc[varName] < Number(1e+6)) {
+      loc[viewName] = loc[varName];
       loc[illionsName] = '';
     } else {
+      var filtered = numFilter(loc[varName],false).split(' ');
+      loc[viewName] = Number(filtered[0]);
       loc[illionsName] = filtered[1];
     }
   }
