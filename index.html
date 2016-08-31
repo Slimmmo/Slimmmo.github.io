@@ -33,7 +33,7 @@
         <li role="presentation" data-ng-class="{active: !isCompare() && isWorld('earth')}"><a data-ng-click="setWorld('earth')">Earth</a></li>
         <li role="presentation" data-ng-class="{active: !isCompare() && isWorld('moon')}"><a data-ng-click="setWorld('moon')">Moon</a></li>
         <li role="presentation" data-ng-class="{active: !isCompare() && isWorld('mars')}"><a data-ng-click="setWorld('mars')">Mars</a></li>
-        <li role="presentation" data-ng-class="{active: !isCompare() && isWorld('lyp')}"><a data-ng-click="setWorld('lyp')">Live Your Profits</a></li>
+        <li role="presentation" data-ng-class="{active: !isCompare() && isWorld('excellent')}"><a data-ng-click="setWorld('excellent')">The Excellent AdVenture</a></li>
       </ul>
       <div data-ng-show="!isCompare()">
         <div>
@@ -159,7 +159,7 @@
                 <label class="col-xs-6" data-ng-show="!isWorld('mars')"><input type="number" class="form-control" min="0" data-ng-model="ref.flux"> # Flux Capitalors</label>
               </div>
               <div class="multicolumn" data-ng-show="!isEvent()">
-                Platinum Boost: 
+                Platinum Boost:
                 <div data-ng-repeat="boost in platinumboosts track by $index">
                   <label class="strike-when-checked checkbox-inline"><input type="checkbox" data-ng-model="ref.platinum[$index][0]" data-ng-change="changePlatinum(ref, $index)"> <span>{{boost}}</span></label>
                 </div>
