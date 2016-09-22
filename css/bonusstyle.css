@@ -22,17 +22,13 @@ thead th {
   color: purple;
 }
 
-.clickable {
-  cursor: pointer;
-}
-
 .fa-plus {
   color: green;
   padding-left: 10px;
 }
 
 .illions {
-  width: 18em;
+  min-width: 18em;
 }
 
 .nav {
@@ -53,3 +49,27 @@ label:hover {
 label.strike-when-checked > input:checked + span {
   text-decoration: line-through;
 }
+
+
+/* Flair */
+* { transition: all 0.5s ease; }
+
+/* Spacing & Alignment */
+.table>thead>tr>th, .table>tbody>tr>th, .table>tfoot>tr>th, .table>thead>tr>td, .table>tbody>tr>td, .table>tfoot>tr>td { vertical-align: middle;}
+.table>thead>tr>th, .table>tbody>tr>th, .table>tfoot>tr>th { text-align: center;}
+.clickable-panel { padding: 10px 15px; }
+.panel-heading { padding: 0; }
+.inline-block { display: inline-block !important; }
+
+/* Helper Classes */
+.no-bottom-margin { margin-bottom: 0 !important; }
+.clickable { cursor: pointer; }
+.top-bottom-margin { margin-top: 10px !important; margin-bottom: 10px !important; }
+.bottom-margin { margin-bottom: 30px !important; }
+
+/* Misc */
+input[type="checkbox"].form-control {
+  box-shadow: none;
+  cursor: pointer;
+}
+.input-group-btn.reset-width { width: auto; }
