@@ -53,10 +53,11 @@ label.strike-when-checked > input:checked + span {
 
 /* Flair */
 * { transition: all 0.5s ease; }
+.fa { transition-duration: 0s; }
 
 /* Spacing & Alignment */
-.table>thead>tr>th, .table>tbody>tr>th, .table>tfoot>tr>th, .table>thead>tr>td, .table>tbody>tr>td, .table>tfoot>tr>td { vertical-align: middle;}
-.table>thead>tr>th, .table>tbody>tr>th, .table>tfoot>tr>th { text-align: center;}
+.table>thead>tr>th, .table>tbody>tr>th, .table>tfoot>tr>th, .table>thead>tr>td, .table>tbody>tr>td, .table>tfoot>tr>td { vertical-align: middle; }
+.table>thead>tr>th, .table>tbody>tr>th, .table>tfoot>tr>th { text-align: center; }
 .clickable-panel { padding: 10px 15px; }
 .panel-heading { padding: 0; }
 .inline-block { display: inline-block !important; }
