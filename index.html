@@ -23,18 +23,20 @@
   <body data-ng-app="advApp">
     <div class="container-fluid col-xs-12" data-ng-controller="advController">
       <div class="page-header">
-        <h1>AdVenture Capitalist Calculator</h1> v0.1<a class="pull-right" href="https://www.reddit.com/r/AdventureCapitalist/comments/4djl15/suit_calculation_platinum/">Feedback</a>
-      </div>
-      <div class="row">
-        <div class="col-xs-12 text-center">
-          <div class="input-group inline-block">
-            <label class="input-group-btn reset-width">
-              <span class="btn btn-primary">
-                Load a Saved State<input type="file" id="fileInput" style="display: none;">
-              </span>
-            </label>
-            <div class="input-group-btn reset-width">
-              <button type="button" class="btn btn-primary" data-ng-click="export()">Save State</button>
+        <div class="row">
+          <div class="col-sm-8 text-center-xs slim-bottom-margin">
+            <h1>AdVenture Capitalist Calculator</h1> v0.1 - <a href="https://www.reddit.com/r/AdventureCapitalist/comments/4djl15/suit_calculation_platinum/">Feedback</a>
+          </div>
+          <div class="col-sm-4 text-right text-center-xs">
+            <div class="input-group inline-block">
+              <label class="input-group-btn reset-width">
+                <span class="btn btn-primary">
+                  Load a Saved State<input type="file" id="fileInput" style="display: none;">
+                </span>
+              </label>
+              <div class="input-group-btn reset-width">
+                <button type="button" class="btn btn-primary" data-ng-click="export()">Save State</button>
+              </div>
             </div>
           </div>
         </div>
@@ -62,14 +64,11 @@
         <hr />
         <div class="row">
           <div class="col-xs-12 text-center">
-            <div class="form-inline">
-              <input type="number" class="form-control" min="0" data-ng-model="ref.viewNumAngels" data-ng-blur="updateAngels()" step="0.001" required> <input type="text" class="form-control illions" data-ng-model="ref.illions" uib-typeahead="ill for ill in illionsArray | filter:$viewValue | limitTo:8" placeholder="*illions" data-ng-blur="updateAngels()"> # of Angels
+            <div class="col-xs-6 text-center">
+              <div class="form-inline">
+                <input type="number" class="form-control" min="0" data-ng-model="ref.viewNumAngels" data-ng-blur="updateAngels()" step="0.001" required> <input type="text" class="form-control illions" data-ng-model="ref.illions" uib-typeahead="ill for ill in illionsArray | filter:$viewValue | limitTo:8" placeholder="*illions" data-ng-blur="updateAngels()"> # of Angels
+              </div>
             </div>
-          </div>
-        </div>
-        <hr />
-        <div class="row">
-          <div class="col-xs-12 text-center">
             <div class="checkbox-inline">
               <label><input type="checkbox" data-ng-model="raw"> Toggle Raw Values</label>
             </div>

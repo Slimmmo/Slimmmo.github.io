@@ -55,6 +55,7 @@ label.strike-when-checked > input:checked + span {
 * { transition: all 0.5s ease; }
 .fa { transition-duration: 0s; }
 
+
 /* Spacing & Alignment */
 .table>thead>tr>th, .table>tbody>tr>th, .table>tfoot>tr>th, .table>thead>tr>td, .table>tbody>tr>td, .table>tfoot>tr>td { vertical-align: middle; }
 .table>thead>tr>th, .table>tbody>tr>th, .table>tfoot>tr>th { text-align: center; }
@@ -62,11 +63,40 @@ label.strike-when-checked > input:checked + span {
 .panel-heading { padding: 0; }
 .inline-block { display: inline-block !important; }
 
+/* Extra-small devices (phones, 768px and down) */
+@media (max-width: 768px) {
+    .text-center-xs {
+        text-align: center !important;
+    }
+}
+
+/* Small devices (tablets, 992px and down) */
+@media (max-width: 992px) {
+    .text-center-sm {
+        text-align: center !important;
+    }
+}
+
+/* Medium devices (desktops, 1200px and down) */
+@media (min-width: 1200px) {
+    .text-center-md {
+        text-align: center !important;
+    }
+}
+
+/* Large devices (large desktops, 1200px and up) */
+.text-center-lg {
+    text-align: center !important;
+}
+
+
 /* Helper Classes */
 .no-bottom-margin { margin-bottom: 0 !important; }
 .clickable { cursor: pointer; }
 .top-bottom-margin { margin-top: 10px !important; margin-bottom: 10px !important; }
+.slim-bottom-margin { margin-bottom: 15px !important; }
 .bottom-margin { margin-bottom: 30px !important; }
+
 
 /* Misc */
 input[type="checkbox"].form-control {
