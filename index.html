@@ -257,19 +257,15 @@
                 </div>
                 <div class="row top-bottom-margin">
                   <div class="col-sm-6">
-                    <div class="form-inline text-center">
+                    <div class="form-inline text-center bottom-margin">
                       <label><input type="number" class="form-control" min="0" data-ng-model="ref.bonusMultiplier"> x Multiplier</label>
                     </div>
                   </div>
                   <div class="col-sm-6">
                     <div class="form-inline text-center">
                       <label><input type="number" class="form-control" min="0" data-ng-model="ref.bonusAngelEffectiveness"> % Angel Investor Bonus</label>
+                      <h2>Total Angel Investor % = {{ref.angelEffectiveness | number}}%</h2>
                     </div>
-                  </div>
-                </div>
-                <div class="row">
-                  <div class="col-xs-12 text-center">
-                    <h2>Total Angel Investor % = {{ref.angelEffectiveness | number}}%</h2>
                   </div>
                 </div>
               </uib-accordion-group>
