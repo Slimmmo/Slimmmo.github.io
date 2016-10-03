@@ -42,7 +42,7 @@
         </div>
       </div>
       <div class="row">
-        <div class="col-xs-12">
+        <div class="col-xs-12 bottom-margin">
           <ul class="nav nav-tabs nav-justified">
             <li role="presentation" data-ng-class="{active: !isCompare() && isWorld('earth')}"><a data-ng-click="setWorld('earth')">Earth</a></li>
             <li role="presentation" data-ng-class="{active: !isCompare() && isWorld('moon')}"><a data-ng-click="setWorld('moon')">Moon</a></li>
@@ -52,25 +52,16 @@
         </div>
       </div>
       <div data-ng-show="!isCompare()">
-        <hr />
         <div class="row">
-          <div class="col-xs-12 text-center">
+          <div class="col-sm-8 slim-bottom-margin text-center-xs">
+            <div class="form-inline">
+              <input type="number" class="form-control" min="0" data-ng-model="ref.viewNumAngels" data-ng-blur="updateAngels()" step="0.001" required> <input type="text" class="form-control illions" data-ng-model="ref.illions" uib-typeahead="ill for ill in illionsArray | filter:$viewValue | limitTo:8" placeholder="*illions" data-ng-blur="updateAngels()"> # of Angels
+            </div>
+          </div>
+          <div class="col-sm-4 text-center-xs text-right">
             <div class="btn-group" role="group">
               <button type="button" class="btn btn-primary" data-ng-click="resetPlanet(ref)">Reset Planet</button>
               <button type="button" class="btn btn-primary" data-ng-click="fullyResetPlanet(ref)">Hard Reset Planet</button>
-            </div>
-          </div>
-        </div>
-        <hr />
-        <div class="row">
-          <div class="col-xs-12 text-center">
-            <div class="col-xs-6 text-center">
-              <div class="form-inline">
-                <input type="number" class="form-control" min="0" data-ng-model="ref.viewNumAngels" data-ng-blur="updateAngels()" step="0.001" required> <input type="text" class="form-control illions" data-ng-model="ref.illions" uib-typeahead="ill for ill in illionsArray | filter:$viewValue | limitTo:8" placeholder="*illions" data-ng-blur="updateAngels()"> # of Angels
-              </div>
-            </div>
-            <div class="checkbox-inline">
-              <label><input type="checkbox" data-ng-model="raw"> Toggle Raw Values</label>
             </div>
           </div>
         </div>
@@ -453,7 +444,6 @@
               <h2>Recommendation: {{ref.recommendation}}</h2>
               <button type="button" class="btn btn-primary btn-lg" data-ng-click="apply(ref)">Apply This Recommendation</button>
               <hr />
-              <label><input type="checkbox" class="form-inline" data-ng-model="raw"> Toggle Raw Values</label>
               <table class="table table-striped table-hover table-bordered space_top text-left">
                 <thead>
                   <tr>
