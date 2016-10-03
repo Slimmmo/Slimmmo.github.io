@@ -987,7 +987,7 @@ advApp.controller('advController', ['$document', '$filter', '$scope', function($
     loc.totalMoneyPerSecond = 0;
     loc.triples = 0;
     loc.upgradeCosts = [];
-    for (var i = 0; i <= loc.investments.length; i++) {
+    for (var i = 0; i < loc.investments.length; i++) {
       loc.upgradeCosts.push([0, 0, 0, 0, 0, 0, 0, 0]);
     }
     loc.viewNumAngels = 0;
