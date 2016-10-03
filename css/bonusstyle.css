@@ -102,6 +102,5 @@ label.strike-when-checked > input:checked + span {
 input[type="checkbox"].form-control {
   box-shadow: none;
   cursor: pointer;
-  height: auto;
 }
 .input-group-btn.reset-width { width: auto; }
