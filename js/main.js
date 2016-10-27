@@ -3,41 +3,35 @@
 var advApp = angular.module('advApp', ['ui.bootstrap', 'ngAnimate']),
 illionsArr = ['', ' Million', ' Billion', ' Trillion', ' Quadrillion', ' Quintillion', ' Sextillion', ' Septillion', ' Octillion', ' Nonillion', ' Decillion', ' Undecillion', ' Duodecillion', ' Tredecillion', ' Quattuordecillion', ' Quindecillion', ' Sexdecillion', ' Septendecillion', ' Octodecillion', ' Novemdecillion', ' Vigintillion', ' Unvigintillion', ' Duovigintillion', ' Tresvigintillion', ' Quattuorvigintillion', ' Quinvigintillion', ' Sexvigintillion', ' Septenvigintillion', ' Octovigintillion', ' Novemvigintillion', ' Trigintillion', ' Untrigintillion', ' Duotrigintillion', ' Tretrigintillion', ' Quattuortrigintillion', ' Quintrigintillion', ' Sextrigintillion', ' Septentrigintillion', ' Octotrigintillion', ' Novemtrigintillion', ' Quadragintillion', ' Unquadragintillion', ' Duoquadragintillion', ' Trequadragintillion', ' Quattuorquadragintillion', ' Quinquadragintillion', ' Sexquadragintillion', ' Septquadragintillion', ' Octoquadragintillion', ' Novemquadragintillion', ' Quinquagintillion', ' Unquinquagintillion', ' Duoquinquagintillion', ' Trequinquagintillion', ' Quattuorquinquagintillion', ' Quinquinquagintillion', ' Sexquinquagintillion', ' Septquinquagintillion', ' Octoquinquagintillion', ' Novemquinquagintillion', ' Sexagintillion', ' Unsexagintillion', ' Duosexagintillion', ' Tresexagintillion', ' Quattuorsexagintillion', ' Quinsexagintillion', ' Sexsexagintillion', ' Septsexagintillion', ' Octosexagintillion', ' Novemsexagintillion', ' Septuagintillion', ' Unseptuagintillion', ' Duoseptuagintillion', ' Treseptuagintillion', ' Quattuorseptuagintillion', ' Quinseptuagintillion', ' Sexseptuagintillion', ' Septseptuagintillion', ' Octoseptuagintillion', ' Novemseptuagintillion', ' Octogintillion', ' Unoctogintillion', ' Duooctogintillion', ' Treoctogintillion', ' Quattuoroctogintillion', ' Quinoctogintillion', ' Sexoctogintillion', ' Septoctogintillion', ' Octooctogintillion', ' Novemoctogintillion', ' Nonagintillion', ' Unnonagintillion', ' Duononagintillion', ' Trenonagintillion', ' Quattuornonagintillion', ' Quinnonagintillion', ' Sexnonagintillion', ' Septnonagintillion', ' Onctononagintillion', ' Novemnonagintillion', ' Centillion', ' Uncentillion'];
 
-function numFilter(input, raw) {
+function numFilter(input) {
   var out = "",
   mCount = 0,
   e = 6;
   if (input === Infinity) {
     return "Infinity";
   } else if (input !== null) {
-    if (!raw) {
-      while (input >= Number('1e+' + e)) {
-        e += 3;
-        mCount++;
-      }
-      if (e !== 6) {
-        e -= 3;
-        input /= Number('1e+' + e);
-      }
-      if (input < 1000) {
-        out = Math.round(input * 1000) / 1000;
-      } else {
-        out = Math.round(input * 100) / 100;
-        out = out.toLocaleString("en-US");
-      }
+    while (input >= Number('1e+' + e)) {
+      e += 3;
+      mCount++;
+    }
+    if (e !== 6) {
+      e -= 3;
+      input /= Number('1e+' + e);
+    }
+    if (input < 1000) {
+      out = Math.round(input * 1000) / 1000;
     } else {
-      out = input.toLocaleString("en-US");
+      out = Math.round(input * 100) / 100;
+      out = out.toLocaleString("en-US");
     }
   }
   return out + illionsArr[mCount];
 }
 
 advApp.filter('time', function() {
-  return function(input, raw) {
+  return function(input) {
     if (input === Infinity) {
       return "———";
-    } else if (raw) {
-      var out = numFilter(input, raw) + ' s';
     } else {
       input = Math.floor(input);
       var s = ("00" + input % 60).slice(-2);
@@ -46,7 +40,7 @@ advApp.filter('time', function() {
       var d = Math.floor(input / 86400);
       var out = "";
       if (d >= 1) {
-        out += numFilter(d, false) + ' d';
+        out += numFilter(d) + ' d';
         if (d < 100) {
           out += ', '
         }
@@ -60,8 +54,8 @@ advApp.filter('time', function() {
 });
 
 advApp.filter('num', function() {
-  return function(input, raw) {
-    return numFilter(input, raw);
+  return function(input) {
+    return numFilter(input);
   };
 });
 
@@ -1343,7 +1337,7 @@ advApp.controller('advController', ['$document', '$filter', '$scope', function($
       loc[viewName] = loc[varName];
       loc[illionsName] = '';
     } else {
-      var filtered = numFilter(loc[varName],false).split(' ');
+      var filtered = numFilter(loc[varName]).split(' ');
       loc[viewName] = Number(filtered[0]);
       loc[illionsName] = filtered[1];
     }

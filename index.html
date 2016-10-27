@@ -23,320 +23,468 @@
   <body data-ng-app="advApp">
     <div class="container-fluid col-xs-12" data-ng-controller="advController">
       <div class="page-header">
-        <h1>AdVenture Capitalist Calculator </h1> v0.1<a class="pull-right" href="https://www.reddit.com/r/AdventureCapitalist/comments/59knd5/gates_of_heck_calculator_updated/">Feedback</a>
+        <div class="row">
+          <div class="col-sm-8 text-center-xs slim-bottom-margin">
+            <h1>AdVenture Capitalist Calculator</h1> v0.1 - <a href="https://www.reddit.com/r/AdventureCapitalist/comments/59knd5/gates_of_heck_calculator_updated/">Feedback</a>
+          </div>
+          <div class="col-sm-4 text-right text-center-xs">
+            <div class="input-group inline-block">
+              <label class="input-group-btn reset-width">
+                <span class="btn btn-primary">
+                  Load a Saved State<input type="file" id="fileInput" style="display: none;">
+                </span>
+              </label>
+              <div class="input-group-btn reset-width">
+                <button type="button" class="btn btn-primary" data-ng-click="export()">Save State</button>
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
-      <div>
-        Load a saved state: <input type="file" id="fileInput"><button type="button" class="btn btn-primary pull-right" data-ng-click="export()">Save State</button>
+      <div class="row">
+        <div class="col-xs-12 bottom-margin">
+          <ul class="nav nav-tabs nav-justified">
+            <li role="presentation" data-ng-class="{active: !isCompare() && isWorld('earth')}"><a data-ng-click="setWorld('earth')">Earth</a></li>
+            <li role="presentation" data-ng-class="{active: !isCompare() && isWorld('moon')}"><a data-ng-click="setWorld('moon')">Moon</a></li>
+            <li role="presentation" data-ng-class="{active: !isCompare() && isWorld('mars')}"><a data-ng-click="setWorld('mars')">Mars</a></li>
+            <li role="presentation" data-ng-class="{active: !isCompare() && isWorld('halloween')}"><a data-ng-click="setWorld('halloween')">Gates of Heck</a></li>
+          </ul>
+        </div>
       </div>
-      <br>
-      <ul class="nav nav-tabs nav-justified">
-        <li role="presentation" data-ng-class="{active: !isCompare() && isWorld('earth')}"><a data-ng-click="setWorld('earth')">Earth</a></li>
-        <li role="presentation" data-ng-class="{active: !isCompare() && isWorld('moon')}"><a data-ng-click="setWorld('moon')">Moon</a></li>
-        <li role="presentation" data-ng-class="{active: !isCompare() && isWorld('mars')}"><a data-ng-click="setWorld('mars')">Mars</a></li>
-        <li role="presentation" data-ng-class="{active: !isCompare() && isWorld('halloween')}"><a data-ng-click="setWorld('halloween')">Gates of Heck</a></li>
-      </ul>
       <div data-ng-show="!isCompare()">
-        <div>
-          <input type="number" class="form-control" min="0" data-ng-model="ref.viewNumAngels" data-ng-blur="updateAngels()" step="0.001" required> <input type="text" class="form-control illions" data-ng-model="ref.illions" uib-typeahead="ill for ill in illionsArray | filter:$viewValue | limitTo:8" placeholder="*illions" data-ng-blur="updateAngels()"> # Angels
-          <label><input type="checkbox" class="form-control" data-ng-model="raw"> Raw Values</label>
-          <button type="button" class="btn btn-primary" data-ng-click="resetPlanet(ref)">Reset Planet</button>
-          <button type="button" class="btn btn-primary" data-ng-click="fullyResetPlanet(ref)">Hard Reset Planet</button>
+        <div class="row">
+          <div class="col-sm-8 slim-bottom-margin text-center-xs">
+            <div class="form-inline">
+              <input type="number" class="form-control" min="0" data-ng-model="ref.viewNumAngels" data-ng-blur="updateAngels()" step="0.001" required> <input type="text" class="form-control illions" data-ng-model="ref.illions" uib-typeahead="ill for ill in illionsArray | filter:$viewValue | limitTo:8" placeholder="*illions" data-ng-blur="updateAngels()"> # of Angels
+            </div>
+          </div>
+          <div class="col-sm-4 text-center-xs text-right">
+            <div class="btn-group" role="group">
+              <button type="button" class="btn btn-primary" data-ng-click="resetPlanet(ref)">Reset Planet</button>
+              <button type="button" class="btn btn-primary" data-ng-click="fullyResetPlanet(ref)">Hard Reset Planet</button>
+            </div>
+          </div>
         </div>
-        <div>
-          <table class="table table-striped table-hover table-bordered space_top">
-            <thead>
-              <tr>
-                <th>Type</th>
-                <th>Number</th>
-                <th ng-show="ref.hasMegaTickets"><label><input type="checkbox" class="form-control" data-ng-model="selectAll[0]" data-ng-change="selectedAll(ref, 0)"> Mega Ticket</label></th>
-                <th>$ / Cycle</th>
-                <th>Cycle Time</th>
-                <th>$ / Second</th>
-                <th>% of total $ / Second</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr data-ng-repeat="inv in ref.investments track by $index">
-                <td>{{inv[0]}}</td>
-                <td><input type="number" class="form-control" min="0" data-ng-model="inv[1]"></td>
-                <td ng-show="ref.hasMegaTickets"><input type="checkbox" class="form-control" data-ng-model="inv[2]"></td>
-                <td>${{inv[3] | num:raw}}</td>
-                <td>{{inv[4] | time:raw}}</td>
-                <td>${{inv[5] | num:raw}}</td>
-                <td>{{inv[6] | num:raw}}%</td>
-              </tr>
-            </tbody>
-          </table>
-        </div>
-        <div>
-          <uib-accordion close-others="false">
-            <uib-accordion-group is-open="accOpen[0]">
-              <uib-accordion-heading>
-                Cost of Upgrades<span class="pull-right fa" ng-class="{'fa-chevron-down': accOpen[0], 'fa-chevron-right': !accOpen[0]}"></span>
-              </uib-accordion-heading>
-              <table class="table table-striped table-hover table-bordered">
-                <thead>
-                  <tr>
-                    <th>Type</th>
-                    <th>$ Cost +1</th>
-                    <th>Time Cost +1</th>
-                    <th>$ Cost +10</th>
-                    <th>Time Cost +10</th>
-                    <th>$ Cost +bonus</th>
-                    <th>Time Cost +bonus</th>
-                    <th>$ Cost +all bonus</th>
-                    <th>Time Cost +all bonus</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  <tr data-ng-repeat="rUC in ref.upgradeCosts track by $index">
-                    <td>{{ref.investments[$index][0]}}</td>
-                    <td>${{rUC[0] | num:raw}}</td>
-                    <td>{{rUC[1] | time:raw}}</td>
-                    <td>${{rUC[2] | num:raw}}</td>
-                    <td>{{rUC[3] | time:raw}}</td>
-                    <td>${{rUC[4] | num:raw}}</td>
-                    <td>{{rUC[5] | time:raw}}</td>
-                    <td>${{rUC[6] | num:raw}}</td>
-                    <td>{{rUC[7] | time:raw}}</td>
-                  </tr>
-                </tbody>
-              </table>
-            </uib-accordion-group>
-            <uib-accordion-group is-open="accOpen[1]">
-              <uib-accordion-heading>
-                Cash Upgrades<span class="pull-right fa" ng-class="{'fa-chevron-down': accOpen[1], 'fa-chevron-right': !accOpen[1]}"></span>
-              </uib-accordion-heading>
-              <div class="well">
-                <label><input type="checkbox" class="form-control col-xs-offset-3" data-ng-model="fillBefore[0]"> Buy all before (inclusive)</label>
-                <label><input type="checkbox" class="form-control col-xs-offset-3" data-ng-model="clearAfter[0]"> Clear all after (inclusive)</label>
-              </div>
-              <div class="multicolumn">
-                <div data-ng-repeat="cupg in ref.cashUpgrades track by $index"><label class="strike-when-checked"><input type="checkbox" class="form-control" data-ng-model="cupg[2]" data-ng-change="checkCash(ref, $index)"> <span>{{getNamedType(ref, cupg)}} (${{cupg[0] | num:raw}})</span></label></div>
-              </div>
-            </uib-accordion-group>
-            <uib-accordion-group is-open="accOpen[2]">
-              <uib-accordion-heading>
-                Angel Upgrades<i data-ng-show="ref.angelExclamation" class="fa fa-plus"></i><span class="pull-right fa" ng-class="{'fa-chevron-down': accOpen[2], 'fa-chevron-right': !accOpen[2]}"></span>
-              </uib-accordion-heading>
-              <div class="well">
-                <label><input type="checkbox" class="form-control col-xs-offset-3" data-ng-model="fillBefore[1]"> Buy all before (inclusive)</label>
-                <label><input type="checkbox" class="form-control col-xs-offset-3" data-ng-model="clearAfter[1]"> Clear all after (inclusive)</label>
-              </div>
-              <div class="multicolumn">
-                <div data-ng-repeat="aupg in ref.angelUpgrades track by $index"><label class="strike-when-checked"><input type="checkbox" class="form-control" data-ng-model="aupg[3]" data-ng-change="checkAngel(ref, $index)"> <span>{{getNamedType(ref, aupg)}} ({{aupg[0] | num:raw}} AI)<i data-ng-show="aupg[2]" title="{{aupg[2] | percentage }} increase in $ / second" class="fa fa-plus"></i></span></label></div>
-              </div>
-            </uib-accordion-group>
-            <uib-accordion-group is-open="accOpen[3]">
-              <uib-accordion-heading>
-                Managers<span class="pull-right fa" ng-class="{'fa-chevron-down': accOpen[3], 'fa-chevron-right': !accOpen[3]}"></span>
-              </uib-accordion-heading>
-              <table class="table table-striped table-hover table-bordered">
-                <thead>
-                  <tr>
-                    <th>Business</th>
-                    <th data-ng-show="isWorld('earth')"><label><input type="checkbox" class="form-control" data-ng-model="selectAll[1]" data-ng-change="selectedAll(ref, 1)"> 10% off</label></th>
-                    <th data-ng-show="isWorld('earth')"><label><input type="checkbox" class="form-control" data-ng-model="selectAll[2]" data-ng-change="selectedAll(ref, 2)"> 99.999% off</label></th>
-                    <th data-ng-show="isWorld('moon')"><label><input type="checkbox" class="form-control" data-ng-model="selectAll[3]" data-ng-change="selectedAll(ref, 3)"> 25% off</label></th>
-                  </tr>
-                </thead>
-                <tbody>
-                  <tr data-ng-repeat="mupg in ref.managerUpgrades track by $index">
-                    <td>{{ref.investments[$index][0]}}</td>
-                    <td data-ng-repeat="mtup in mupg track by $index">
-                      <label class="strike-when-checked"><input type="checkbox" data-ng-model="mtup[1]"> <span>{{(isWorld('moon') || $index == 1) ? ' $' : ' '}}{{mtup[0] | num:raw}}{{(!isWorld('moon') && $index == 0) ? ' AI' : ''}}</span></label>
-                    </td>
-                  </tr>
-                </tbody>
-              </table>
-            </uib-accordion-group>
-            <uib-accordion-group is-open="accOpen[4]" class="form-inline">
-              <uib-accordion-heading>
-                Gold/Platinum Upgrades + Suits<i data-ng-show="ref.suitExclamation && !isEvent()" class="fa fa-plus"></i><span class="pull-right fa" ng-class="{'fa-chevron-down': accOpen[4], 'fa-chevron-right': !accOpen[4]}"></span>
-              </uib-accordion-heading>
-              <div class="row">
-                <label class="col-xs-6"><input type="number" class="form-control" min="0" data-ng-model="ref.triples"> # 3x Multipliers</label>
-                <label class="col-xs-6" data-ng-show="!isWorld('mars')"><input type="number" class="form-control" min="0" data-ng-model="ref.flux"> # Flux Capitalors</label>
-              </div>
-              <div class="multicolumn" data-ng-show="!isEvent()">
-                Platinum Boost:
-                <div data-ng-repeat="boost in platinumboosts track by $index">
-                  <label class="strike-when-checked checkbox-inline"><input type="checkbox" data-ng-model="ref.platinum[$index][0]" data-ng-change="changePlatinum(ref, $index)"> <span>{{boost}}</span></label>
-                </div>
-              </div>
-              <div class="multicolumn" data-ng-show="!isEvent()">
-                <div data-ng-repeat="suit in ref.suits track by $index">
-                  <label class="strike-when-checked checkbox-inline"><input type="checkbox" data-ng-model="ref.suits[$index][0]" data-ng-change="changeSuits(ref, $index)"> <span>{{suitList[$index][0]}} Suit<i data-ng-show="ref.suits[$index][1]" title="{{ref.suits[$index][1] | percentage}} increase in $ / second" data-ng-class="{best_suit: $index == ref.bestSuit}" class="fa fa-plus"></i></span></label>
-                </div>
-              </div>
-            </uib-accordion-group>
-            <uib-accordion-group is-open="accOpen[5]">
-              <uib-accordion-heading>
-                Other Bonuses<span class="pull-right fa" ng-class="{'fa-chevron-down': accOpen[5], 'fa-chevron-right': !accOpen[5]}"></span>
-              </uib-accordion-heading>
-              <p>Please only input the bonus you have.<br>
-              For example, if you have a 30% Angel Investor increase from a Christmas event, so now your base Angel Investor bonus is 32%, but with upgrades it could easily be above 40%, please only input 30 or the calculations will be off.
-              </p>
-              <label class="col-xs-6"><input type="number" class="form-control" min="0" data-ng-model="ref.bonusAngelEffectiveness">% Angel Investor bonus</label>
-              <label class="col-xs-6"><input type="number" class="form-control" min="0" data-ng-model="ref.bonusMultiplier">x multiplier</label>
-              <label class="col-xs-6">Total Angel Investor % = {{ref.angelEffectiveness | number}}%</label>
-            </uib-accordion-group>
-            <uib-accordion-group is-open="accOpen[6]">
-              <uib-accordion-heading>
-                Super Badges<i data-ng-show="ref.badgeExclamation" class="fa fa-plus"></i><span class="pull-right fa" ng-class="{'fa-chevron-down': accOpen[6], 'fa-chevron-right': !accOpen[6]}"></span>
-              </uib-accordion-heading>
-              <div class="multicolumn">
-                <div data-ng-repeat="badge in ref.badges track by $index">
-                  <label class="strike-when-checked checkbox-inline"><input type="checkbox" data-ng-model="ref.badges[$index][0]" data-ng-change="changeBadge(ref, $index)"> <span>{{superbadgeList[$index][0]}} ({{getBadgeBonusInfo(ref,superbadgeList[$index])}})<i data-ng-show="ref.badges[$index][1]" title="{{ref.badges[$index][1] | percentage}} increase in $ / second" data-ng-class="{best_badge: $index == ref.bestBadge}" class="fa fa-plus"></i></span></label>
-                </div>
-              </div>
-            </uib-accordion-group>
-          </uib-accordion>
-        </div>
-        <h2>Total $ / second : {{ref.totalMoneyPerSecond | number}} ({{ref.totalMoneyPerSecond | num}})</h2>
-        <h2>Total $ / minute : {{ref.totalMoneyPerSecond * 60 | number}} ({{ref.totalMoneyPerSecond * 60 | num}})</h2>
-        <h2>Total $ / hour : {{ref.totalMoneyPerSecond * 3600 | number}} ({{ref.totalMoneyPerSecond * 3600 | num}})</h2>
-        <uib-accordion>
-          <uib-accordion-group is-open="accOpen2[0]">
-            <uib-accordion-heading>
-              Angel Calculations<span class="pull-right fa" ng-class="{'fa-chevron-down': accOpen2[0], 'fa-chevron-right': !accOpen2[0]}"></span>
-            </uib-accordion-heading>
-            All of values in the tables will include sacrificed angels in calculating the number required to increase by x%. The only exception is Doubled w/o Sacrificed which should match your in game numbers exactly and does not include sacrificed angels.
-            <br><br>
-            <input type="number" class="form-control" min="0" data-ng-model="ref.viewLifetimeEarnings" data-ng-blur="updateEarnings()" step="0.001" required> <input type="text" class="form-control illions" data-ng-model="ref.angelIllions" uib-typeahead="ill for ill in illionsArray | filter:$viewValue | limitTo:8" placeholder="*illions" data-ng-blur="updateEarnings()"> Lifetime Earnings
-            <br>
-            <input type="number" class="form-control" min="0" data-ng-model="ref.viewSacAngels" data-ng-blur="updateSacrificedAngels()" step="0.001" required> <input type="text" class="form-control illions" data-ng-model="ref.sacIllions" uib-typeahead="ill for ill in illionsArray | filter:$viewValue | limitTo:8" placeholder="*illions" data-ng-blur="updateSacrificedAngels()"> # Angels Sacrificed
-            <br>
-            <button type="button" class="btn btn-primary space_top" data-ng-click="calcAngelInvestors(ref)">Calculate Angels</button>
+        <div class="row">
+          <div class="col-xs-12">
             <table class="table table-striped table-hover table-bordered space_top">
               <thead>
                 <tr>
-                  <th></th>
-                  <th>Number of Angels</th>
-                  <th>Lifetime Cost</th>
-                  <th>Lifetime Difference</th>
-                  <th>Difference Time Cost</th>
+                  <th>Type</th>
+                  <th>Number</th>
+                  <th ng-show="ref.hasMegaTickets"><div class="checkbox-inline"><label class="no-bottom-margin"><input type="checkbox" data-ng-model="selectAll[0]" data-ng-change="selectedAll(ref, 0)"> Mega Ticket</label></div></th>
+                  <th>$ / Cycle</th>
+                  <th>Cycle Time</th>
+                  <th>$ / Second</th>
+                  <th>% of Total $ / Second</th>
                 </tr>
               </thead>
               <tbody>
-                <tr data-ng-repeat="aUC in ref.angelCosts track by $index">
-                  <td data-ng-if="!$last">{{aUC[0]}}</td>
-                  <td data-ng-if="$last"><input type="number" class="form-control" min="0" data-ng-model="ref.customAngelMul" step="0.1"> x</td>
-                  <td>{{aUC[1] | num:raw}} AI</td>
-                  <td>${{aUC[2] | num:raw}}</td>
-                  <td>${{aUC[3] | num:raw}}</td>
-                  <td>{{aUC[4] | time:raw}}</td>
+                <tr data-ng-repeat="inv in ref.investments track by $index">
+                  <td>{{inv[0]}}</td>
+                  <td><input type="number" class="form-control" min="0" data-ng-model="inv[1]"></td>
+                  <td ng-show="ref.hasMegaTickets"><input type="checkbox" class="form-control" data-ng-model="inv[2]"></td>
+                  <td>${{inv[3] | num:raw}}</td>
+                  <td>{{inv[4] | time:raw}}</td>
+                  <td>${{inv[5] | num:raw}}</td>
+                  <td>{{inv[6] | num:raw}}%</td>
                 </tr>
               </tbody>
             </table>
-          </uib-accordion-group>
-          <uib-accordion-group is-open="accOpen2[1]">
-            <uib-accordion-heading>
-              Filter recommendations<span class="pull-right fa" ng-class="{'fa-chevron-down': accOpen2[1], 'fa-chevron-right': !accOpen2[1]}"></span>
-            </uib-accordion-heading>
-            <label><input type="checkbox" class="form-control" data-ng-model="ref.noSingles"> Don't show +1 upgrades</label>
-            <label><input type="checkbox" class="form-control" data-ng-model="ref.noTens"> Don't show +10 upgrades</label>
-            <label><input type="checkbox" class="form-control" data-ng-model="ref.noHundreds"> Don't show +100 upgrades</label>
-            <br>
-            <br>
-            <div>
-              Don't show upgrades that take longer than (Days : Hours : Minutes)
-            </div>
-            <table>
-              <tr class="text-center">
-                <td><a ng-click="incrementDays(ref)" class="btn btn-link"><span class="fa fa-chevron-up"></span></a></td>
-                <td>&nbsp;</td>
-                <td><a ng-click="incrementHours(ref)" class="btn btn-link"><span class="fa fa-chevron-up"></span></a></td>
-                <td>&nbsp;</td>
-                <td><a ng-click="incrementMinutes(ref)" class="btn btn-link"><span class="fa fa-chevron-up"></span></a></td>
-              </tr>
-              <tr>
-                <td class="form-group">
-                  <input style="width:50px;" data-ng-model="filterTime.days" class="form-control text-center" type="text" pattern="[0-9]*" placeholder="d">
-                </td>
-                <td>:</td>
-                <td class="form-group">
-                  <input style="width:50px;" data-ng-model="filterTime.hours" class="form-control text-center" type="text" pattern="[0-9]*" placeholder="h">
-                </td>
-                <td>:</td>
-                <td class="form-group">
-                  <input style="width:50px;" data-ng-model="filterTime.minutes" class="form-control text-center" type="text" pattern="[0-9]*" placeholder="m">
-                </td>
-              </tr>
-              <tr class="text-center">
-                <td><a ng-click="decrementDays(ref)" class="btn btn-link"><span class="fa fa-chevron-down"></span></a></td>
-                <td>&nbsp;</td>
-                <td><a ng-click="decrementHours(ref)" class="btn btn-link"><span class="fa fa-chevron-down"></span></a></td>
-                <td>&nbsp;</td>
-                <td><a ng-click="decrementMinutes(ref)" class="btn btn-link"><span class="fa fa-chevron-down"></span></a></td>
-              </tr>
-            </table>
-            <div>
-              Don't show upgrades that have % Increase in $ / Second less than X
-            </div>
-            <table>
-              <tr class="text-center">
-                <td><a ng-click="incrementPercentage(ref)" class="btn btn-link"><span class="fa fa-chevron-up"></span></a></td>
-              </tr>
-              <tr class="form-group">
-                <td class="form-group">
-                  <input style="width:50px;" data-ng-model="filterTime.percentage" class="form-control text-center" type="text" pattern="[0-9]*[.]?[0-9]{0,3}" placeholder="%">
-                </td>
-              </tr>
-              <tr class="text-center">
-                <td><a ng-click="decrementPercentage(ref)" class="btn btn-link"><span class="fa fa-chevron-down"></span></a></td>
-              </tr>
-            </table>
-          </uib-accordion-group>
-        </uib-accordion>
-        <button type="button" class="btn btn-primary" data-ng-click="calc(ref)">Calculate</button>
-        <div data-ng-show="ref.recTable.length">
-          <h2>Recommendation: {{ref.recommendation}}</h2>
-          <button type="button" class="btn btn-primary" data-ng-click="apply(ref)">Apply Recommendation</button>
-          <label><input type="checkbox" class="form-control" data-ng-model="raw"> Raw Values</label>
-          <table class="table table-striped table-hover table-bordered space_top">
-            <thead>
-              <tr>
-                <th>Upgrade</th>
-                <th>To</th>
-                <th class="clickable" data-ng-click="clickSort(ref, 2)">Upgrade Score (higher = better)*
-                  <span data-ng-if="2 == sortIndex && reverse" class="pull-right fa fa-chevron-down"></span>
-                  <span data-ng-if="2 == sortIndex && !reverse" class="pull-right fa fa-chevron-up"></span>
-                </th>
-                <th class="clickable" data-ng-click="clickSort(ref, 3)">Cost of Upgrade
-                  <span data-ng-if="3 == sortIndex && reverse" class="pull-right fa fa-chevron-down"></span>
-                  <span data-ng-if="3 == sortIndex && !reverse" class="pull-right fa fa-chevron-up"></span>
-                </th>
-                <th class="clickable" data-ng-click="clickSort(ref, 4)">Cost of Upgrade in Time
-                  <span data-ng-if="4 == sortIndex && reverse" class="pull-right fa fa-chevron-down"></span>
-                  <span data-ng-if="4 == sortIndex && !reverse" class="pull-right fa fa-chevron-up"></span>
-                </th>
-                <th class="clickable" data-ng-click="clickSort(ref, 5)">Increase in $ / Second
-                  <span data-ng-if="5 == sortIndex && reverse" class="pull-right fa fa-chevron-down"></span>
-                  <span data-ng-if="5 == sortIndex && !reverse" class="pull-right fa fa-chevron-up"></span>
-                </th>
-                <th class="clickable" data-ng-click="clickSort(ref, 6)">% Increase in $ / Second
-                  <span data-ng-if="6 == sortIndex && reverse" class="pull-right fa fa-chevron-down"></span>
-                  <span data-ng-if="6 == sortIndex && !reverse" class="pull-right fa fa-chevron-up"></span>
-                </th>
-                <th>Apply</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr data-ng-repeat="rec in ref.recTable track by $index">
-                <td>{{rec[0] | rec:ref}}</td>
-                <td>{{rec[1] | num:raw}}</td>
-                <td>{{rec[2] | num:raw}}</td>
-                <td>${{rec[3] | num:raw}}</td>
-                <td>{{rec[4] | time:raw}}</td>
-                <td>${{rec[5] | num:raw}}</td>
-                <td>{{rec[6] | num:raw}}%</td>
-                <td><button type="button" class="btn btn-primary" data-ng-click="applyRow(ref, rec)">Apply this row</button></td>
-              </tr>
-            </tbody>
-          </table>
+          </div>
         </div>
-        <h3>* Upgrade Score is calculated by minimizing time to buy any pair of upgrades.  If your goal is to buy two upgrades, then the upgrade with a higher score should be bought first.</h3>
+        <div class="row">
+          <div class="col-xs-12">
+            <uib-accordion close-others="false">
+              <uib-accordion-group is-open="accOpen[0]">
+                <uib-accordion-heading ng-click="accOpen[0] = !accOpen[0]">
+                  <div class="clickable-panel">
+                    Cost of Upgrades<span class="pull-right fa" ng-class="{'fa-chevron-down': accOpen[0], 'fa-chevron-right': !accOpen[0]}"></span>
+                  </div>
+                </uib-accordion-heading>
+                <table class="table table-striped table-hover table-bordered">
+                  <thead>
+                    <tr>
+                      <th>Type</th>
+                      <th>$ Cost +1</th>
+                      <th>Time Cost +1</th>
+                      <th>$ Cost +10</th>
+                      <th>Time Cost +10</th>
+                      <th>$ Cost +Bonus</th>
+                      <th>Time Cost +Bonus</th>
+                      <th>$ Cost +All Bonuses</th>
+                      <th>Time Cost +All Bonus</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr data-ng-repeat="rUC in ref.upgradeCosts track by $index">
+                      <td>{{ref.investments[$index][0]}}</td>
+                      <td>${{rUC[0] | num:raw}}</td>
+                      <td>{{rUC[1] | time:raw}}</td>
+                      <td>${{rUC[2] | num:raw}}</td>
+                      <td>{{rUC[3] | time:raw}}</td>
+                      <td>${{rUC[4] | num:raw}}</td>
+                      <td>{{rUC[5] | time:raw}}</td>
+                      <td>${{rUC[6] | num:raw}}</td>
+                      <td>{{rUC[7] | time:raw}}</td>
+                    </tr>
+                  </tbody>
+                </table>
+              </uib-accordion-group>
+              <uib-accordion-group is-open="accOpen[1]">
+                <uib-accordion-heading ng-click="accOpen[1] = !accOpen[1]">
+                  <div class="clickable-panel">
+                    Cash Upgrades<span class="pull-right fa" ng-class="{'fa-chevron-down': accOpen[1], 'fa-chevron-right': !accOpen[1]}"></span>
+                  </div>
+                </uib-accordion-heading>
+                <div class="well">
+                  <div class="row text-center">
+                    <div class="form-inline col-md-3 col-md-offset-3">
+                      <label><input type="checkbox" class="form-inline" data-ng-model="fillBefore[0]"> Buy All Before Selection (Inclusive)</label>
+                    </div>
+                    <div class="form-inline col-md-3">
+                      <label><input type="checkbox" class="form-inline" data-ng-model="clearAfter[0]"> Clear All After Selection (Inclusive)</label>
+                    </div>
+                  </div>
+                </div>
+                <div class="multicolumn">
+                  <div data-ng-repeat="cupg in ref.cashUpgrades track by $index"><label class="strike-when-checked"><input type="checkbox" class="form-inline" data-ng-model="cupg[2]" data-ng-change="checkCash(ref, $index)"> <span>{{getNamedType(ref, cupg)}} (${{cupg[0] | num:raw}})</span></label></div>
+                </div>
+              </uib-accordion-group>
+              <uib-accordion-group is-open="accOpen[2]">
+                <uib-accordion-heading ng-click="accOpen[2] = !accOpen[2]">
+                  <div class="clickable-panel">
+                    Angel Upgrades<i data-ng-show="ref.angelExclamation" class="fa fa-plus"></i><span class="pull-right fa" ng-class="{'fa-chevron-down': accOpen[2], 'fa-chevron-right': !accOpen[2]}"></span>
+                  </div>
+                </uib-accordion-heading>
+                <div class="well">
+                  <div class="row text-center">
+                    <div class="form-inline col-md-3 col-md-offset-3">
+                      <label><input type="checkbox" class="form-inline" data-ng-model="fillBefore[1]"> Buy All Before Selection (Inclusive)</label>
+                    </div>
+                    <div class="form-inline col-md-3">
+                      <label><input type="checkbox" class="form-inline" data-ng-model="clearAfter[1]"> Clear All After Selection (Inclusive)</label>
+                    </div>
+                  </div>
+                </div>
+                <div class="multicolumn">
+                  <div data-ng-repeat="aupg in ref.angelUpgrades track by $index"><label class="strike-when-checked"><input type="checkbox" class="form-inline" data-ng-model="aupg[3]" data-ng-change="checkAngel(ref, $index)"> <span>{{getNamedType(ref, aupg)}} ({{aupg[0] | num:raw}} AI)<i data-ng-show="aupg[2]" title="{{aupg[2] | percentage }} increase in $ / second" class="fa fa-plus"></i></span></label></div>
+                </div>
+              </uib-accordion-group>
+              <uib-accordion-group is-open="accOpen[3]">
+                <uib-accordion-heading ng-click="accOpen[3] = !accOpen[3]">
+                  <div class="clickable-panel">
+                    Managers<span class="pull-right fa" ng-class="{'fa-chevron-down': accOpen[3], 'fa-chevron-right': !accOpen[3]}"></span>
+                  </div>
+                </uib-accordion-heading>
+                <table class="table table-striped table-hover table-bordered">
+                  <thead>
+                    <tr>
+                      <th>Business</th>
+                      <th data-ng-show="isWorld('earth')"><label><input type="checkbox" class="form-inline" data-ng-model="selectAll[1]" data-ng-change="selectedAll(ref, 1)"> 10% Off</label></th>
+                      <th data-ng-show="isWorld('earth')"><label><input type="checkbox" class="form-inline" data-ng-model="selectAll[2]" data-ng-change="selectedAll(ref, 2)"> 99.999% Off</label></th>
+                      <th data-ng-show="isWorld('moon')"><label><input type="checkbox" class="form-inline" data-ng-model="selectAll[3]" data-ng-change="selectedAll(ref, 3)"> 25% Off</label></th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr data-ng-repeat="mupg in ref.managerUpgrades track by $index">
+                      <td>{{ref.investments[$index][0]}}</td>
+                      <td data-ng-repeat="mtup in mupg track by $index">
+                        <label class="strike-when-checked"><input type="checkbox" class="form-inline" data-ng-model="mtup[1]"> <span>{{(isWorld('moon') || $index == 1) ? ' $' : ' '}}{{mtup[0] | num:raw}}{{(!isWorld('moon') && $index == 0) ? ' AI' : ''}}</span></label>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </uib-accordion-group>
+              <uib-accordion-group is-open="accOpen[4]" class="form-inline">
+                <uib-accordion-heading ng-click="accOpen[4] = !accOpen[4]">
+                  <div class="clickable-panel">
+                    Gold/Platinum Upgrades + Suits<i data-ng-show="ref.suitExclamation && !isEvent()" class="fa fa-plus"></i><span class="pull-right fa" ng-class="{'fa-chevron-down': accOpen[4], 'fa-chevron-right': !accOpen[4]}"></span>
+                  </div>
+                </uib-accordion-heading>
+                <div class="row">
+                  <div class="col-xs-12">
+                    <div class="well">
+                      <div class="row">
+                        <div class="col-md-6 text-center">
+                          <div class="form-inline top-bottom-margin">
+                            <label><input type="number" class="form-control" min="0" data-ng-model="ref.triples"> # 3x Multipliers</label>
+                          </div>
+                        </div>
+                        <div class="col-md-6 text-center">
+                          <div class="form-inline top-bottom-margin">
+                            <label data-ng-show="!isWorld('mars')"><input type="number" class="form-control" min="0" data-ng-model="ref.flux"> # Flux Capitalors</label>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col-xs-6">
+                  <p><strong>Platinum Boost:</strong></p>
+                    <div class="multicolumn" data-ng-show="!isEvent()">
+                      <div data-ng-repeat="boost in platinumboosts track by $index">
+                        <label class="strike-when-checked checkbox-inline"><input type="checkbox" data-ng-model="ref.platinum[$index][0]" data-ng-change="changePlatinum(ref, $index)"> <span>{{boost}}</span></label>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-xs-6">
+                    <p><strong>Suits:</strong></p>
+                    <div class="multicolumn" data-ng-show="!isEvent()">
+                      <div data-ng-repeat="suit in ref.suits track by $index">
+                        <label class="strike-when-checked checkbox-inline"><input type="checkbox" data-ng-model="ref.suits[$index][0]" data-ng-change="changeSuits(ref, $index)"> <span>{{suitList[$index][0]}} Suit<i data-ng-show="ref.suits[$index][1]" title="{{ref.suits[$index][1] | percentage}} increase in $ / second" data-ng-class="{best_suit: $index == ref.bestSuit}" class="fa fa-plus"></i></span></label>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </uib-accordion-group>
+              <uib-accordion-group is-open="accOpen[5]">
+                <uib-accordion-heading ng-click="accOpen[5] = !accOpen[5]">
+                  <div class="clickable-panel">
+                    Other Bonuses<span class="pull-right fa" ng-class="{'fa-chevron-down': accOpen[5], 'fa-chevron-right': !accOpen[5]}"></span>
+                  </div>
+                </uib-accordion-heading>
+                <div class="row">
+                  <div class="col-xs-12">
+                    <p>
+                      Please only input the bonus you have.
+                    </p>
+                    <p>
+                      <em>For example, if you have a 30% Angel Investor increase from a Christmas event, so now your base Angel Investor bonus is 32%, but with upgrades it could easily be above 40%, please only input 30 or the calculations will be off.</em>
+                    </p>
+                  </div>
+                </div>
+                <div class="row top-bottom-margin">
+                  <div class="col-sm-6">
+                    <div class="form-inline text-center bottom-margin">
+                      <label><input type="number" class="form-control" min="0" data-ng-model="ref.bonusMultiplier"> x Multiplier</label>
+                    </div>
+                  </div>
+                  <div class="col-sm-6">
+                    <div class="form-inline text-center">
+                      <label><input type="number" class="form-control" min="0" data-ng-model="ref.bonusAngelEffectiveness"> % Angel Investor Bonus</label>
+                      <h2>Total Angel Investor % = {{ref.angelEffectiveness | number}}%</h2>
+                    </div>
+                  </div>
+                </div>
+              </uib-accordion-group>
+              <uib-accordion-group is-open="accOpen[6]">
+                <uib-accordion-heading ng-click="accOpen[6] = !accOpen[6]">
+                  <div class="clickable-panel">
+                    Super Badges<i data-ng-show="ref.badgeExclamation" class="fa fa-plus"></i><span class="pull-right fa" ng-class="{'fa-chevron-down': accOpen[6], 'fa-chevron-right': !accOpen[6]}"></span>
+                  </div>
+                </uib-accordion-heading>
+                <div class="multicolumn">
+                  <div data-ng-repeat="badge in ref.badges track by $index">
+                    <label class="strike-when-checked checkbox-inline"><input type="checkbox" data-ng-model="ref.badges[$index][0]" data-ng-change="changeBadge(ref, $index)"> <span>{{superbadgeList[$index][0]}} ({{getBadgeBonusInfo(ref,superbadgeList[$index])}})<i data-ng-show="ref.badges[$index][1]" title="{{ref.badges[$index][1] | percentage}} increase in $ / second" data-ng-class="{best_badge: $index == ref.bestBadge}" class="fa fa-plus"></i></span></label>
+                  </div>
+                </div>
+              </uib-accordion-group>
+            </uib-accordion>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-xs-12 text-center">
+            <button type="button" class="btn btn-lg btn-primary" data-ng-click="calc(ref)">Calculate</button>
+          </div>
+        </div>
+        <hr />
+        <div class="row">
+          <div class="col-xs-12">
+            <h2>Total $ / second&nbsp;:&nbsp;&nbsp;{{ref.totalMoneyPerSecond | number}} ({{ref.totalMoneyPerSecond | num}})</h2>
+            <h2>Total $ / minute&nbsp;&nbsp;:&nbsp;&nbsp;{{ref.totalMoneyPerSecond * 60 | number}} ({{ref.totalMoneyPerSecond * 60 | num}})</h2>
+            <h2>Total $ / hour&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;:&nbsp;&nbsp;{{ref.totalMoneyPerSecond * 3600 | number}} ({{ref.totalMoneyPerSecond * 3600 | num}})</h2>
+          </div>
+        </div>
+        <hr />
+        <div class="row">
+          <div class="col-xs-12">
+            <uib-accordion close-others="false">
+              <uib-accordion-group is-open="accOpen2[0]">
+                <uib-accordion-heading ng-click="accOpen2[0] = !accOpen2[0]">
+                  <div class="clickable-panel">
+                    Angel Calculations<span class="pull-right fa" ng-class="{'fa-chevron-down': accOpen2[0], 'fa-chevron-right': !accOpen2[0]}"></span>
+                  </div>
+                </uib-accordion-heading>
+                <div class="row">
+                  <div class="col-xs-12">
+                    <p class="bottom-margin">
+                      All of values in the tables will include sacrificed angels in calculating the number required to increase by x%. The only exception is Doubled w/o Sacrificed which should match your in game numbers exactly and does not include sacrificed angels.
+                    </p>
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col-md-6 text-center">
+                    <div class="form-inline bottom-margin">
+                      <input type="number" class="form-control" min="0" data-ng-model="ref.viewLifetimeEarnings" data-ng-blur="updateEarnings()" step="0.001" required> <input type="text" class="form-control illions" data-ng-model="ref.angelIllions" uib-typeahead="ill for ill in illionsArray | filter:$viewValue | limitTo:8" placeholder="*illions" data-ng-blur="updateEarnings()"> Lifetime Earnings
+                    </div>
+                  </div>
+                  <div class="col-md-6 text-center">
+                    <div class="form-inline bottom-margin">
+                      <input type="number" class="form-control" min="0" data-ng-model="ref.viewSacAngels" data-ng-blur="updateSacrificedAngels()" step="0.001" required> <input type="text" class="form-control illions" data-ng-model="ref.sacIllions" uib-typeahead="ill for ill in illionsArray | filter:$viewValue | limitTo:8" placeholder="*illions" data-ng-blur="updateSacrificedAngels()"> # Angels Sacrificed
+                    </div>
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col-xs-12 text-center">
+                    <button type="button" class="btn btn-lg btn-primary space_top bottom-margin" data-ng-click="calcAngelInvestors(ref)">Calculate Angels</button>
+                  </div>
+                </div>
+                <table class="table table-striped table-hover table-bordered space_top">
+                  <thead>
+                    <tr>
+                      <th>Threshold</th>
+                      <th>Number of Angels</th>
+                      <th>Lifetime Cost</th>
+                      <th>Lifetime Difference</th>
+                      <th>Difference Time Cost</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr data-ng-repeat="aUC in ref.angelCosts track by $index">
+                      <td data-ng-if="!$last">{{aUC[0]}}</td>
+                      <td data-ng-if="$last"><input type="number" class="form-control" min="0" data-ng-model="ref.customAngelMul" step="0.1"> x</td>
+                      <td>{{aUC[1] | num:raw}} AI</td>
+                      <td>${{aUC[2] | num:raw}}</td>
+                      <td>${{aUC[3] | num:raw}}</td>
+                      <td>{{aUC[4] | time:raw}}</td>
+                    </tr>
+                  </tbody>
+                </table>
+                <div class="row">
+                  <div class="col-xs-12 text-center">
+                    <button type="button" class="btn btn-primary space_top bottom-margin" data-ng-click="calcAngelInvestors(ref)">Calculate Custom Threshold</button>
+                  </div>
+                </div>
+              </uib-accordion-group>
+              <hr />
+              <uib-accordion-group is-open="accOpen2[1]">
+                <uib-accordion-heading ng-click="accOpen2[1] = !accOpen2[1]">
+                  <div class="clickable-panel">
+                    Recommendations Filters<span class="pull-right fa" ng-class="{'fa-chevron-down': accOpen2[1], 'fa-chevron-right': !accOpen2[1]}"></span>
+                  </div>
+                </uib-accordion-heading>
+                <div class="row text-center bottom-margin">
+                  <div class="col-sm-4">
+                    <label><input type="checkbox" class="form-inline" data-ng-model="ref.noSingles"> Don't show +1 upgrades</label>
+                  </div>
+                  <div class="col-sm-4">
+                    <label><input type="checkbox" class="form-inline" data-ng-model="ref.noTens"> Don't show +10 upgrades</label>
+                  </div>
+                  <div class="col-sm-4">
+                    <label><input type="checkbox" class="form-inline" data-ng-model="ref.noHundreds"> Don't show +100 upgrades</label>
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col-md-6 text-center top-bottom-margin">
+                    <p>
+                      Don't show upgrades that take longer than (Days : Hours : Minutes)
+                    </p>
+                    <table class="inline-block">
+                      <tr class="text-center">
+                        <td><a ng-click="incrementDays(ref)" class="btn btn-link"><span class="fa fa-chevron-up"></span></a></td>
+                        <td>&nbsp;</td>
+                        <td><a ng-click="incrementHours(ref)" class="btn btn-link"><span class="fa fa-chevron-up"></span></a></td>
+                        <td>&nbsp;</td>
+                        <td><a ng-click="incrementMinutes(ref)" class="btn btn-link"><span class="fa fa-chevron-up"></span></a></td>
+                      </tr>
+                      <tr>
+                        <td class="form-group">
+                          <input style="width:50px;" data-ng-model="filterTime.days" class="form-control text-center" type="text" pattern="[0-9]*" placeholder="d">
+                        </td>
+                        <td>:</td>
+                        <td class="form-group">
+                          <input style="width:50px;" data-ng-model="filterTime.hours" class="form-control text-center" type="text" pattern="[0-9]*" placeholder="h">
+                        </td>
+                        <td>:</td>
+                        <td class="form-group">
+                          <input style="width:50px;" data-ng-model="filterTime.minutes" class="form-control text-center" type="text" pattern="[0-9]*" placeholder="m">
+                        </td>
+                      </tr>
+                      <tr class="text-center">
+                        <td><a ng-click="decrementDays(ref)" class="btn btn-link"><span class="fa fa-chevron-down"></span></a></td>
+                        <td>&nbsp;</td>
+                        <td><a ng-click="decrementHours(ref)" class="btn btn-link"><span class="fa fa-chevron-down"></span></a></td>
+                        <td>&nbsp;</td>
+                        <td><a ng-click="decrementMinutes(ref)" class="btn btn-link"><span class="fa fa-chevron-down"></span></a></td>
+                      </tr>
+                    </table>
+                  </div>
+                  <div class="col-md-6 text-center top-bottom-margin">
+                    <p>
+                      Don't show upgrades that have % Increase in $ / Second less than X
+                    </p>
+                    <table class="inline-block">
+                      <tr class="text-center">
+                        <td><a ng-click="incrementPercentage(ref)" class="btn btn-link"><span class="fa fa-chevron-up"></span></a></td>
+                      </tr>
+                      <tr class="form-group">
+                        <td class="form-group">
+                          <input style="width:50px;" data-ng-model="filterTime.percentage" class="form-control text-center" type="text" pattern="[0-9]*[.]?[0-9]{0,3}" placeholder="%">
+                        </td>
+                      </tr>
+                      <tr class="text-center">
+                        <td><a ng-click="decrementPercentage(ref)" class="btn btn-link"><span class="fa fa-chevron-down"></span></a></td>
+                      </tr>
+                    </table>
+                  </div>
+                </div>
+              </uib-accordion-group>
+            </uib-accordion>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-xs-12">
+            <div class="text-center" data-ng-show="ref.recTable.length">
+              <h2>Recommendation: {{ref.recommendation}}</h2>
+              <button type="button" class="btn btn-primary btn-lg" data-ng-click="apply(ref)">Apply This Recommendation</button>
+              <hr />
+              <table class="table table-striped table-hover table-bordered space_top text-left">
+                <thead>
+                  <tr>
+                    <th>Upgrade</th>
+                    <th>To</th>
+                    <th class="clickable" data-ng-click="clickSort(ref, 2)">Upgrade Score (higher = better)*
+                      <span data-ng-if="2 == sortIndex && reverse" class="pull-right fa fa-chevron-down"></span>
+                      <span data-ng-if="2 == sortIndex && !reverse" class="pull-right fa fa-chevron-up"></span>
+                    </th>
+                    <th class="clickable" data-ng-click="clickSort(ref, 3)">Cost of Upgrade
+                      <span data-ng-if="3 == sortIndex && reverse" class="pull-right fa fa-chevron-down"></span>
+                      <span data-ng-if="3 == sortIndex && !reverse" class="pull-right fa fa-chevron-up"></span>
+                    </th>
+                    <th class="clickable" data-ng-click="clickSort(ref, 4)">Cost of Upgrade in Time
+                      <span data-ng-if="4 == sortIndex && reverse" class="pull-right fa fa-chevron-down"></span>
+                      <span data-ng-if="4 == sortIndex && !reverse" class="pull-right fa fa-chevron-up"></span>
+                    </th>
+                    <th class="clickable" data-ng-click="clickSort(ref, 5)">Increase in $ / Second
+                      <span data-ng-if="5 == sortIndex && reverse" class="pull-right fa fa-chevron-down"></span>
+                      <span data-ng-if="5 == sortIndex && !reverse" class="pull-right fa fa-chevron-up"></span>
+                    </th>
+                    <th class="clickable" data-ng-click="clickSort(ref, 6)">% Increase in $ / Second
+                      <span data-ng-if="6 == sortIndex && reverse" class="pull-right fa fa-chevron-down"></span>
+                      <span data-ng-if="6 == sortIndex && !reverse" class="pull-right fa fa-chevron-up"></span>
+                    </th>
+                    <th>Apply</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr data-ng-repeat="rec in ref.recTable track by $index">
+                    <td>{{rec[0] | rec:ref}}</td>
+                    <td>{{rec[1] | num:raw}}</td>
+                    <td>{{rec[2] | num:raw}}</td>
+                    <td>${{rec[3] | num:raw}}</td>
+                    <td>{{rec[4] | time:raw}}</td>
+                    <td>${{rec[5] | num:raw}}</td>
+                    <td>{{rec[6] | num:raw}}%</td>
+                    <td><button type="button" class="btn btn-primary center-block" data-ng-click="applyRow(ref, rec)">Apply This Row</button></td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+        <h3>*Upgrade Score is calculated by minimizing time to buy any pair of upgrades.  If your goal is to buy two upgrades, then the upgrade with a higher score should be bought first.</h3>
       </div>
       <hr>
       <h4 class="pull-right">Found an error? Want to request a feature? You can do so on <a href="https://www.reddit.com/r/AdventureCapitalist/comments/59knd5/gates_of_heck_calculator_updated/">Reddit</a> or <a href="https://github.com/Slimmmo/Slimmmo.github.io">Github</a>.</h4>
