@@ -103,7 +103,6 @@ label.strike-when-checked > input:checked + span {
 input[type="checkbox"].form-control, input[type="checkbox"].form-inline {
   box-shadow: none;
   cursor: pointer;
-  visibility: hidden;
   position: relative;
   text-align: center;
   margin: 0;
