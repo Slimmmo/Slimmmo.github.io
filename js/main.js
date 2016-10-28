@@ -1349,7 +1349,8 @@ advApp.controller('advController', ['$document', '$filter', '$scope', function($
   };
 
   function loadDefaults() {
-   $scope.halloween.baseCost = [6, 71, 640, 20680, 344160, 1492920, 89133040, 149084800, 5758901760, 66666666666];
+    $scope.halloween.angelScale = 150;
+    $scope.halloween.baseCost = [6, 71, 640, 20680, 344160, 1492920, 89133040, 149084800, 5758901760, 66666666666];
     $scope.halloween.basePower = [1.02, 1.04, 1.08, 1.16, 1.32, 1.64, 2.28, 3.56, 6.12, 12.24];
     $scope.halloween.baseProfit = [.75, 20, 180, 1440, 17280, 207360, 2488325, 29860000, 358318000, 6666500000];
     $scope.halloween.baseSpeed = [2, 5, 9, 14, 20, 56, 84, 144, 328, 666];
