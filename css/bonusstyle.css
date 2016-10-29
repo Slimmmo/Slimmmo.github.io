@@ -50,12 +50,6 @@ label.strike-when-checked > input:checked + span {
   text-decoration: line-through;
 }
 
-
-/* Flair */
-* { transition: all 0.5s ease; }
-.fa { transition-duration: 0s; }
-
-
 /* Spacing & Alignment */
 .table>thead>tr>th, .table>tbody>tr>th, .table>tfoot>tr>th, .table>thead>tr>td, .table>tbody>tr>td, .table>tfoot>tr>td { vertical-align: middle; }
 .table>thead>tr>th, .table>tbody>tr>th, .table>tfoot>tr>th { text-align: center; }
