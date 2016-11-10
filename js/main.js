@@ -1349,7 +1349,7 @@ advApp.controller('advController', ['$document', '$filter', '$scope', function($
   };
 
   function loadDefaults() {
-    $scope.rain.angelScale = 45;
+    $scope.rain.angelScale = 150;
     $scope.rain.baseCost = [7, 83, 749, 24195, 402667, 98285656, 174429216, 5758901760, 33333333333];
     $scope.rain.basePower = [1.025, 1.045, 1.085, 1.165, 1.325, 2.285, 3.565, 6.125, 12.25];
     $scope.rain.baseProfit = [0.5, 10, 90, 720, 8640, 1244150, 14929000, 179159000, 7979500000];
