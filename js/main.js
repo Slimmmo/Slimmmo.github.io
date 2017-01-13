@@ -529,28 +529,30 @@ advApp.controller('advController', ['$document', '$filter', '$scope', function($
           highestSharedLevel = loc.investments[i][1];
         }
       }
-      for (i = 0; i < loc.unlocks[loc.investments.length].length; i++) {
-        if (loc.unlocks[loc.investments.length][i][0] > highestSharedLevel) {
-          highestSharedLevel = loc.unlocks[loc.investments.length][i][0];
-          break;
+      if (highestSharedLevel < loc.unlocks[loc.investments.length][loc.unlocks[loc.investments.length].length - 1][0]) {
+        for (i = 0; i < loc.unlocks[loc.investments.length].length; i++) {
+          if (loc.unlocks[loc.investments.length][i][0] > highestSharedLevel) {
+            highestSharedLevel = loc.unlocks[loc.investments.length][i][0];
+            break;
+          }
         }
-      }
-      for (i = 0; i < tempPlanet.investments.length; i++) {
-        if (tempPlanet.investments[i][1] < highestSharedLevel) {
-          tempUnlock += calcUnlockCost(loc, i, tempPlanet.investments[i][1], highestSharedLevel - tempPlanet.investments[i][1]);
-          tempPlanet.investments[i][1] = highestSharedLevel;
+        for (i = 0; i < tempPlanet.investments.length; i++) {
+          if (tempPlanet.investments[i][1] < highestSharedLevel) {
+            tempUnlock += calcUnlockCost(loc, i, tempPlanet.investments[i][1], highestSharedLevel - tempPlanet.investments[i][1]);
+            tempPlanet.investments[i][1] = highestSharedLevel;
+          }
         }
-      }
-      calcState(tempPlanet);
-      tempUnlockTime = tempUnlock / loc.totalMoneyPerSecond;
-      tempPercentageIncrease = (tempPlanet.totalMoneyPerSecond - loc.totalMoneyPerSecond) * 100 / loc.totalMoneyPerSecond;
-      if ((loc.filterTime === null || loc.filterTime > tempUnlockTime) && ($scope.filterTime.percentage === null || $scope.filterTime.percentage < tempPercentageIncrease)) {
-        upgradeScore = calcUpgradeScore(tempPlanet, loc, tempUnlockTime);
-        if (upgradeScore > max) {
-          max = upgradeScore;
-          maxObj = ['all', highestSharedLevel];
+        calcState(tempPlanet);
+        tempUnlockTime = tempUnlock / loc.totalMoneyPerSecond;
+        tempPercentageIncrease = (tempPlanet.totalMoneyPerSecond - loc.totalMoneyPerSecond) * 100 / loc.totalMoneyPerSecond;
+        if ((loc.filterTime === null || loc.filterTime > tempUnlockTime) && ($scope.filterTime.percentage === null || $scope.filterTime.percentage < tempPercentageIncrease)) {
+          upgradeScore = calcUpgradeScore(tempPlanet, loc, tempUnlockTime);
+          if (upgradeScore > max) {
+            max = upgradeScore;
+            maxObj = ['all', highestSharedLevel];
+          }
+          loc.recTable.push(['all', highestSharedLevel, upgradeScore, tempUnlock, tempUnlock / loc.totalMoneyPerSecond, tempPlanet.totalMoneyPerSecond - loc.totalMoneyPerSecond, tempPercentageIncrease]);
         }
-        loc.recTable.push(['all', highestSharedLevel, upgradeScore, tempUnlock, tempUnlock / loc.totalMoneyPerSecond, tempPlanet.totalMoneyPerSecond - loc.totalMoneyPerSecond, tempPercentageIncrease]);
       }
     }
     loc.rec = maxObj;
