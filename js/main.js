@@ -1524,7 +1524,7 @@ advApp.controller('advController', ['$document', '$filter', '$scope', function($
     $scope.managermaniaI.unlocks[7] = [];
     $scope.managermaniaI.unlocks[8] = [];
     $scope.managermaniaI.unlocks[9] = [];
-    $scope.managermaniaI.cashUpgrades = [[1001, [0, 6], false],[300001, [2, 6], false],[1000001, [0, 12], false],[10000001, [2, 12], false],[100000001, [0, 18], false],[1e9, [2, 18], false],[9e9, [0, 24], false],[80e9, [2, 24], false],[500e9, [0, 50], false],[500e12, [1, 50], false]];
+    $scope.managermaniaI.cashUpgrades = [[1001, [0, 6], false],[300001, [2, 6], false],[1000001, [0, 12], false],[10000001, [2, 12], false],[100000001, [0, 18], false],[1e9, [2, 18], false],[9e9, [0, 24], false],[80e9, [2, 24], false],[500e9, [0, 50], false],[3e12, [2, 222], false]];
     $scope.managermaniaI.angelUpgrades = [];
     $scope.managermaniaI.managerUpgrades = [];
     $scope.moon.unlocks[0] = [[10, [0, 3.5]],[20, [0, 4]],[40, [0, 4.5]],[80, [0, 5]],[160, [0, 5.5]],[320, [0, 6]],[640, [0, 6.5]],[1280, [0, 7]],[2560, [0, 7.5]],[5120, [0, 999999999]],[10000, [0, 3.5]]];
