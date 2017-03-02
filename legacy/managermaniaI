@@ -1,0 +1,23 @@
+    $scope.managermaniaI.angelScale = 0;
+    $scope.managermaniaI.baseCost = [12, 65];
+    $scope.managermaniaI.basePower = [1.09, 1.03];
+    $scope.managermaniaI.baseProfit = [2, 13];
+    $scope.managermaniaI.baseSpeed = [1, 10];
+    $scope.managermaniaI.hasMegaTickets = false;
+    $scope.managermaniaI.investments = [
+      ['W.W. Heisenbird', 1, false, 0, 0, 0, 0],
+      ['Gus Pollos', 1, false, 0, 0, 0, 0]
+    ];
+    $scope.managermaniaI.unlocks[0] = [[50, [0, 2]],[100, [2, 0.5]],[150, [0, 3]],[150, [2, 0.5]],[200, [0, 4]]];
+    $scope.managermaniaI.unlocks[1] = [[111, [2, 3]],[222, [1, 0.8]],[444, [2, 4]],[666, [1, 0.8]]];
+    $scope.managermaniaI.unlocks[2] = [];
+    $scope.managermaniaI.unlocks[3] = [];
+    $scope.managermaniaI.unlocks[4] = [];
+    $scope.managermaniaI.unlocks[5] = [];
+    $scope.managermaniaI.unlocks[6] = [];
+    $scope.managermaniaI.unlocks[7] = [];
+    $scope.managermaniaI.unlocks[8] = [];
+    $scope.managermaniaI.unlocks[9] = [];
+    $scope.managermaniaI.cashUpgrades = [[1001, [0, 6], false],[300001, [2, 6], false],[1000001, [0, 12], false],[10000001, [2, 12], false],[100000001, [0, 18], false],[1e9, [2, 18], false],[9e9, [0, 24], false],[80e9, [2, 24], false],[500e9, [0, 50], false],[3e12, [2, 222], false]];
+    $scope.managermaniaI.angelUpgrades = [];
+    $scope.managermaniaI.managerUpgrades = [];
