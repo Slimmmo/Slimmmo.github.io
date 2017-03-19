@@ -136,7 +136,8 @@ advApp.controller('advController', ['$document', '$filter', '$scope', function($
     ['Kitchen Gadget', 0, [4, 30]],
     ['Fuzzee', 0, [8, 20]],
     ['Pro-Team Shake', 0, [14, 20]],
-    ['Cupid', 0, [18, 15]]
+    ['Cupid', 0, [18, 15]],
+    ['Bunny Ears', 1, [2, 30]]
   ];
   var planets = ['earth', 'moon', 'mars', 'rain'];
 
