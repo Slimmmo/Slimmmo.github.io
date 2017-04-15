@@ -10,7 +10,7 @@ function numFilter(input) {
   if (input === Infinity) {
     return "Infinity";
   } else if (input !== null) {
-    while (input >= Number('1e+' + e)) {
+    while (Math.abs(input) >= Number('1e+' + e)) {
       e += 3;
       mCount++;
     }
