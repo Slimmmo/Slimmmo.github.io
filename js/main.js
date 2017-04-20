@@ -92,6 +92,7 @@ advApp.filter('rec', function() {
 advApp.controller('advController', ['$document', '$filter', '$scope', function($document, $filter, $scope) {
   $scope.accOpen = [false, false, false, false, false, false, false];
   $scope.accOpen2 = [false, false];
+  $scope.buyMultiplier = 1;
   $scope.clearAfter = [false, false];
   $scope.coins = {};
   $scope.compare = false;
@@ -732,6 +733,20 @@ advApp.controller('advController', ['$document', '$filter', '$scope', function($
     return retVal;
   };
 
+  $scope.changeBuyMultiplier = function() {
+    switch ($scope.buyMultiplier) {
+      case 1:
+        $scope.buyMultiplier = 10;
+        break;
+      case 10:
+        $scope.buyMultiplier = 100;
+        break;
+      case 100:
+        $scope.buyMultiplier = 1;
+        break;
+    }
+  }
+
   $scope.changePlatinum = function(loc, index) {
     for (var i = 0; i < loc.platinum.length; i++) {
       if (i !== index) {
@@ -1272,6 +1287,7 @@ advApp.controller('advController', ['$document', '$filter', '$scope', function($
     $scope.fillBefore = [false, false];
     $scope.compare = false;
     $scope.ref = $scope[planet];
+    $scope.buyMultiplier = 1;
     localStorage.setItem('refWorld', planet);
   };
 
