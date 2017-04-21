@@ -44,6 +44,7 @@
       <div class="row">
         <div class="col-xs-12">
           <ul class="nav nav-tabs nav-justified">
+<<<<<<< HEAD
             <li role="presentation" data-ng-class="{active: isWorld('earth')}"><a data-ng-click="setWorld('earth')">Earth</a></li>
             <li role="presentation" data-ng-class="{active: isWorld('moon')}"><a data-ng-click="setWorld('moon')">Moon</a></li>
             <li role="presentation" data-ng-class="{active: isWorld('mars')}"><a data-ng-click="setWorld('mars')">Mars</a></li>
@@ -54,6 +55,12 @@
         <div class="col-xs-12 bottom-margin">
           <ul class="nav nav-pills" data-ng-if="showEvents">
             <li data-ng-repeat="ev in events track by $index" role="presentation" data-ng-class="{active: ev[0] == lastEvent}"><a data-ng-click="setWorld(ev[0])">{{::ev[1]}}</a></li>
+=======
+            <li role="presentation" data-ng-class="{active: !isCompare() && isWorld('earth')}"><a data-ng-click="setWorld('earth')">Earth</a></li>
+            <li role="presentation" data-ng-class="{active: !isCompare() && isWorld('moon')}"><a data-ng-click="setWorld('moon')">Moon</a></li>
+            <li role="presentation" data-ng-class="{active: !isCompare() && isWorld('mars')}"><a data-ng-click="setWorld('mars')">Mars</a></li>
+            <li role="presentation" data-ng-class="{active: !isCompare() && isWorld('coins')}"><a data-ng-click="setWorld('coins')">Insert Coins to Continue Replay</a></li>
+>>>>>>> origin/master
           </ul>
         </div>
       </div>

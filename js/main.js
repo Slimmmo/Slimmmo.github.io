@@ -144,7 +144,7 @@ advApp.controller('advController', ['$document', '$filter', '$scope', function($
   $scope.friday = {};
   $scope.halloween = {};
   $scope.illionsArray = illionsArr.slice(1);
-  $scope.lastEvent = 'carol';
+  $scope.lastEvent = 'coins';
   $scope.liverich = {};
   $scope.love = {};
   $scope.lyp = {};
