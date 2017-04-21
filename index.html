@@ -42,16 +42,22 @@
         </div>
       </div>
       <div class="row">
-        <div class="col-xs-12 bottom-margin">
+        <div class="col-xs-12">
           <ul class="nav nav-tabs nav-justified">
-            <li role="presentation" data-ng-class="{active: !isCompare() && isWorld('earth')}"><a data-ng-click="setWorld('earth')">Earth</a></li>
-            <li role="presentation" data-ng-class="{active: !isCompare() && isWorld('moon')}"><a data-ng-click="setWorld('moon')">Moon</a></li>
-            <li role="presentation" data-ng-class="{active: !isCompare() && isWorld('mars')}"><a data-ng-click="setWorld('mars')">Mars</a></li>
-            <li role="presentation" data-ng-class="{active: !isCompare() && isWorld('evil')}"><a data-ng-click="setWorld('evil')">The Root of All Evil 2017</a></li>
+            <li role="presentation" data-ng-class="{active: isWorld('earth')}"><a data-ng-click="setWorld('earth')">Earth</a></li>
+            <li role="presentation" data-ng-class="{active: isWorld('moon')}"><a data-ng-click="setWorld('moon')">Moon</a></li>
+            <li role="presentation" data-ng-class="{active: isWorld('mars')}"><a data-ng-click="setWorld('mars')">Mars</a></li>
+            <li role="presentation" data-ng-class="{active: isEvent()}"><a data-ng-click="setWorld(lastEvent)">{{getEventName(lastEvent)}}</a></li>
+            <li role="presentation"><a data-ng-click="showEventsClick()">Events</a></li>
+          </ul>
+        </div>
+        <div class="col-xs-12 bottom-margin">
+          <ul class="nav nav-pills" data-ng-if="showEvents">
+            <li data-ng-repeat="ev in events track by $index" role="presentation" data-ng-class="{active: ev[0] == lastEvent}"><a data-ng-click="setWorld(ev[0])">{{::ev[1]}}</a></li>
           </ul>
         </div>
       </div>
-      <div data-ng-show="!isCompare()">
+      <div>
         <div class="row">
           <div class="col-sm-8 slim-bottom-margin text-center-xs">
             <div class="form-inline">
@@ -67,30 +73,32 @@
         </div>
         <div class="row">
           <div class="col-xs-12">
-            <table class="table table-striped table-hover table-bordered space_top">
-              <thead>
-                <tr>
-                  <th>Type</th>
-                  <th>Number</th>
-                  <th ng-show="ref.hasMegaTickets"><div class="checkbox-inline"><label class="no-bottom-margin"><input type="checkbox" data-ng-model="selectAll[0]" data-ng-change="selectedAll(ref, 0)"> Mega Ticket</label></div></th>
-                  <th>$ / Cycle</th>
-                  <th>Cycle Time</th>
-                  <th>$ / Second</th>
-                  <th>% of Total $ / Second</th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr data-ng-repeat="inv in ref.investments track by $index">
-                  <td>{{inv[0]}}</td>
-                  <td><input type="number" class="form-control" min="0" data-ng-model="inv[1]"></td>
-                  <td ng-show="ref.hasMegaTickets"><input type="checkbox" class="form-control" data-ng-model="inv[2]"></td>
-                  <td>${{inv[3] | num:raw}}</td>
-                  <td>{{inv[4] | time:raw}}</td>
-                  <td>${{inv[5] | num:raw}}</td>
-                  <td>{{inv[6] | num:raw}}%</td>
-                </tr>
-              </tbody>
-            </table>
+            <refresher condition="calcToggle">
+              <table class="table table-striped table-hover table-bordered space_top">
+                <thead>
+                  <tr>
+                    <th>Type</th>
+                    <th>Number</th>
+                    <th data-ng-if="ref.hasMegaTickets"><div class="checkbox-inline"><label class="no-bottom-margin"><input type="checkbox" data-ng-model="selectAll[0]" data-ng-change="selectedAll(ref, 0)"> Mega Ticket</label></div></th>
+                    <th>$ / Cycle</th>
+                    <th>Cycle Time</th>
+                    <th>$ / Second</th>
+                    <th>% of Total $ / Second</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr data-ng-repeat="inv in ref.investments track by $index">
+                    <td>{{::inv[0]}}</td>
+                    <td><input type="number" class="form-control" min="0" data-ng-model="inv[1]"></td>
+                    <td data-ng-if="ref.hasMegaTickets"><input type="checkbox" class="form-control" data-ng-model="inv[2]"></td>
+                    <td>${{::inv[3] | num:raw}}</td>
+                    <td>{{::inv[4] | time:raw}}</td>
+                    <td>${{::inv[5] | num:raw}}</td>
+                    <td>{{::inv[6] | num:raw}}%</td>
+                  </tr>
+                </tbody>
+              </table>
+            </refresher>
           </div>
         </div>
         <div class="row">
@@ -102,34 +110,36 @@
                     Cost of Upgrades<span class="pull-right fa" ng-class="{'fa-chevron-down': accOpen[0], 'fa-chevron-right': !accOpen[0]}"></span>
                   </div>
                 </uib-accordion-heading>
-                <table class="table table-striped table-hover table-bordered">
-                  <thead>
-                    <tr>
-                      <th>Type</th>
-                      <th>$ Cost +1</th>
-                      <th>Time Cost +1</th>
-                      <th>$ Cost +10</th>
-                      <th>Time Cost +10</th>
-                      <th>$ Cost +Bonus</th>
-                      <th>Time Cost +Bonus</th>
-                      <th>$ Cost +All Bonuses</th>
-                      <th>Time Cost +All Bonus</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr data-ng-repeat="rUC in ref.upgradeCosts track by $index">
-                      <td>{{ref.investments[$index][0]}}</td>
-                      <td>${{rUC[0] | num:raw}}</td>
-                      <td>{{rUC[1] | time:raw}}</td>
-                      <td>${{rUC[2] | num:raw}}</td>
-                      <td>{{rUC[3] | time:raw}}</td>
-                      <td>${{rUC[4] | num:raw}}</td>
-                      <td>{{rUC[5] | time:raw}}</td>
-                      <td>${{rUC[6] | num:raw}}</td>
-                      <td>{{rUC[7] | time:raw}}</td>
-                    </tr>
-                  </tbody>
-                </table>
+                <refresher condition="calcToggle">
+                  <table class="table table-striped table-hover table-bordered">
+                    <thead>
+                      <tr>
+                        <th>Type</th>
+                        <th>$ Cost +1</th>
+                        <th>Time Cost +1</th>
+                        <th>$ Cost +10</th>
+                        <th>Time Cost +10</th>
+                        <th>$ Cost +Bonus</th>
+                        <th>Time Cost +Bonus</th>
+                        <th>$ Cost +All Bonuses</th>
+                        <th>Time Cost +All Bonus</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr data-ng-repeat="rUC in ref.upgradeCosts track by $index">
+                        <td>{{::ref.investments[$index][0]}}</td>
+                        <td>${{::rUC[0] | num:raw}}</td>
+                        <td>{{::rUC[1] | time:raw}}</td>
+                        <td>${{::rUC[2] | num:raw}}</td>
+                        <td>{{::rUC[3] | time:raw}}</td>
+                        <td>${{::rUC[4] | num:raw}}</td>
+                        <td>{{::rUC[5] | time:raw}}</td>
+                        <td>${{::rUC[6] | num:raw}}</td>
+                        <td>{{::rUC[7] | time:raw}}</td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </refresher>
               </uib-accordion-group>
               <uib-accordion-group is-open="accOpen[1]">
                 <uib-accordion-heading ng-click="accOpen[1] = !accOpen[1]">
@@ -148,13 +158,15 @@
                   </div>
                 </div>
                 <div class="multicolumn">
-                  <div data-ng-repeat="cupg in ref.cashUpgrades track by $index"><label class="strike-when-checked"><input type="checkbox" class="form-inline" data-ng-model="cupg[2]" data-ng-change="checkCash(ref, $index)"> <span>{{getNamedType(ref, cupg)}} (${{cupg[0] | num:raw}})</span></label></div>
+                  <refresher condition="calcToggle">
+                    <div data-ng-repeat="cupg in ref.cashUpgrades track by $index"><label class="strike-when-checked"><input type="checkbox" class="form-inline" data-ng-model="cupg[2]" data-ng-change="checkCash(ref, $index)"> <span>{{::getNamedType(ref, cupg)}} (${{::cupg[0] | num:raw}})</span></label></div>
+                  </refresher>
                 </div>
               </uib-accordion-group>
               <uib-accordion-group is-open="accOpen[2]">
                 <uib-accordion-heading ng-click="accOpen[2] = !accOpen[2]">
                   <div class="clickable-panel">
-                    Angel Upgrades<i data-ng-show="ref.angelExclamation" class="fa fa-plus"></i><span class="pull-right fa" ng-class="{'fa-chevron-down': accOpen[2], 'fa-chevron-right': !accOpen[2]}"></span>
+                    Angel Upgrades<i data-ng-if="ref.angelExclamation" class="fa fa-plus"></i><span class="pull-right fa" ng-class="{'fa-chevron-down': accOpen[2], 'fa-chevron-right': !accOpen[2]}"></span>
                   </div>
                 </uib-accordion-heading>
                 <div class="well">
@@ -168,7 +180,9 @@
                   </div>
                 </div>
                 <div class="multicolumn">
-                  <div data-ng-repeat="aupg in ref.angelUpgrades track by $index"><label class="strike-when-checked"><input type="checkbox" class="form-inline" data-ng-model="aupg[3]" data-ng-change="checkAngel(ref, $index)"> <span>{{getNamedType(ref, aupg)}} ({{aupg[0] | num:raw}} AI)<i data-ng-show="aupg[2]" title="{{aupg[2] | percentage }} increase in $ / second" class="fa fa-plus"></i></span></label></div>
+                  <refresher condition="calcToggle">
+                    <div data-ng-repeat="aupg in ref.angelUpgrades track by $index"><label class="strike-when-checked"><input type="checkbox" class="form-inline" data-ng-model="aupg[3]" data-ng-change="checkAngel(ref, $index)"> <span>{{::getNamedType(ref, aupg)}} ({{::aupg[0] | num:raw}} AI)<i data-ng-if="aupg[2]" title="{{aupg[2] | percentage }} increase in $ / second" class="fa fa-plus"></i></span></label></div>
+                  </refresher>
                 </div>
               </uib-accordion-group>
               <uib-accordion-group is-open="accOpen[3]">
@@ -181,25 +195,27 @@
                   <thead>
                     <tr>
                       <th>Business</th>
-                      <th data-ng-show="isWorld('earth')"><label><input type="checkbox" class="form-inline" data-ng-model="selectAll[1]" data-ng-change="selectedAll(ref, 1)"> 10% Off</label></th>
-                      <th data-ng-show="isWorld('earth')"><label><input type="checkbox" class="form-inline" data-ng-model="selectAll[2]" data-ng-change="selectedAll(ref, 2)"> 99.999% Off</label></th>
-                      <th data-ng-show="isWorld('moon')"><label><input type="checkbox" class="form-inline" data-ng-model="selectAll[3]" data-ng-change="selectedAll(ref, 3)"> 25% Off</label></th>
+                      <th data-ng-if="isWorld('earth')"><label><input type="checkbox" class="form-inline" data-ng-model="selectAll[1]" data-ng-change="selectedAll(ref, 1)"> 10% Off</label></th>
+                      <th data-ng-if="isWorld('earth')"><label><input type="checkbox" class="form-inline" data-ng-model="selectAll[2]" data-ng-change="selectedAll(ref, 2)"> 99.999% Off</label></th>
+                      <th data-ng-if="isWorld('moon')"><label><input type="checkbox" class="form-inline" data-ng-model="selectAll[3]" data-ng-change="selectedAll(ref, 3)"> 25% Off</label></th>
                     </tr>
                   </thead>
                   <tbody>
-                    <tr data-ng-repeat="mupg in ref.managerUpgrades track by $index">
-                      <td>{{ref.investments[$index][0]}}</td>
-                      <td data-ng-repeat="mtup in mupg track by $index">
-                        <label class="strike-when-checked"><input type="checkbox" class="form-inline" data-ng-model="mtup[1]"> <span>{{(isWorld('moon') || $index == 1) ? ' $' : ' '}}{{mtup[0] | num:raw}}{{(!isWorld('moon') && $index == 0) ? ' AI' : ''}}</span></label>
-                      </td>
-                    </tr>
+                    <refresher condition="calcToggle">
+                      <tr data-ng-repeat="mupg in ref.managerUpgrades track by $index">
+                        <td>{{::ref.investments[$index][0]}}</td>
+                        <td data-ng-repeat="mtup in mupg track by $index">
+                          <label class="strike-when-checked"><input type="checkbox" class="form-inline" data-ng-model="mtup[1]"> <span>{{(isWorld('moon') || $index == 1) ? ' $' : ' '}}{{::mtup[0] | num:raw}}{{(!isWorld('moon') && $index == 0) ? ' AI' : ''}}</span></label>
+                        </td>
+                      </tr>
+                    </refresher>
                   </tbody>
                 </table>
               </uib-accordion-group>
               <uib-accordion-group is-open="accOpen[4]" class="form-inline">
                 <uib-accordion-heading ng-click="accOpen[4] = !accOpen[4]">
                   <div class="clickable-panel">
-                    Gold/Platinum Upgrades + Suits<i data-ng-show="ref.suitExclamation && !isEvent()" class="fa fa-plus"></i><span class="pull-right fa" ng-class="{'fa-chevron-down': accOpen[4], 'fa-chevron-right': !accOpen[4]}"></span>
+                    Gold/Platinum Upgrades + Suits<i data-ng-if="ref.suitExclamation && !isEvent()" class="fa fa-plus"></i><span class="pull-right fa" ng-class="{'fa-chevron-down': accOpen[4], 'fa-chevron-right': !accOpen[4]}"></span>
                   </div>
                 </uib-accordion-heading>
                 <div class="row">
@@ -213,7 +229,7 @@
                         </div>
                         <div class="col-md-6 text-center">
                           <div class="form-inline top-bottom-margin">
-                            <label data-ng-show="!isWorld('mars')"><input type="number" class="form-control" min="0" data-ng-model="ref.flux"> # Flux Capitalors</label>
+                            <label data-ng-if="!isWorld('mars')"><input type="number" class="form-control" min="0" data-ng-model="ref.flux"> # Flux Capitalors</label>
                           </div>
                         </div>
                       </div>
@@ -223,18 +239,22 @@
                 <div class="row">
                   <div class="col-xs-6">
                   <p><strong>Platinum Boost:</strong></p>
-                    <div class="multicolumn" data-ng-show="!isEvent()">
-                      <div data-ng-repeat="boost in platinumboosts track by $index">
-                        <label class="strike-when-checked checkbox-inline"><input type="checkbox" data-ng-model="ref.platinum[$index][0]" data-ng-change="changePlatinum(ref, $index)"> <span>{{boost}}</span></label>
-                      </div>
+                    <div class="multicolumn" data-ng-if="!isEvent()">
+                      <refresher condition="calcToggle">
+                        <div data-ng-repeat="boost in platinumboosts track by $index">
+                          <label class="strike-when-checked checkbox-inline"><input type="checkbox" data-ng-model="ref.platinum[$index][0]" data-ng-change="changePlatinum(ref, $index)"> <span>{{::boost}}</span></label>
+                        </div>
+                      </refresher>
                     </div>
                   </div>
                   <div class="col-xs-6">
                     <p><strong>Suits:</strong></p>
-                    <div class="multicolumn" data-ng-show="!isEvent()">
-                      <div data-ng-repeat="suit in ref.suits track by $index">
-                        <label class="strike-when-checked checkbox-inline"><input type="checkbox" data-ng-model="ref.suits[$index][0]" data-ng-change="changeSuits(ref, $index)"> <span>{{suitList[$index][0]}} Suit<i data-ng-show="ref.suits[$index][1]" title="{{ref.suits[$index][1] | percentage}} increase in $ / second" data-ng-class="{best_suit: $index == ref.bestSuit}" class="fa fa-plus"></i></span></label>
-                      </div>
+                    <div class="multicolumn" data-ng-if="!isEvent()">
+                      <refresher condition="calcToggle">
+                        <div data-ng-repeat="suit in ref.suits track by $index">
+                          <label class="strike-when-checked checkbox-inline"><input type="checkbox" data-ng-model="ref.suits[$index][0]" data-ng-change="changeSuits(ref, $index)"> <span>{{::suitList[$index][0]}} Suit<i data-ng-if="ref.suits[$index][1]" title="{{ref.suits[$index][1] | percentage}} increase in $ / second" data-ng-class="{best_suit: $index == ref.bestSuit}" class="fa fa-plus"></i></span></label>
+                        </div>
+                      </refresher>
                     </div>
                   </div>
                 </div>
@@ -272,12 +292,12 @@
               <uib-accordion-group is-open="accOpen[6]">
                 <uib-accordion-heading ng-click="accOpen[6] = !accOpen[6]">
                   <div class="clickable-panel">
-                    Super Badges<i data-ng-show="ref.badgeExclamation" class="fa fa-plus"></i><span class="pull-right fa" ng-class="{'fa-chevron-down': accOpen[6], 'fa-chevron-right': !accOpen[6]}"></span>
+                    Super Badges<i data-ng-if="ref.badgeExclamation" class="fa fa-plus"></i><span class="pull-right fa" ng-class="{'fa-chevron-down': accOpen[6], 'fa-chevron-right': !accOpen[6]}"></span>
                   </div>
                 </uib-accordion-heading>
                 <div class="multicolumn">
                   <div data-ng-repeat="badge in ref.badges track by $index">
-                    <label class="strike-when-checked checkbox-inline"><input type="checkbox" data-ng-model="ref.badges[$index][0]" data-ng-change="changeBadge(ref, $index)"> <span>{{superbadgeList[$index][0]}} ({{getBadgeBonusInfo(ref,superbadgeList[$index])}})<i data-ng-show="ref.badges[$index][1]" title="{{ref.badges[$index][1] | percentage}} increase in $ / second" data-ng-class="{best_badge: $index == ref.bestBadge}" class="fa fa-plus"></i></span></label>
+                    <label class="strike-when-checked checkbox-inline"><input type="checkbox" data-ng-model="ref.badges[$index][0]" data-ng-change="changeBadge(ref, $index)"> <span>{{::superbadgeList[$index][0]}} ({{::getBadgeBonusInfo(ref,superbadgeList[$index])}})<i data-ng-if="ref.badges[$index][1]" title="{{ref.badges[$index][1] | percentage}} increase in $ / second" data-ng-class="{best_badge: $index == ref.bestBadge}" class="fa fa-plus"></i></span></label>
                   </div>
                 </div>
               </uib-accordion-group>
@@ -436,51 +456,53 @@
         </div>
         <div class="row">
           <div class="col-xs-12">
-            <div class="text-center" data-ng-show="ref.recTable.length">
-              <h2>Recommendation: {{ref.recommendation}}</h2>
-              <button type="button" class="btn btn-primary btn-lg" data-ng-click="apply(ref)">Apply This Recommendation</button>
-              <hr />
-              <table class="table table-striped table-hover table-bordered space_top text-left">
-                <thead>
-                  <tr>
-                    <th>Upgrade</th>
-                    <th>To</th>
-                    <th class="clickable" data-ng-click="clickSort(ref, 2)">Upgrade Score (higher = better)*
-                      <span data-ng-if="2 == sortIndex && reverse" class="pull-right fa fa-chevron-down"></span>
-                      <span data-ng-if="2 == sortIndex && !reverse" class="pull-right fa fa-chevron-up"></span>
-                    </th>
-                    <th class="clickable" data-ng-click="clickSort(ref, 3)">Cost of Upgrade
-                      <span data-ng-if="3 == sortIndex && reverse" class="pull-right fa fa-chevron-down"></span>
-                      <span data-ng-if="3 == sortIndex && !reverse" class="pull-right fa fa-chevron-up"></span>
-                    </th>
-                    <th class="clickable" data-ng-click="clickSort(ref, 4)">Cost of Upgrade in Time
-                      <span data-ng-if="4 == sortIndex && reverse" class="pull-right fa fa-chevron-down"></span>
-                      <span data-ng-if="4 == sortIndex && !reverse" class="pull-right fa fa-chevron-up"></span>
-                    </th>
-                    <th class="clickable" data-ng-click="clickSort(ref, 5)">Increase in $ / Second
-                      <span data-ng-if="5 == sortIndex && reverse" class="pull-right fa fa-chevron-down"></span>
-                      <span data-ng-if="5 == sortIndex && !reverse" class="pull-right fa fa-chevron-up"></span>
-                    </th>
-                    <th class="clickable" data-ng-click="clickSort(ref, 6)">% Increase in $ / Second
-                      <span data-ng-if="6 == sortIndex && reverse" class="pull-right fa fa-chevron-down"></span>
-                      <span data-ng-if="6 == sortIndex && !reverse" class="pull-right fa fa-chevron-up"></span>
-                    </th>
-                    <th>Apply</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  <tr data-ng-repeat="rec in ref.recTable track by $index">
-                    <td>{{rec[0] | rec:ref}}</td>
-                    <td>{{rec[1] | num:raw}}</td>
-                    <td>{{rec[2] | num:raw}}</td>
-                    <td>${{rec[3] | num:raw}}</td>
-                    <td>{{rec[4] | time:raw}}</td>
-                    <td>${{rec[5] | num:raw}}</td>
-                    <td>{{rec[6] | num:raw}}%</td>
-                    <td><button type="button" class="btn btn-primary center-block" data-ng-click="applyRow(ref, rec)">Apply This Row</button></td>
-                  </tr>
-                </tbody>
-              </table>
+            <div class="text-center" data-ng-if="ref.recTable.length">
+              <refresher condition="calcToggle">
+                <h2>Recommendation: {{::ref.recommendation}}</h2>
+                <button type="button" class="btn btn-primary btn-lg" data-ng-click="apply(ref)">Apply This Recommendation</button>
+                <hr />
+                <table class="table table-striped table-hover table-bordered space_top text-left">
+                  <thead>
+                    <tr>
+                      <th>Upgrade</th>
+                      <th>To</th>
+                      <th class="clickable" data-ng-click="clickSort(ref, 2)">Upgrade Score (higher = better)*
+                        <span data-ng-if="2 == sortIndex && reverse" class="pull-right fa fa-chevron-down"></span>
+                        <span data-ng-if="2 == sortIndex && !reverse" class="pull-right fa fa-chevron-up"></span>
+                      </th>
+                      <th class="clickable" data-ng-click="clickSort(ref, 3)">Cost of Upgrade
+                        <span data-ng-if="3 == sortIndex && reverse" class="pull-right fa fa-chevron-down"></span>
+                        <span data-ng-if="3 == sortIndex && !reverse" class="pull-right fa fa-chevron-up"></span>
+                      </th>
+                      <th class="clickable" data-ng-click="clickSort(ref, 4)">Cost of Upgrade in Time
+                        <span data-ng-if="4 == sortIndex && reverse" class="pull-right fa fa-chevron-down"></span>
+                        <span data-ng-if="4 == sortIndex && !reverse" class="pull-right fa fa-chevron-up"></span>
+                      </th>
+                      <th class="clickable" data-ng-click="clickSort(ref, 5)">Increase in $ / Second
+                        <span data-ng-if="5 == sortIndex && reverse" class="pull-right fa fa-chevron-down"></span>
+                        <span data-ng-if="5 == sortIndex && !reverse" class="pull-right fa fa-chevron-up"></span>
+                      </th>
+                      <th class="clickable" data-ng-click="clickSort(ref, 6)">% Increase in $ / Second
+                        <span data-ng-if="6 == sortIndex && reverse" class="pull-right fa fa-chevron-down"></span>
+                        <span data-ng-if="6 == sortIndex && !reverse" class="pull-right fa fa-chevron-up"></span>
+                      </th>
+                      <th>Apply</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr data-ng-repeat="rec in ref.recTable track by $index">
+                      <td>{{::rec[0] | rec:ref}}</td>
+                      <td>{{::rec[1] | num:raw}}</td>
+                      <td>{{::rec[2] | num:raw}}</td>
+                      <td>${{::rec[3] | num:raw}}</td>
+                      <td>{{::rec[4] | time:raw}}</td>
+                      <td>${{::rec[5] | num:raw}}</td>
+                      <td>{{::rec[6] | num:raw}}%</td>
+                      <td><button type="button" class="btn btn-primary center-block" data-ng-click="applyRow(ref, rec)">Apply This Row</button></td>
+                    </tr>
+                  </tbody>
+                </table>
+              </refresher>
             </div>
           </div>
         </div>

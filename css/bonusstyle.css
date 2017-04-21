@@ -2,7 +2,7 @@ h1 {
   display:inline;
 }
 
-.nav-tabs > li > a {
+.nav > li > a {
   cursor: pointer;
 }
 
