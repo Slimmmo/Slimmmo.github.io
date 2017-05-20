@@ -298,7 +298,9 @@ advApp.controller('advController', ['$document', '$filter', '$scope', function($
   }
 
   $scope.apply = function(loc) {
-    $scope.applyRow(loc, loc.recTable[0]);
+    if (loc.rectable.length > 0) {
+      $scope.applyRow(loc, loc.recTable[0]);
+    }
   };
 
   $scope.applyRow = function(loc, row) {
@@ -1412,7 +1414,9 @@ advApp.controller('advController', ['$document', '$filter', '$scope', function($
   };
 
   function updateRecString(loc) {
-    if (loc.rec[0] === 'all') {
+    if (loc.rec.length == 0) {
+      loc.recommendation = 'No recommendation.'
+    } else if (loc.rec[0] === 'all') {
       loc.recommendation = 'Buy all to level ' + loc.rec[1];
     } else if (loc.rec[0] === 'level') {
       loc.recommendation = 'Buy ' + loc.investments[loc.rec[1]][0] + ' to level ' + loc.rec[2] + '.';
