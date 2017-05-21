@@ -298,7 +298,7 @@ advApp.controller('advController', ['$document', '$filter', '$scope', function($
   }
 
   $scope.apply = function(loc) {
-    if (loc.rectable.length > 0) {
+    if (loc.recTable.length > 0) {
       $scope.applyRow(loc, loc.recTable[0]);
     }
   };
