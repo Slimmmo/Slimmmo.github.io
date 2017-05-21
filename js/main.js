@@ -510,7 +510,7 @@ advApp.controller('advController', ['$document', '$filter', '$scope', function($
     inc = [],
     tempPlanet = JSON.parse(JSON.stringify(loc)),
     max = 0,
-    maxObj = [0, 0],
+    maxObj = null,
     tempUnlock = null, tempUnlockTime = null, tempPercentageIncrease = null,
     upgradeScore = 0;
     loc.recTable = [];
@@ -1414,7 +1414,7 @@ advApp.controller('advController', ['$document', '$filter', '$scope', function($
   };
 
   function updateRecString(loc) {
-    if (loc.rec.length == 0) {
+    if (loc.rec == null) {
       loc.recommendation = 'No recommendation.'
     } else if (loc.rec[0] === 'all') {
       loc.recommendation = 'Buy all to level ' + loc.rec[1];
