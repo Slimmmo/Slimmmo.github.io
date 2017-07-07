@@ -1551,7 +1551,7 @@ advApp.controller('advController', ['$document', '$filter', '$scope', function($
       ['Pirate Ship Outboard', 1, false, 0, 0, 0, 0]
     ];
     $scope.friday.angelScale = 150; // idk if this is right
-    $scope.friday.baseCost = [17.5, 40, 67.5, 100, 137.5, 360, 700, 1120, 2250];
+    $scope.friday.baseCost = [10, 20, 30, 40, 50, 120, 200, 280, 500];
     $scope.friday.basePower = [1.75, 2, 2.25, 2.5, 2.75, 3, 3.5, 4, 4.5];
     $scope.friday.baseProfit = [1, 3, 5, 7, 21, 60, 145, 270, 525];
     $scope.friday.baseSpeed = [5, 8, 11, 14, 17, 20, 35, 45, 60];
