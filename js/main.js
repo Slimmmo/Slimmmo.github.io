@@ -193,7 +193,8 @@ advApp.controller('advController', ['$document', '$filter', '$scope', function($
     ['Bunny Ears', 1, [2, 30]],
     ['Hero Mask', 1, [4, 25]],
     ['XO Skeleton', 1, [10, 20]],
-    ['Drums', 1, [18, 20]]
+    ['Drums', 1, [18, 20]],
+    ['MXC', 2, [2, 25]]
   ];
   var planets = ['earth', 'moon', 'mars'];
 
