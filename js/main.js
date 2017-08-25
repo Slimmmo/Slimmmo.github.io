@@ -135,6 +135,7 @@ advApp.controller('advController', ['$document', '$filter', '$scope', function($
     ['managermaniaI', 'Manager Mania I'],
     ['newyou', 'New You Resolutions'],
     ['evil', 'Root of All Evil'],
+    ['saturday', 'Saturday Morning Fever'],
     ['excellent', 'The Excellent AdVenture']
   ];
   $scope.evil = {};
@@ -1703,7 +1704,7 @@ advApp.controller('advController', ['$document', '$filter', '$scope', function($
     $scope.rain.baseProfit = [0.5, 10, 90, 720, 8640, 1244150, 14929000, 179159000, 7979500000];
     $scope.rain.baseSpeed = [2, 6, 10, 21, 30, 126, 216, 375, 696];
     $scope.rain.hasMegaTickets = false;
-    $scope.rain.investments =[
+    $scope.rain.investments = [
       ['Micro-Eggs', 1, false, 0, 0, 0, 0],
       ['Sham-Rocks', 0, false, 0, 0, 0, 0],
       ['Clover Fields', 0, false, 0, 0, 0, 0],
@@ -1713,6 +1714,23 @@ advApp.controller('advController', ['$document', '$filter', '$scope', function($
       ['Rainbow Makers', 0, false, 0, 0, 0, 0],
       ['Cruelty-Free Feet', 0, false, 0, 0, 0, 0],
       ['Yucky Charms', 0, false, 0, 0, 0, 0],
+    ];
+    $scope.saturday.angelScale = 45;
+    $scope.saturday.baseCost = [2, 5, 10, 24, 50, 84, 126, 198, 272];
+    $scope.saturday.basePower = [1.03, 1.07, 1.15, 1.35, 1.75, 2.2, 2.7, 3.2, 4];
+    $scope.saturday.baseProfit = [1, 3, 6, 10, 15, 21, 28, 36, 45];
+    $scope.saturday.baseSpeed = [2, 4, 6, 8, 10, 12, 14, 16, 18];
+    $scope.saturday.hasMegaTickets = false;
+    $scope.saturday.investments = [
+      ['Ankle Biters', 1, false, 0, 0, 0, 0],
+      ['Babargoyles', 0, false, 0, 0, 0, 0],
+      ['Rocky and Stimpson', 0, false, 0, 0, 0, 0],
+      ['My Lil Beast Machine', 0, false, 0, 0, 0, 0],
+      ['School Bikes from Mars', 0, false, 0, 0, 0, 0],
+      ['Captain Plan It', 0, false, 0, 0, 0, 0],
+      ['Tick Juice', 0, false, 0, 0, 0, 0],
+      ['Teddy Duxpin', 0, false, 0, 0, 0, 0],
+      ['Power Rescue Rangers', 0, false, 0, 0, 0, 0],
     ];
 
     for (var p in planets) {
@@ -2010,5 +2028,18 @@ advApp.controller('advController', ['$document', '$filter', '$scope', function($
     $scope.rain.cashUpgrades = [[3.5e+5, [0, 5], false],[1e+6, [2, 5], false],[2.5e+6, [4, 5], false],[1e+7, [6, 5], false],[2.5e+7, [8, 5], false],[2.5e+9, [10, 5], false],[1e+11, [12, 5], false],[5e+12, [14, 5], false],[1e+13, [16, 5], false],[5e+13, [18, 7], false],[2.5e+14, [0, 5], false],[1e+15, [2, 5], false],[2.5e+15, [4, 5], false],[5e+15, [6, 5], false],[1e+16, [8, 5], false],[5e+16, [10, 5], false],[7.5e+16, [12, 5],false],[5e+17, [14, 5], false],[2.5e+18, [16, 5], false],[1e+19, [18, 9], false],[5e+19, [20, 1], false],[5e+22, [0, 7], false],[1e+23, [2, 7], false],[2e+23, [4, 7], false],[8e+23, [6, 7], false],[3.2e+24, [8, 7], false],[15.1e+24, [10, 7], false],[32.5e+24, [12, 7], false],[56.7e+24, [14, 7], false],[75e+24, [16, 7], false],[100e+24, [18, 8], false], [400e+27, [0, 9], false],[1.6e+30, [2, 9], false],[6.4e+30, [4, 9], false],[12.8e+30, [6, 9], false],[25e+30, [8, 9], false],[88.8e+30, [10, 9], false],[300e+30, [12, 9], false],[2e+33, [14, 9], false],[10e+33, [16, 9], false],[50e+33, [18, 10], false],[1e+36, [0, 11], false],[2e+36, [2, 11], false],[3e+36, [4, 11], false],[4e+36, [6, 11], false],[5e+36, [8, 11], false],[7e+36, [10, 11], false],[8e+36, [12, 11], false],[9e+36, [14, 11], false],[10e+36, [16, 11], false],[100e+36, [18, 12], false],[3.33e+39, [0, 13], false],[6.66e+39, [2, 13], false],[9.99e+39, [4, 13], false],[24e+39, [6, 13], false],[48e+39, [8, 13], false],[128e+39, [10, 13], false],[200e+39, [12, 13], false],[355e+39, [14, 13], false],[500e+39, [16, 13], false],[1e+42, [18, 14], false],[5.555e+45, [0, 15], false],[55.555e+45, [2, 15], false],[555.555e+45, [4, 15], false],[5.555e+48, [6, 15], false],[55.555e+48, [8, 15], false],[5.555e+51, [10, 15], false],[55.555e+51, [12, 15], false],[555.555e+51, [14, 15], false],[5.555e+54, [16, 15], false],[55.555e+54, [18, 16], false]];
     $scope.rain.angelUpgrades = [[654321, [0, 9], false, false],[7e+6, [2, 9], false, false],[8.7e+7, [4, 9], false, false],[9.87e+8, [6, 9], false, false],[1e+9, [8, 9], false, false],[1.21e+11, [10, 9], false, false],[1e+12, [12, 9], false, false],[1.4e+13, [14, 9], false, false],[1.51e+14, [16, 9], false, false],[5.5e+16, [18, 9], false, false],[5.5e+16, [30, 111], false, false],[5.5e+16, [31, 100], false, false],[5.5e+16, [32, 75], false, false],[5.5e+16, [33, 50], false, false],[5.5e+16, [34, 40], false, false],[5.5e+16, [35, 20], false, false],[5.5e+16, [36, 15], false, false],[5.5e+16, [37, 10], false, false],[5.5e+16, [38, 5], false, false],[5.5e+16, [0, 9], false, false],[100e+15, [2, 9], false, false],[1e+18, [4, 9], false, false],[10e+18, [6, 9], false, false],[100e+18, [8, 9], false, false],[10e+21, [10, 9], false, false],[100e+21, [12, 9], false, false],[1e+24, [14, 9], false, false],[10e+24, [16, 9], false, false],[1e+27, [18, 9], false, false]];
     $scope.rain.managerUpgrades = [];
+    $scope.saturday.unlocks[0] = [[250, [18, 3.33]],[1111, [18, 5.55]],[2222, [18, 7.77]]];
+    $scope.saturday.unlocks[1] = [[200, [18, 3.33]],[600, [18, 5.55]],[1200, [18, 7.77]]];
+    $scope.saturday.unlocks[2] = [[200, [18, 3.33]],[400, [18, 5.55]],[650, [18, 7.77]]];
+    $scope.saturday.unlocks[3] = [[25, [18, 3.33]],[100, [18, 5.55]],[200, [18, 7.77]]];
+    $scope.saturday.unlocks[4] = [[22, [18, 3.33]],[77, [18, 5.55]],[135, [18, 7.77]]];
+    $scope.saturday.unlocks[5] = [[22, [18, 3.33]],[77, [18, 5.55]],[111, [18, 7.77]]];
+    $scope.saturday.unlocks[6] = [[10, [18, 3.33]],[30, [18, 5.55]],[65, [18, 7.77]]];
+    $scope.saturday.unlocks[7] = [[10, [18, 3.33]],[30, [18, 5.55]],[70, [18, 7.77]]];
+    $scope.saturday.unlocks[8] = [[15, [18, 3.33]],[40, [18, 5.55]],[65, [18, 7.77]]];
+    $scope.saturday.unlocks[9] = [[5, [1, 5]],[10, [3, 5]],[14, [18, 2]],[15, [5, 5]],[20, [7, 5]],[25, [9, 5]],[30, [11, 5]],[35, [13, 5]],[40, [15, 5]],[45, [17, 5]],[50, [1, 5]],[55, [3, 5]],[60, [5, 5]],[65, [7, 5]],[70, [9, 5]],[75, [11, 5]],[80, [13, 5]],[85, [15, 5]],[90, [17, 5]]];
+    $scope.saturday.cashUpgrades = [[12345, [0, 2]],[67890, [2, 2]],[123456, [4, 2]],[789012, [6, 2]],[1234567, [8, 2]],[8901234, [10, 2]],[12345678, [12, 2]],[90123456, [14, 2]],[123456789, [16, 2]],[1.234e+9, [18, 3]],[24.681e+9, [0, 5]]];
+    $scope.saturday.angelUpgrades = [[1111, [18, 3], false, false],[222222, [18, 4], false, false],[33e+6, [18, 4], false, false],[22e+9, [18, 4], false, false],[55e+12, [18, 4], false, false],[77e+15, [18, 4], false, false]];
+    $scope.saturday.managerUpgrades = [];
   };
 }]);
