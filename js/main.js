@@ -158,6 +158,7 @@ advApp.controller('advController', ['$document', '$filter', '$scope', function($
   $scope.raw = false;
   $scope.ref = $scope.earth;
   $scope.reverse = true;
+  $scope.saturday = {};
   $scope.selectAll = [false, false, false, false];
   $scope.showEvents = false;
   $scope.showUpdate = false;
