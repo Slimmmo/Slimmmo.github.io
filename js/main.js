@@ -136,7 +136,8 @@ advApp.controller('advController', ['$document', '$filter', '$scope', function($
     ['newyou', 'New You Resolutions'],
     ['evil', 'Root of All Evil'],
     ['saturday', 'Saturday Morning Fever'],
-    ['excellent', 'The Excellent AdVenture']
+    ['excellent', 'The Excellent AdVenture'],
+    ['onepercent', "1% Land"]
   ];
   $scope.evil = {};
   $scope.excellent = {};
@@ -153,6 +154,7 @@ advApp.controller('advController', ['$document', '$filter', '$scope', function($
   $scope.mars = {};
   $scope.moon = {};
   $scope.newyou = {};
+  $scope.onepercent = {};
   $scope.platinumboosts = [17.77, 77.77, 777.77, 7777.77];
   $scope.rain = {};
   $scope.raw = false;
@@ -1700,6 +1702,22 @@ advApp.controller('advController', ['$document', '$filter', '$scope', function($
       ['Macro Chips', 0, false, 0, 0, 0, 0],
       ['Mystery Meat', 0, false, 0, 0, 0, 0]
     ];
+    $scope.onepercent.angelScale = 45; // Currently Unknown
+    $scope.onepercent.baseCost = [1, 20, 30, 50, 100, 200, 400, 1000, 19550717100000];
+    $scope.onepercent.basePower = [1.05, 1.05, 1.05, 1.05, 1.05, 1.05, 1.05, 1.05, 1.05];
+    $scope.onepercent.baseProfit = [4, 17, 25, 33, 2500, 5000, 8000, 10000, 1]; // 9
+    $scope.onepercent.baseSpeed = [4, 420, 540, 840, 1200, 2400, 3600, 4500, 1]; // 9
+    $scope.onepercent.investments = [
+      ['Lemon Lane', 1, false, 0, 0, 0, 0],
+      ['Caviar Dots', 0, false, 0, 0, 0, 0],
+      ['Champagne Falls', 0, false, 0, 0, 0, 0],
+      ['Dodo Legs', 0, false, 0, 0, 0, 0],
+      ['Endangered Animal Petting Zoo', 0, false, 0, 0, 0, 0],
+      ['Grey Poupon A Stick', 0, false, 0, 0, 0, 0],
+      ['Ivory Tower of Terror', 0, false, 0, 0, 0, 0],
+      ['Stock Market Crash Coaster', 0, false, 0, 0, 0, 0],
+      ['Capitalism Hill', 0, false, 0, 0, 0, 0]
+    ];
     $scope.rain.angelScale = 45;
     $scope.rain.baseCost = [7, 83, 749, 24195, 402667, 98285656, 174429216, 5758901760, 33333333333];
     $scope.rain.basePower = [1.025, 1.045, 1.085, 1.165, 1.325, 2.285, 3.565, 6.125, 12.25];
@@ -2017,6 +2035,30 @@ advApp.controller('advController', ['$document', '$filter', '$scope', function($
     $scope.newyou.cashUpgrades = [[3e+6, [0, 7], false],[24e+6, [2, 7], false],[192e+6, [4, 7], false],[1.536e+9, [6, 7], false],[12.288e+9, [8, 7], false],[100e+9, [20, 15], false],[447.456e+9, [0, 7], false],[1.769e+12, [2, 7], false],[21.233e+12, [4, 7], false],[254.803e+12, [6, 7], false],[4.076e+15, [8, 7], false],[10e+15, [20, 15], false],[65.2e+15, [0, 7], false],[104e+15, [2, 7], false],[4.32e+18, [4, 7], false],[96.3e+18, [6, 7], false],[321e+18, [8, 7], false],[1e+21, [20, 10], false],[2.23e+21, [0, 7], false],[45.3e+21, [2, 7], false],[721e+21, [4, 7], false],[8.22e+24, [6, 7], false],[15.5e+24, [8, 7], false],[100e+24, [20, 10], false],[222e+24, [0, 7], false],[7.61e+27, [2, 7], false],[41.1e+27, [4, 7], false],[735e+27, [6, 7], false],[4.45e+30, [8, 7], false],[10e+30, [20, 10], false],[89.6e+30, [0, 7], false],[777e+30, [2, 7], false],[9.11e+33, [4, 7], false],[16.6e+33, [6, 7], false],[741e+33, [8, 7], false],[1e+36, [20, 10], false],[8.52e+36, [0, 7], false],[61.4e+36, [2, 7], false],[519e+36, [4, 7], false],[3.51e+39, [6, 7], false],[33.3e+39, [8, 7], false],[100e+39, [20, 10], false],[723e+39, [0, 7], false],[4.53e+42, [2, 7], false],[72.1e+42, [4, 7], false],[822e+42, [6, 7], false],[1.55e+45, [8, 7], false],[10e+45, [20, 10], false],[22.2e+45, [0, 7], false],[761e+45, [2, 7], false],[4.11e+48, [4, 7], false],[73.5e+48, [6, 7], false],[455e+48, [8, 7], false],[1e+51, [20, 10], false],[8.96e+51, [0, 7], false],[77.7e+51, [2, 7], false],[911e+51, [4, 7], false],[1.66e+54, [6, 7], false],[74.1e+54, [8, 7], false],[100e+54, [20, 10], false],[852e+54, [0, 7], false],[6.14e+57, [2, 7], false],[51.9e+57, [4, 7], false],[351e+57, [6, 7], false],[3.33e+60, [8, 7], false],[10e+60, [20, 10], false]];
     $scope.newyou.angelUpgrades = [[1e+6, [30, 25], false, false],[2e+6, [31, 20], false, false],[3e+6, [32, 15], false, false],[4e+6, [33, 10], false, false],[5e+6, [34, 5], false, false],[6e+12, [30, 25], false, false],[7e+12, [31, 20], false, false],[8e+12, [32, 15], false, false],[9e+12, [33, 10], false, false],[10e+12, [34, 5], false, false],[11e+18, [30, 25], false, false],[12e+18, [31, 20], false, false],[13e+18, [32, 15], false, false],[140e+18, [33, 10], false, false],[150e+18, [34, 5], false, false],[77e+21, [20, 15], false, false]];
     $scope.newyou.managerUpgrades = [];
+    // [#, [Investing ID, Multiplier]]
+    // 0 = Lemon Lane Profit
+    // 2 = Caviar Dots Profit
+    // 4 = Champagne Falls Profit
+    // 6 = Dodo Legs Profit
+    // 8 = Endangered Animal Petting Zoo Profit
+    // 10 = Grey Poupon A Stick Profit
+    // 12 = Ivory Tower of Terror Profit
+    // 14 = Stock Market Crash Coaster Profit
+    // 16 = Capitalism Hill Profit
+    // 20 = All Profit
+    $scope.onepercent.unlocks[0] = [[25, [9, 50]],[50, [11, 40]],[75, [13, 40]],[100, [15, 25]],[150, [21, 1.4]],[225, [21, 1.4]],[250, [18, 8]],[600, [20, 2]],[625, [20, 7]],[700, [20, 7]],[830, [20, 7]],[911, [0, 999]],[1000, [20, 2]],[1300, [0, 4]]];
+    $scope.onepercent.unlocks[1] = [[24, [3, 2]],[36, [20, 2]],[87, [2, 5]],[115, [3, 5]]];
+    $scope.onepercent.unlocks[2] = [[36, [5, 2]],[70, [20, 2]],[125, [4, 2]],[180, [5, 5]]];
+    $scope.onepercent.unlocks[3] = [[60, [7, 2]],[100, [20, 2]],[220, [7, 2]],[310, [7, 4]]];
+    $scope.onepercent.unlocks[4] = [[260, [8, 5]],[700, [20, 2]],[2550, [20, 3]]];
+    $scope.onepercent.unlocks[5] = [[300, [10, 7]],[940, [20, 2]],[2575, [20, 3]]];
+    $scope.onepercent.unlocks[6] = [[10, [20, 2]],[300, [12, 10]],[640, [20, 2]],[2585, [20, 3]]];
+    $scope.onepercent.unlocks[7] = [[325, [14, 15]],[2600, [20, 3]]];
+    $scope.onepercent.unlocks[8] = [[5, [20, 7]],[15, [16, 999]],[40, [16, 7]],[48, [17, 5]],[65, [16, 33]]];
+    $scope.onepercent.unlocks[9] = [[1, [21, 4]],[16, [21, 3.5]],[20, [20, 7]],[25, [20, 7]],[32, [20, 7]],[44, [20, 2]],[53, [20, 7]],[62, [20, 9]],[67, [20, 9]],[72, [20, 9]],[77, [20, 9]]];
+    $scope.onepercent.cashUpgrades = [[399.99, [18, 2], false],[799.99, [8, 4], false],[499999.99, [18, 2], false],[999999.99, [10, 8], false],[9999999.99, [18, 2], false],[29999999.99, [12, 16], false],[99999999.99, [18, 2], false],[239999999.99, [14, 32], false],[3999999999.99, [18, 3], false],[29999999999.99, [2, 150], false],[29999999999.99, [4, 100], false]];
+    $scope.onepercent.angelUpgrades = [[25000, [18, 5], false, false]];
+    $scope.onepercent.managerUpgrades = [];
     $scope.rain.unlocks[0] = [[100, [0, 25]],[1000, [0, 50]],[2000, [0, 75]],[3000, [0, 100]],[4000, [0, 125]],[5000, [0, 150]],[6000, [0, 175]]];
     $scope.rain.unlocks[1] = [[100, [2, 200]],[600, [2, 225]],[1500, [2, 250]],[3000, [2, 275]]];
     $scope.rain.unlocks[2] = [[60, [4, 25]],[400, [4, 250]],[1200, [4, 2500]],[1800, [4, 25000]]];
