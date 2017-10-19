@@ -146,7 +146,7 @@ advApp.controller('advController', ['$document', '$filter', '$scope', function($
   $scope.friday = {};
   $scope.halloween = {};
   $scope.illionsArray = illionsArr.slice(1);
-  $scope.lastEvent = 'coins';
+  $scope.lastEvent = 'onepercent';
   $scope.liverich = {};
   $scope.love = {};
   $scope.lyp = {};
@@ -1704,9 +1704,9 @@ advApp.controller('advController', ['$document', '$filter', '$scope', function($
     ];
     $scope.onepercent.angelScale = 45; // Currently Unknown
     $scope.onepercent.baseCost = [1, 20, 30, 50, 100, 200, 400, 1000, 19550717100000];
-    $scope.onepercent.basePower = [1.1, 3, 2, 1.5, 1.05, 1.05, 1.05, 1.05, 1.05]; // 9
-    $scope.onepercent.baseProfit = [4, 17, 25, 33, 2500, 5000, 8000, 10000, 1]; // 9
-    $scope.onepercent.baseSpeed = [4, 420, 540, 840, 1200, 2400, 3600, 4500, 1]; // 9
+    $scope.onepercent.basePower = [1.1, 3, 2, 1.5, 1.05, 1.05, 1.05, 1.05, 6]; // 9
+    $scope.onepercent.baseProfit = [4, 17, 25, 33, 2500, 5000, 8000, 10000, 1000000];
+    $scope.onepercent.baseSpeed = [4, 420, 540, 840, 1200, 2400, 3600, 4500, 25200];
     $scope.onepercent.investments = [
       ['Lemon Lane', 1, false, 0, 0, 0, 0],
       ['Caviar Dots', 0, false, 0, 0, 0, 0],
@@ -2046,7 +2046,7 @@ advApp.controller('advController', ['$document', '$filter', '$scope', function($
     // 14 = Stock Market Crash Coaster Profit
     // 16 = Capitalism Hill Profit
     // 20 = All Profit
-    $scope.onepercent.unlocks[0] = [[25, [9, 50]],[50, [11, 40]],[75, [13, 40]],[100, [15, 25]],[150, [21, 1.4]],[225, [21, 1.4]],[250, [18, 8]],[600, [18, 2]],[625, [18, 7]],[700, [18, 7]],[830, [18, 7]],[911, [0, 999]],[1000, [18, 2]],[1300, [0, 4]]];
+    $scope.onepercent.unlocks[0] = [[25, [9, 50]],[50, [11, 40]],[75, [13, 40]],[100, [15, 25]],[150, [19, 1.4]],[225, [19, 1.4]],[250, [18, 8]],[600, [18, 2]],[625, [18, 7]],[700, [18, 7]],[830, [18, 7]],[911, [0, 999]],[1000, [18, 2]],[1300, [0, 4]]];
     $scope.onepercent.unlocks[1] = [[24, [3, 2]],[36, [18, 2]],[87, [2, 5]],[115, [3, 5]]];
     $scope.onepercent.unlocks[2] = [[36, [5, 2]],[70, [18, 2]],[125, [4, 2]],[180, [5, 5]]];
     $scope.onepercent.unlocks[3] = [[60, [7, 2]],[100, [18, 2]],[218, [7, 2]],[310, [7, 4]]];
@@ -2055,7 +2055,7 @@ advApp.controller('advController', ['$document', '$filter', '$scope', function($
     $scope.onepercent.unlocks[6] = [[10, [18, 2]],[300, [12, 10]],[640, [18, 2]],[2585, [18, 3]]];
     $scope.onepercent.unlocks[7] = [[325, [14, 15]],[2600, [18, 3]]];
     $scope.onepercent.unlocks[8] = [[5, [18, 7]],[15, [16, 999]],[40, [16, 7]],[48, [17, 5]],[65, [16, 33]]];
-    $scope.onepercent.unlocks[9] = [[1, [21, 4]],[16, [21, 3.5]],[18, [18, 7]],[25, [18, 7]],[32, [18, 7]],[44, [18, 2]],[53, [18, 7]],[62, [18, 9]],[67, [18, 9]],[72, [18, 9]],[77, [18, 9]]];
+    $scope.onepercent.unlocks[9] = [[1, [19, 4]],[16, [19, 3.5]],[18, [18, 7]],[25, [18, 7]],[32, [18, 7]],[44, [18, 2]],[53, [18, 7]],[62, [18, 9]],[67, [18, 9]],[72, [18, 9]],[77, [18, 9]]];
     $scope.onepercent.cashUpgrades = [[399.99, [18, 2], false],[799.99, [8, 4], false],[499999.99, [18, 2], false],[999999.99, [10, 8], false],[9999999.99, [18, 2], false],[29999999.99, [12, 16], false],[99999999.99, [18, 2], false],[239999999.99, [14, 32], false],[3999999999.99, [18, 3], false],[29999e+6, [2, 150], false],[29999e+6, [4, 100], false],[29999e+6, [6, 100], false],[139999e+6, [2, 200], false],[139999e+6, [4, 200], false],[139999e+6, [6, 150], false],[499999e+6, [2, 200], false],[499999e+6, [4, 200], false],[499999e+6, [6, 200], false],[99999e+9, [8, 8], false],[599999e+9, [10, 4], false],[1199e+12, [12, 2.5], false],[3499e+12, [10, 3], false],[12499e+12, [12, 1.5], false],[19999e+12, [14, 2], false],[99999e+12, [12, 1.5], false],[299999e+12, [14, 2], false]];
     $scope.onepercent.angelUpgrades = [[25000, [18, 5], false, false],[4e+6, [18, 3], false, false],[28e+9, [18, 3], false, false],[3e+14, [18, 3], false, false],[1e+17, [18, 3], false, false],[2e+18, [18, 5], false, false],[2e+21, [18, 5], false, false],[1e+23, [18, 5], false, false],[3e+24, [18, 5], false, false],[4e+27, [18, 9], false, false]];
     $scope.onepercent.managerUpgrades = [];
