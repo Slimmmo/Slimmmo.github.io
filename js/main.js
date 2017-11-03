@@ -331,7 +331,7 @@ advApp.controller('advController', ['$document', '$filter', '$scope', function($
   };
 
   function applySuperBadge(loc) {
-    var i;
+    var i, j;
     for (i = 0; i < loc.badges.length; i++) {
       if (loc.badges[i][0] === true) {
         if (loc.name === $scope[planets[$scope.superbadgeList[i][1]]].name) {
@@ -404,7 +404,7 @@ advApp.controller('advController', ['$document', '$filter', '$scope', function($
     managerDiscount = 1;
     for (; i < numLevels; i++) {
       retVal += Math.pow(loc.basePower[index], i);
-    };
+    }
     if (index === 0 && $scope.isWorld('earth')) {
       fromLevel -= 1;
     }
@@ -1525,7 +1525,7 @@ advApp.controller('advController', ['$document', '$filter', '$scope', function($
       ['Bank', 0, false, 0, 0, 0, 0],
       ['Oil', 0, false, 0, 0, 0, 0]
     ];
-    $scope.easystreet.angelScale = 150;
+    $scope.easystreet.angelScale = 45;
     $scope.easystreet.baseCost = [12.72, 333, 33333, 1962000, 75000000, 1200000000, 23232323232, 159159159159, 1964091800000];
     $scope.easystreet.basePower = [1.10, 1.10, 1.10, 1.10, 1.10, 1.10, 1.10, 1.10, 1.10];
     $scope.easystreet.baseProfit = [1.15, 56, 1500, 32370, 756000, 4.2e6, 85e6, 2.5e9, 130e9];
@@ -1925,20 +1925,27 @@ advApp.controller('advController', ['$document', '$filter', '$scope', function($
     $scope.easystreet.unlocks[8] = [[5, [16, 18]], [425, [18, 2]], [666, [17, 42]], [950, [16, 7]]];
     $scope.easystreet.unlocks[9] = [[300, [1, 2]], [350, [3, 10]], [375, [5, 14]], [450, [15, 36]], [475, [13, 30]], [575, [7, 18]], [750, [9, 22]], [800, [11, 26]], [900, [19, 2]], [925, [19, 2]], [975, [18, 3]], [1000, [18, 3]]];
     $scope.easystreet.cashUpgrades = [[5e6, [0, 111], false], [170e6, [2, 111], false], [2e9, [4, 111], false], [40e9, [6, 111], false], [300e9, [8, 111], false], [2.2e12, [10, 111], false], [120e12, [12, 111], false], [4e15, [14, 111], false], [500e15, [16, 111], false], [250e21, [4, 111], false], [470e21, [6, 111], false], [1.5e24, [8, 111], false], [2.5e24, [10, 111], false], [12.5e24, [12, 111], false], [60e24, [14, 28], false], [100e24, [16, 2], false], [2e27, [2, 111], false], [5e27, [0, 3], false], [6e30, [16, 13], false],
+        [60e30, [14, 3], false],
+        [4e33, [6, 7], false],
+        [8e36, [0, 20], false],
+        [700e36, [6, 2], false],
+        [2e39, [8, 77], false],
+        [35e39, [2, 999], false],
         /*
         [5e6, [0, 111], false],
         [5e6, [0, 111], false],
         [5e6, [0, 111], false],
          */
     ];
-    $scope.easystreet.angelUpgrades = [[100000, [18, 3], false], [200000, [0, 999], false], [50e6, [2, 999], false], [2e9, [18, 6], false], [6e9, [4, 7], false], [2e12, [18, 6], false], [6e12, [6, 666], false], [5e15, [18, 6], false], [15e15, [8, 99], false], [5e18, [18, 6], false], [10e18, [16, 999], false], [8e21, [18, 6], false],
+    $scope.easystreet.angelUpgrades = [[100000, [18, 3], false, false], [200000, [0, 999], false, false], [50e6, [2, 999], false, false], [2e9, [18, 6], false, false], [6e9, [4, 7], false, false], [2e12, [18, 6], false, false], [6e12, [6, 666], false, false], [5e15, [18, 6], false, false], [15e15, [8, 99], false, false], [5e18, [18, 6], false, false], [10e18, [16, 999], false, false], [8e21, [18, 6], false, false],
+
         /*
-        [100000, [14, 3], false],
-        [100000, [18, 6], false],
-        [100000, [12, 3], false],
-        [100000, [18, 6], false],
-        [100000, [10, 3], false],
-        [100000, [18, 6], false]*/
+        [100000, [14, 3], false, false],
+        [100000, [18, 6], false, false],
+        [100000, [12, 3], false, false],
+        [100000, [18, 6], false, false],
+        [100000, [10, 3], false, false],
+        [100000, [18, 6], false, false]*/
     ];
     $scope.easystreet.managerUpgrades = [];
     $scope.evil.unlocks[0] = [[50, [0, 2]], [100, [10, 0.5]], [150, [0, 3]], [150, [10, 0.5]], [200, [0, 4]], [300, [10, 0.5]], [400, [0, 5]], [500, [10, 0.5]], [600, [0, 6]], [700, [10, 0.5]], [800, [0, 7]], [900, [10, 0.5]], [1000, [0, 8]], [1100, [10, 0.5]], [1200, [0, 9]], [1300, [10, 0.5]], [1500, [0, 10]]];
