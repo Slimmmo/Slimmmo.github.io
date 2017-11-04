@@ -202,7 +202,8 @@ advApp.controller('advController', ['$document', '$filter', '$scope', function($
     ['Drums', 1, [18, 20]],
     ['MXC', 2, [2, 25]],
     ['Cereal', 1, [14, 20]],
-    ['Capitalism Hill', 2, [6, 15]]
+    ['Capitalism Hill', 2, [6, 15]],
+    ['Haunted Mansion', 2, [4, 20]]
   ];
   var planets = ['earth', 'moon', 'mars'];
 
