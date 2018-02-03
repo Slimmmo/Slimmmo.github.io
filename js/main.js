@@ -141,7 +141,8 @@ advApp.controller('advController', ['$document', '$filter', '$scope', function($
     ['onepercent', "1% Land"],
     ['easystreet', 'A Nightmare on Easy Street'],
     ['gizmo', 'Thanks-Gizmo'],
-    ['merrymerger', 'Merry Merger']
+    ['merrymerger', 'Merry Merger'],
+    ['profitabowl', 'Profit-a-Bowl']
   ];
   $scope.evil = {};
   $scope.excellent = {};
@@ -151,7 +152,7 @@ advApp.controller('advController', ['$document', '$filter', '$scope', function($
   $scope.gizmo = {};
   $scope.halloween = {};
   $scope.illionsArray = illionsArr.slice(1);
-  $scope.lastEvent = 'merrymerger';
+  $scope.lastEvent = 'profitabowl';
   $scope.liverich = {};
   $scope.love = {};
   $scope.lyp = {};
@@ -162,6 +163,7 @@ advApp.controller('advController', ['$document', '$filter', '$scope', function($
   $scope.newyou = {};
   $scope.onepercent = {};
   $scope.platinumboosts = [17.77, 77.77, 777.77, 7777.77];
+  $scope.profitabowl = {};
   $scope.rain = {};
   $scope.raw = false;
   $scope.ref = $scope.earth;
@@ -208,10 +210,10 @@ advApp.controller('advController', ['$document', '$filter', '$scope', function($
     ['Cereal', 1, [14, 20]],
     ['Capitalism Hill', 2, [6, 15]],
     ['Haunted Mansion', 2, [4, 20]],
-    ['Fi-doo 3000', 2, [0, 25]]
-    //Future badges:
-    //['', 2, [10, ]],
+    ['Fi-doo 3000', 2, [0, 25]],
+    ['Turdy', 2, [10, 25]]
     //['', 2, [12, ]],
+    //Future badges:
     //['', 2, [16, ]],
     //['', 2, [18, ]],
   ];
@@ -1717,7 +1719,7 @@ advApp.controller('advController', ['$document', '$filter', '$scope', function($
       ['LIFE Pod', 0, false, 0, 0, 0, 0],
       ['Terrorformer', 0, false, 0, 0, 0, 0]
     ];
-    $scope.merrymerger.angelScale = 150;
+    $scope.merrymerger.angelScale = 7;
     $scope.merrymerger.baseCost = [18.5152, 1250, 93733, 9373350, 1171668750, 175750000000, 30756300000000, 6.151e15, 1.384e18];
     $scope.merrymerger.basePower = [1.35, 1.325, 1.3, 1.275, 1.25, 1.225, 1.2, 1.175, 1.15];
     $scope.merrymerger.baseProfit = [5, 20, 80, 320, 1280, 5120, 20480, 81920, 327680];
@@ -1787,6 +1789,24 @@ advApp.controller('advController', ['$document', '$filter', '$scope', function($
       ['Ivory Tower of Terror', 0, false, 0, 0, 0, 0],
       ['Stock Market Crash Coaster', 0, false, 0, 0, 0, 0],
       ['Capitalism Hill', 0, false, 0, 0, 0, 0]
+    ];
+    $scope.profitabowl.angelScale = 45;
+    $scope.profitabowl.baseCost = [5, 10, 200, 5000, 150000, 10e6, 500e6, 400e9, 400e9];
+    $scope.profitabowl.basePower = [1.0006999855, 4.2, 3, 2.8, 2.6, 2.4, 2.2, 2.1, 2];
+    $scope.profitabowl.baseProfit = [0.5, 50, 350, 1650, 8000, 5e6, 69e6, 8e9, 12e9];
+    $scope.profitabowl.baseSpeed = [1, 10, 15, 20, 30, 35, 40, 60, 60];
+    $scope.profitabowl.hasMegaTickets = false;
+    $scope.profitabowl.ignorePlatinumBoost = true;
+    $scope.profitabowl.investments = [
+      ['Fake Fans', 1, false, 0, 0, 0, 0],
+      ['Million-dollar Dip', 0, false, 0, 0, 0, 0],
+      ['Backpack BBQ', 0, false, 0, 0, 0, 0],
+      ['Death D-fine Dining', 0, false, 0, 0, 0, 0],
+      ['Budget Lite', 0, false, 0, 0, 0, 0],
+      ['Foam Sitff-arms', 0, false, 0, 0, 0, 0],
+      ['Skybox Seating', 0, false, 0, 0, 0, 0],
+      ['Designer Uniforms', 0, false, 0, 0, 0, 0],
+      ['Hypno-ads', 0, false, 0, 0, 0, 0],
     ];
     $scope.rain.angelScale = 45;
     $scope.rain.baseCost = [7, 83, 749, 24195, 402667, 98285656, 174429216, 5758901760, 33333333333];
@@ -2208,6 +2228,114 @@ advApp.controller('advController', ['$document', '$filter', '$scope', function($
     $scope.onepercent.cashUpgrades = [[399.99, [18, 2], false],[799.99, [8, 4], false],[499999.99, [18, 2], false],[999999.99, [10, 8], false],[9999999.99, [18, 2], false],[29999999.99, [12, 16], false],[99999999.99, [18, 2], false],[239999999.99, [14, 32], false],[3999999999.99, [18, 3], false],[29999e+6, [2, 150], false],[29999e+6, [4, 100], false],[29999e+6, [6, 100], false],[139999e+6, [2, 200], false],[139999e+6, [4, 200], false],[139999e+6, [6, 150], false],[499999e+6, [2, 200], false],[499999e+6, [4, 200], false],[499999e+6, [6, 200], false],[99999e+9, [8, 8], false],[599999e+9, [10, 4], false],[1199e+12, [12, 2.5], false],[3499e+12, [10, 3], false],[12499e+12, [12, 1.5], false],[19999e+12, [14, 2], false],[99999e+12, [12, 1.5], false],[299999e+12, [14, 2], false],[499999e+12, [8, 7], false],[4999e+15, [10, 2], false],[19999e+15, [12, 1.5], false],[99999e+15, [16, 9999], false],[15e+20, [2, 5], false],[24999e+17, [4, 5], false],[34999e+17, [6, 5], false],[4999e+24, [14, 3], false],[59999e+24, [12, 3], false],[9999e+27, [10, 3], false],[39999e+27, [8, 3], false],[2999e+30, [6, 3], false],[7999e+30, [4, 3], false],[1999e+33, [0, 999], false],[2999e+33, [2, 3], false],[79999e+36, [18, 3], false],[399999e+39, [18, 5], false],[9999e+42, [16, 5], false],[39999e+42, [0, 3], false],[1999e+45, [14, 3], false],[3999e+45, [2, 2], false],[7999e+45, [4, 2], false],[29999e+45, [6, 2], false],[69999e+45, [8, 13], false],[69999e+48, [10, 18], false],[149999e+48, [12, 19], false]];
     $scope.onepercent.angelUpgrades = [[25000, [18, 5], false, false],[4e+6, [18, 3], false, false],[28e+9, [18, 3], false, false],[3e+14, [18, 3], false, false],[1e+17, [18, 3], false, false],[2e+18, [18, 5], false, false],[2e+21, [18, 5], false, false],[1e+23, [18, 5], false, false],[3e+24, [18, 5], false, false],[4e+27, [18, 9], false, false]];
     $scope.onepercent.managerUpgrades = [];
+    $scope.profitabowl.unlocks[0] = [
+    [5000,[18,2]],
+    [10000,[18,1.5]],
+    [20000,[18,1.25]],
+    [40000,[18,1.25]],
+    [50000,[18,1.25]],
+    [60000,[18,1.2]],
+    [80000,[18,1.5]],
+    [90000,[18,7]],
+    [103667,[18,9]],
+    ];
+    $scope.profitabowl.unlocks[1] = [
+    [10,[2,16]],
+    [20,[2,200]],
+    [30,[2,1]],
+    [40,[2,1]],
+    [50,[2,1]],
+    ];
+    $scope.profitabowl.unlocks[2] = [
+    [10,[4,10]],
+    [20,[4,100]],
+    [30,[4,1]],
+    [40,[4,1]],
+    [50,[4,1]],
+    ];
+    $scope.profitabowl.unlocks[3] = [
+    [10,[6,10]],
+    [20,[6,50]],
+    [30,[6,1]],
+    [40,[6,1]],
+    [50,[6,1]],
+    ];
+    $scope.profitabowl.unlocks[4] = [
+    [10,[8,10]],
+    [20,[8,20]],
+    [30,[8,1]],
+    [40,[8,1]],
+    [50,[8,1]],
+    ];
+    $scope.profitabowl.unlocks[5] = [
+    [10,[10,3]],
+    [20,[10,1.5]],
+    [30,[10,1]],
+    [40,[10,1]],
+    [50,[10,1]],
+    ];
+    $scope.profitabowl.unlocks[6] = [
+    [10,[12,1.25]],
+    [20,[12,5]],
+    [30,[12,1]],
+    [40,[12,1]],
+    [50,[12,1]],
+    ];
+    $scope.profitabowl.unlocks[7] = [
+    [3, [14,1.25]],
+    [10,[14,1.1]],
+    [13,[14,1.1]],
+    [17,[14,1]],
+    [20,[14,1]],
+    [27,[14,1]],
+    [30,[14,1]],
+    [37,[14,1]],
+    [40,[14,1]],
+    [43,[14,1]],
+    [44,[14,1]],
+    ];
+    $scope.profitabowl.unlocks[8] = [
+    [6, [16,1.1]],
+    [7, [16,1.1]],
+    [10,[16,1.1]],
+    [17,[16,1]],
+    [23,[16,1]],
+    [29,[16,1]],
+    [32,[16,1]],
+    [38,[16,1]],
+    [44,[16,1]],
+    [47,[16,1]],
+    ];
+    $scope.profitabowl.unlocks[9] = [
+    //[1,[,]],
+    //[5,[,]],
+    //[10,[,]],
+    //[15,[,]],
+    //[25,[,]],
+    //[30,[,]],
+    //[35,[,]],
+    //[40,[,]],
+    //[50,[,]],
+    //[52,[,]],
+    //[60,[,]],
+    ];
+    $scope.profitabowl.cashUpgrades = [
+    [350e6, [18, 18], false],
+    [100e9, [18, 9], false],
+    [400e18, [18, 3], false],
+    [50e24, [18, 3], false],
+    [2.5e27, [18, 3], false]
+    ];
+    $scope.profitabowl.angelUpgrades = [
+    [1e6, [0, 52], false, false],
+    [10e6, [0, 26], false, false],
+    [20e6, [0, 13], false, false],
+    [100e6, [0, 6], false, false],
+    [700e6, [0, 3], false, false],
+    [4e9, [0, 52], false, false],
+    [20e9, [0, 18], false, false]
+    ];
+    $scope.profitabowl.managerUpgrades = [];
     $scope.rain.unlocks[0] = [[100, [0, 25]],[1000, [0, 50]],[2000, [0, 75]],[3000, [0, 100]],[4000, [0, 125]],[5000, [0, 150]],[6000, [0, 175]]];
     $scope.rain.unlocks[1] = [[100, [2, 200]],[600, [2, 225]],[1500, [2, 250]],[3000, [2, 275]]];
     $scope.rain.unlocks[2] = [[60, [4, 25]],[400, [4, 250]],[1200, [4, 2500]],[1800, [4, 25000]]];
