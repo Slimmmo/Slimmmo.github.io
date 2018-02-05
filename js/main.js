@@ -211,10 +211,10 @@ advApp.controller('advController', ['$document', '$filter', '$scope', function($
     ['Capitalism Hill', 2, [6, 15]],
     ['Haunted Mansion', 2, [4, 20]],
     ['Fi-doo 3000', 2, [0, 25]],
-    ['Turdy', 2, [10, 25]]
+    ['Turdy', 2, [10, 25]],
     //['', 2, [12, ]],
+    ['Budget Light', 2, [16, 15]]
     //Future badges:
-    //['', 2, [16, ]],
     //['', 2, [18, ]],
   ];
   var planets = ['earth', 'moon', 'mars'];
@@ -1792,7 +1792,7 @@ advApp.controller('advController', ['$document', '$filter', '$scope', function($
     ];
     $scope.profitabowl.angelScale = 300;
     $scope.profitabowl.baseCost = [5, 10, 200, 5000, 150000, 10e6, 500e6, 400e9, 400e9];
-    $scope.profitabowl.basePower = [1.0006999855, 4.2, 3, 2.8, 2.6, 2.4, 2.2, 2.1, 2];
+    $scope.profitabowl.basePower = [1.0006999855, 3.2, 3, 2.8, 2.6, 2.4, 2.2, 2.1, 2];
     $scope.profitabowl.baseProfit = [0.5, 50, 350, 1650, 8000, 5e6, 69e6, 8e9, 12e9];
     $scope.profitabowl.baseSpeed = [1, 10, 15, 20, 30, 35, 40, 60, 60];
     $scope.profitabowl.hasMegaTickets = false;
