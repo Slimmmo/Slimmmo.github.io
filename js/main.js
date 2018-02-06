@@ -1802,7 +1802,7 @@ advApp.controller('advController', ['$document', '$filter', '$scope', function($
       ['Backpack BBQ', 0, false, 0, 0, 0, 0],
       ['Death D-fine Dining', 0, false, 0, 0, 0, 0],
       ['Budget Lite', 0, false, 0, 0, 0, 0],
-      ['Foam Sitff-arms', 0, false, 0, 0, 0, 0],
+      ['Foam Stiff-arms', 0, false, 0, 0, 0, 0],
       ['Skybox Seating', 0, false, 0, 0, 0, 0],
       ['Hypno-ads', 0, false, 0, 0, 0, 0],
       ['Designer Uniforms', 0, false, 0, 0, 0, 0],
