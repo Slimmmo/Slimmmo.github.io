@@ -212,10 +212,9 @@ advApp.controller('advController', ['$document', '$filter', '$scope', function($
     ['Haunted Mansion', 2, [4, 20]],
     ['Fi-doo 3000', 2, [0, 25]],
     ['Turdy', 2, [10, 25]],
-    //['', 2, [12, ]],
     ['Budget Light', 2, [16, 15]]
     //Future badges:
-    //['', 2, [18, ]],
+    //['', 2, [12, ]],
   ];
   var planets = ['earth', 'moon', 'mars'];
 
@@ -1805,8 +1804,8 @@ advApp.controller('advController', ['$document', '$filter', '$scope', function($
       ['Budget Lite', 0, false, 0, 0, 0, 0],
       ['Foam Sitff-arms', 0, false, 0, 0, 0, 0],
       ['Skybox Seating', 0, false, 0, 0, 0, 0],
-      ['Designer Uniforms', 0, false, 0, 0, 0, 0],
       ['Hypno-ads', 0, false, 0, 0, 0, 0],
+      ['Designer Uniforms', 0, false, 0, 0, 0, 0],
     ];
     $scope.rain.angelScale = 45;
     $scope.rain.baseCost = [7, 83, 749, 24195, 402667, 98285656, 174429216, 5758901760, 33333333333];
