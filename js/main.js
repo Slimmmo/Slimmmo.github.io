@@ -178,6 +178,7 @@ advApp.controller('advController', ['$document', '$filter', '$scope', function($
     ['Gold', 2],
     ['Green', 10],
     ['Red', 2],
+    ['Teal', 30],
     ['White', 2]
   ];
   $scope.superbadgeList = [
@@ -656,7 +657,7 @@ advApp.controller('advController', ['$document', '$filter', '$scope', function($
     var i = 0, j = true,
     highestSharedLevel = loc.investments[0][1];
     loc.totalMoneyPerSecond = 0;
-    loc.angelEffectiveness = 2 + (loc.suits[suitFromName('red')][0] ? $scope.suitList[suitFromName('red')][1] : 0) + (loc.suits[suitFromName('green')][0] ? $scope.suitList[suitFromName('green')][1] : 0);
+    loc.angelEffectiveness = 2 + (loc.suits[suitFromName('red')][0] ? $scope.suitList[suitFromName('red')][1] : 0) + (loc.suits[suitFromName('green')][0] ? $scope.suitList[suitFromName('green')][1] : 0) + (loc.suits[suitFromName('teal')][0] ? $scope.suitList[suitFromName('teal')[1] : 0);
     for (; i < loc.investments.length; i++) {
       if (loc.investments[i][2] === false) {
         j = false;
