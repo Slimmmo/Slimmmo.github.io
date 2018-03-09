@@ -1772,7 +1772,7 @@ advApp.controller('advController', ['$document', '$filter', '$scope', function($
       ['Macro Chips', 0, false, 0, 0, 0, 0],
       ['Mystery Meat', 0, false, 0, 0, 0, 0]
     ];
-    $scope.onepercent.angelScale = 45; // Currently Unknown
+    $scope.onepercent.angelScale = 150; // For March, 2018, replay
     $scope.onepercent.baseCost = [1, 20, 30, 50, 100, 200, 400, 1000, 19550717100000];
     $scope.onepercent.basePower = [1.1, 3, 2, 1.5, 1.05, 1.05, 1.05, 1.05, 6]; // 9
     $scope.onepercent.baseProfit = [4, 17, 25, 33, 2500, 5000, 8000, 10000, 1000000];
