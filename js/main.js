@@ -1579,7 +1579,8 @@ advApp.controller('advController', ['$document', '$filter', '$scope', function($
     $scope.excellent.basePower =  [1.75, 2,    2.25, 2.5,   2.75,  3,  3.5,   4,     4.5];
     $scope.excellent.baseProfit = [0.5,  1.5,  2.5,  3.5,   10.5,  30, 72.5,  135,   262.5];
     $scope.excellent.baseSpeed =  [5,    8,    11,   14,    17,    20, 35,    45,    60];
-    $scope.excellent.hasMegaTickets = false;
+    $scope.excellent.hasMegaTickets = true;
+    $scope.excellent.ignorePlatinumBoost = true;
     $scope.excellent.investments = [
       ['Dino Shock Collars', 1, false, 0, 0, 0, 0],
       ['Pyramid Cranes', 1, false, 0, 0, 0, 0],
