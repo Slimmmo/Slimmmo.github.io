@@ -1609,7 +1609,7 @@ advApp.controller('advController', ['$document', '$filter', '$scope', function($
       ['Trample-ines', 1, false, 0, 0, 0, 0],
       ['Sucky Vacuums', 1, false, 0, 0, 0, 0]
     ];
-    $scope.gizmo.angelScale = 150;
+    $scope.gizmo.angelScale = 180;
     $scope.gizmo.baseCost = [5, 88, 777, 22222, 444444, 99999999, 222222222, 5555555555, 33333333333];
     $scope.gizmo.basePower = [1.023, 1.046, 1.083, 1.166, 1.323, 2.286, 3.563, 6.126, 12.26];
     $scope.gizmo.baseProfit = [0.5, 9, 81, 729, 7771, 1111111, 1212121, 161616161, 8180000000];
