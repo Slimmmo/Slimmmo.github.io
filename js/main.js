@@ -1609,7 +1609,7 @@ advApp.controller('advController', ['$document', '$filter', '$scope', function($
       ['Trample-ines', 1, false, 0, 0, 0, 0],
       ['Sucky Vacuums', 1, false, 0, 0, 0, 0]
     ];
-    $scope.gizmo.angelScale = 150;
+    $scope.gizmo.angelScale = 180;
     $scope.gizmo.baseCost = [5, 88, 777, 22222, 444444, 99999999, 222222222, 5555555555, 33333333333];
     $scope.gizmo.basePower = [1.023, 1.046, 1.083, 1.166, 1.323, 2.286, 3.563, 6.126, 12.26];
     $scope.gizmo.baseProfit = [0.5, 9, 81, 729, 7771, 1111111, 1212121, 161616161, 8180000000];
@@ -2022,47 +2022,16 @@ advApp.controller('advController', ['$document', '$filter', '$scope', function($
     $scope.friday.cashUpgrades = [[100000, [18, 4], false], [10000000, [18, 5], false], [1e+9, [18, 6], false], [100e+9, [18, 7], false], [10e+12, [18, 8], false], [1e+15, [18, 9], false], [100e+15, [18, 10], false], [1e+18, [18, 11], false], [1e+21, [18, 12], false], [1e+24, [18, 13], false], [1e+27, [18, 14], false], [1e+30, [18, 15], false], [1e+33, [18, 16], false], [1e+36, [18, 17], false], [1e+39, [18, 18], false], [1e+42, [18, 19], false], [10e+45, [18, 20], false], [100e+48, [18, 21], false], [1e+54, [18, 22], false], [100e+57, [18, 23], false], [100e+63, [18, 24], false], [1e+81, [18, 25], false], [1e+84, [18, 26], false], [1e+87, [18, 27], false], [1e+90, [18, 28], false], [1e+93, [18, 29], false], [1e+96, [18, 30], false], [1e+99, [18, 31], false], [1e+102, [18, 32], false], [1e+105, [18, 33], false], [1e+108, [18, 34], false]];
     $scope.friday.angelUpgrades = [[10e+6, [20, 2], false, false], [10e+12, [20, 3], false, false], [10e+18, [20, 4], false, false], [100e+24, [20, 5], false, false], [1e+33, [20, 16], false, false]];
     $scope.friday.managerUpgrades = [];
-    $scope.gizmo.unlocks[0] = [
-    [100, [0, 20]]
-    ];
-    $scope.gizmo.unlocks[1] = [
-    [120, [2, 111]]
-    ];
-    $scope.gizmo.unlocks[2] = [
-    ];
-    $scope.gizmo.unlocks[3] = [
-    ];
-    $scope.gizmo.unlocks[4] = [
-    ];
-    $scope.gizmo.unlocks[5] = [
-    ];
-    $scope.gizmo.unlocks[6] = [
-    ];
-    $scope.gizmo.unlocks[7] = [
-    ];
-    $scope.gizmo.unlocks[8] = [
-    ];
-    $scope.gizmo.unlocks[9] = [
-    [1, [19, 2]], 
-    [2, [19, 2]],
-    [5, [19, 2]],
-    [7, [19, 2]],
-    [9, [19, 2]],
-    [11, [19, 2]],
-    [13, [19, 2]],
-    [15, [19, 2]],
-    [17, [18, 7]],
-    [19, [19, 2]],
-    //[20, [19, 2]],
-    //[21, [19, 2]],
-    [23, [19, 2]],
-    //[23, [19, 2]],
-    //[26, [19, 2]],
-    [29, [19, 2]],
-    //[32, [19, 2]],
-    [35, [18, 2]],
-    //[55, [19, 2]],
-    ];
+    $scope.gizmo.unlocks[0] = [[100, [0, 20]], [1000, [0, 40]], [2000, [0, 60]], [3000,[0, 80]], [4000, [0, 100]], [5000, [0, 200]], [6000, [0, 300]]];
+    $scope.gizmo.unlocks[1] = [[120, [2, 111]], [600, [2,222]], [1200, [2, 333]], [3000, [2,444]]];
+    $scope.gizmo.unlocks[2] = [[60, [4, 33]], [360, [4, 333]], [1200, [4, 3333]], [1800, [4, 33333]]];
+    $scope.gizmo.unlocks[3] = [[60, [6, 22]], [180, [6, 222]], [420, [6, 2222]], [900, [6, 22222]]];
+    $scope.gizmo.unlocks[4] = [[25, [8, 100]], [100, [8, 100]], [250, [8, 100]], [500, [8, 100]]];
+    $scope.gizmo.unlocks[5] = [[4, [10, 66]], [30, [10, 66]], [60, [10, 66]], [120, [10, 66]], [180, [10,66]]];
+    $scope.gizmo.unlocks[6] = [[5, [12, 77]], [25, [12, 77]], [75, [12, 77]], [120, [12, 777]]];
+    $scope.gizmo.unlocks[7] = [[5, [14, 44]], [15, [14, 44]], [45, [14, 44]], [83, [14, 444]]];
+    $scope.gizmo.unlocks[8] = [[3, [16, 55]], [15, [16, 55]], [30, [16, 55]], [60, [16, 555]]];
+    $scope.gizmo.unlocks[9] = [[1, [19, 2]], [2, [19, 2]], [5, [19, 2]], [7, [19, 2]], [9, [19, 2]], [11, [19, 2]], [13, [19, 2]], [15, [19, 2]], [17, [18, 7]], [19, [19, 2]], [23, [19, 2]], [29, [19, 2]], [35, [18, 2]]];
     $scope.gizmo.cashUpgrades = [[332500, [0, 4], false], [950000, [2, 4], false], [2375000, [4, 4], false], [9500000, [6, 4], false], [23750000, [8, 4], false], [2.375e9, [10, 4], false], [95e9, [12, 4], false], [4.75e12, [14, 4], false], [9.5e12, [16, 4], false], [47.5e12, [18, 9], false], [237.5e12, [0, 5], false], [950e12, [2, 5], false], [2.375e15, [4, 5], false], [4.75e15, [6, 5], false], [9.5e15, [8, 5], false], [47.5e15, [10, 5], false], [71.25e15, [12, 5], false], [475e15, [14, 5], false], [2.375e18, [16, 5], false], [9.5e18, [18, 9], false], [47.5e18, [20, 1], false], [47.5e21, [0, 6], false], [95e21, [2, 6], false], [190e21, [4, 6], false], [760e21, [6, 6], false], [3.04e24, [8, 6], false], [14.345e24, [10, 6], false], [30.875e24, [12, 6], false], [53.865e24, [14, 6], false], [71.25e24, [16, 6], false], [95e24, [18, 9], false], [380e27, [0, 9], false], [1.52e30, [2, 9], false], [6.08e30, [4, 9], false], [12.16e30, [6, 9], false], [23.75e30, [8, 9], false], [84.36e30, [10, 9], false], [285e30, [12, 9], false], [1.9e33, [14, 9], false], [9.5e33, [16, 9], false], [47.5e33, [18, 9], false], [950e33, [0, 10], false], [1.9e36, [2, 10], false], [2.85e36, [4, 10], false], [3.8e36, [6, 10], false], [4.75e36, [8, 10], false], [6.65e36, [10, 10], false], [7.5e36, [12, 10], false], [8.55e36, [14, 10], false], [9.5e36, [16, 10], false], [95e36, [18, 9], false], [3.163e39, [0, 11], false], [6.327e39, [2, 11], false], [9.49e39, [4, 11], false], [22.8e39, [6, 11], false], [45.6e39, [8, 11], false], [121.6e39, [10, 11], false], [190e39, [12, 11], false], [337.25e39, [14, 11], false], [475e39, [16, 11], false], [950e39, [18, 9], false], [5.277e45, [0, 13], false], [52.777e45, [2, 13], false], [527.777e45, [4, 13], false], [5.277e48, [6, 13], false], [52.777e48, [8, 13], false], [5.277e51, [10, 13], false], [52.777e51, [12, 13], false], [527.777e51, [14, 13], false], [5.277e54, [16, 13], false], [52.777e54, [18, 9], false]];
     $scope.gizmo.angelUpgrades = [[621605, [0, 9], false, false], [7e6, [2, 9], false, false], [83e6, [4, 9], false, false], [938e6, [6, 9], false, false], [1e9, [8, 9], false, false], [115e9, [10, 9], false, false], [1e12, [12, 9], false, false], [13e12, [14, 9], false, false], [143e12, [16, 9], false, false], [52e15, [18, 99], false, false], [52e15, [30, 111], false, false], [52e15, [31, 75], false, false], [52e15, [32, 50], false, false], [52e15, [33, 40], false, false], [52e15, [34, 20], false, false], [52e15, [35, 15], false, false], [52e15, [36, 10], false, false], [52e15, [37, 5], false, false], [52e15, [0, 9], false, false], [95e15, [2, 9], false, false], [950e15, [4, 9], false, false], [9e18, [6, 9], false, false], [95e18, [8, 9], false, false], [9e21, [10, 9], false, false], [95e21, [12, 9], false, false], [950e21, [14, 9], false, false], [9e24, [16, 9], false, false], [949e24, [18, 9], false, false]];
     $scope.gizmo.managerUpgrades = [];
