@@ -1833,7 +1833,8 @@ advApp.controller('advController', ['$document', '$filter', '$scope', function($
     $scope.saturday.basePower = [1.03, 1.07, 1.15, 1.35, 1.75, 2.2, 2.7, 3.2, 4];
     $scope.saturday.baseProfit = [1, 3, 6, 10, 15, 21, 28, 36, 45];
     $scope.saturday.baseSpeed = [2, 4, 6, 8, 10, 12, 14, 16, 18];
-    $scope.saturday.hasMegaTickets = false;
+    $scope.saturday.hasMegaTickets = true;
+    $scope.saturday.ignorePlatinumBoost = true;
     $scope.saturday.investments = [
       ['Ankle Biters', 1, false, 0, 0, 0, 0],
       ['Babargoyles', 0, false, 0, 0, 0, 0],
