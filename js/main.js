@@ -1682,7 +1682,8 @@ advApp.controller('advController', ['$document', '$filter', '$scope', function($
     $scope.lyp.basePower =  [1.023, 1.046, 1.083, 1.166, 1.323,  2.286,    3.563,     6.126,      12.26];
     $scope.lyp.baseProfit = [0.5,   9,     81,    729,   7777,   1.111e6,  1.212e6,   161.616e6,  8.181e9];
     $scope.lyp.baseSpeed =  [1.5,   5,     8,     18,    28,     120,      210,       370,        700];
-    $scope.lyp.hasMegaTickets = false;
+    $scope.lyp.hasMegaTickets = true;
+    $scope.lyp.ignorePlatinumBoost = true;
     $scope.lyp.investments = [
       ['Belly Flopping', 1, false, 0, 0, 0, 0],
       ['Larping', 0, false, 0, 0, 0, 0],
