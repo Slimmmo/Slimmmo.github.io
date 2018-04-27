@@ -1558,7 +1558,7 @@ advApp.controller('advController', ['$document', '$filter', '$scope', function($
         ['Last Mansion on the Left', 0, false, 0, 0, 0, 0]
     ];
     $scope.evil.angelScale = 150;
-    $scope.evil.baseCost = [6.12, 72, 650, 20720, 344250, 1503600, 90050200, 151035400, 5822065000, 67035000000];
+    $scope.evil.baseCost = [6, 72, 650, 20720, 344250, 1503600, 90050200, 151035400, 5822065000, 67035000000];
     $scope.evil.basePower = [1.02, 1.04, 1.08, 1.16, 1.32, 1.64, 2.28, 3.56, 6.12, 12.24];
     $scope.evil.baseProfit = [0.75, 22, 190, 1475, 17300, 207420, 2488000, 30022000, 364205000, 6695000000];
     $scope.evil.baseSpeed = [2, 5, 9, 14, 20, 57, 85, 148, 333, 640];
