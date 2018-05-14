@@ -1797,11 +1797,11 @@ advApp.controller('advController', ['$document', '$filter', '$scope', function($
       ['Capitalism Hill', 0, false, 0, 0, 0, 0]
     ];
     $scope.profitabowl.angelScale = 300;
-    $scope.profitabowl.baseCost = [5, 10, 200, 5000, 150000, 10e6, 500e6, 400e9, 400e9];
-    $scope.profitabowl.basePower = [1.0006999855, 3.2, 3, 2.8, 2.6, 2.4, 2.2, 2.1, 2];
+    $scope.profitabowl.baseCost = [4.996502448, 10, 200, 5000, 150000, 10e6, 500e6, 400e9, 400e9];
+    $scope.profitabowl.basePower = [1.0007, 3.2, 3, 2.8, 2.6, 2.4, 2.2, 2.1, 2];
     $scope.profitabowl.baseProfit = [0.5, 50, 350, 1650, 8000, 5e6, 69e6, 8e9, 12e9];
     $scope.profitabowl.baseSpeed = [1, 10, 15, 20, 30, 35, 40, 60, 60];
-    $scope.profitabowl.hasMegaTickets = false;
+    $scope.profitabowl.hasMegaTickets = true;
     $scope.profitabowl.ignorePlatinumBoost = true;
     $scope.profitabowl.investments = [
       ['Fake Fans', 1, false, 0, 0, 0, 0],
