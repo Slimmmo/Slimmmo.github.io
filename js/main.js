@@ -1491,7 +1491,8 @@ advApp.controller('advController', ['$document', '$filter', '$scope', function($
     $scope.cashella.basePower = [1.045, 1.105, 1.225, 1.525, 2.125, 3.3, 4.05, 4.8, 6];
     $scope.cashella.baseProfit = [2, 6, 12, 20, 30, 42, 56, 72, 90];
     $scope.cashella.baseSpeed = [4, 8, 12, 16, 20, 24, 28, 32, 36];
-    $scope.cashella.hasMegaTickets = false;
+    $scope.cashella.hasMegaTickets = true;
+    $scope.cashella.ignorePlatinumBoost = true;
     $scope.cashella.investments = [
       ['Food Fighters', 1, false, 0, 0, 0, 0],
       ['L.I.L. Z', 0, false, 0, 0, 0, 0],
