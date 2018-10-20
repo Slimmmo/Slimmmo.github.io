@@ -1634,8 +1634,6 @@ advApp.controller('advController', ['$document', '$filter', '$scope', function($
     $scope.halloween.basePower = [1.02, 1.04, 1.08, 1.16, 1.32, 1.64, 2.28, 3.56, 6.12, 12.24];
     $scope.halloween.baseProfit = [.75, 20, 180, 1440, 17280, 207360, 2488325, 29860000, 358318000, 6666500000];
     $scope.halloween.baseSpeed = [2, 5, 9, 14, 20, 56, 84, 144, 328, 666];
-    $scope.halloween.hasMegaTicekts = true;
-    $scope.halloween.ignorePlatinumBoost = true;
     $scope.halloween.investments = [
       ['Texas Raisins', 1, false, 0, 0, 0, 0],
       ['Dandy Candy', 0, false, 0, 0, 0, 0],
