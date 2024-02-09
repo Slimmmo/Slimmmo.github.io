@@ -1,30 +1,26 @@
 # slimmmo.github.io
 
-Simple [AdVenture Capitalist](http://store.steampowered.com/app/346900/) calculator using averages not cycle time.
-Made with [AngularJS](http://angularjs.org/), [Bootstrap](http://getbootstrap.com/), [ui-bootstrap](https://angular-ui.github.io/bootstrap/), and [Font-Awesome](http://fortawesome.github.io/Font-Awesome/).
+[AdVenture Capitalist](http://store.steampowered.com/app/346900/) calculator to greedily optimize your purchases.
+Made with [Next.js](https://nextjs.org/), [zustand](https://github.com/pmndrs/zustand), [TanStack Tables](https://tanstack.com/table/latest), and [Tailwind CSS](https://tailwindcss.com/).
 
-[Reddit link](https://www.reddit.com/r/AdventureCapitalist/comments/3ik18l/another_calculator/).
+## Why the update?
+I need a new job so I used this to learn React.
 
-Please let me know if:
-- you find any errors; and include as much information as possible for me to try to re-create it so I can fix it. If a calculation is off by a small amount, such as Lemons is saying 1.224 Billion / cycle instead of 1.223 Billion / cycle, then please just ignore it and don't let me know as it is either a rounding error or an error since number of angels is not exactly correct (rounding in game).
-- you think there is a more appropriate Upgrade Score calculation.
-- you would like any other additional features.
+## Somethings wrong/broken!
+Let me know with an [issue](https://github.com/Slimmmo/Slimmmo.github.io/issues) or in the [Reddit thread](https://www.reddit.com/r/AdventureCapitalist/comments/3ik18l/another_calculator/). Please include as much information as possible so I can recreate it.
 
-### Notes:
-- Remember to manually check number of angels after each angel purchase. It's not intuitive yet.
+## Running Locally
 
-### To Do:
+1. Clone or download the repo.
+2. Install the dependencies
+```bash
+npm i
+```
+3. Run the development server:
+```bash
+npm run dev
+```
+4. Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
 
-### Code
-- Lots of overlap between resetPlanet, fullyResetPlanet and loadDefaults. Will need a rewrite.
-- Saving and loading formatting is nasty but don't want to save the whole planet since lots of it doesn't need to be saved. Output only the necessary fields (e.g. not upgradeCosts). When loading, load defaults then overwrite them with saved values while checking that the save actually has a value for that variable. This also needs a considerable redesign.
-
-### Features
-- Implement cycle time increments instead of averages to make the saving time calculations more accurate.
-- Incorporate a method to make decimal calculations accurate (stupid Javascript floats).
-- Add the managers that reduce unlock cost of businesses to recommendations.
-- Add a way to play out a user-defined strategy and provide detailed information.
-- Add a way to compare strategies.
-- Implement Simulate function from dev to play out the strategy that always purchases the highest recommended upgrade.
-- Add a way to change number of steps in the Simulate function.
-- A cool tree-based exploration for comparing upgrade paths (https://www.reddit.com/r/AdventureCapitalist/comments/3ik18l/another_calculator/cvvvcdt)
+## How did you deploy a Next.js app to GitHub Pages?
+[Next.js GitHub Pages](https://github.com/gregrickaby/nextjs-github-pages)

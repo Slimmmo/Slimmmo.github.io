@@ -1,0 +1,101 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+ 
+@layer base {
+	:root {
+		/* Name: custom color palette
+		   Author: Ilias Ism
+		   URL: https://gradient.page */
+	
+		/* CSS: .bg-gradient { background: var(--gradient) } */
+		--gradient: #00467F;
+		--background: 220 100% 98.5%;
+		--foreground: 220 10% 1%;
+	
+		--muted: 220 10% 92.5%;
+		--muted-foreground: 220 5% 42.5%;
+	
+		--popover: 220 10% 92.5%;
+		--popover-foreground: 220 10% 1.25%;
+	
+		--card: 220 10% 92.5%;
+		--card-foreground: 220 10% 1.25%;
+	
+		--border: 220 15% 90%;
+		--input: 220 15% 90%;
+	
+		--primary: 220 100% 25%;
+		--primary-foreground: 220 2% 92.5%;
+	
+		--secondary: 220 10% 90%;
+		--secondary-foreground: 220 7% 12.5%;
+	
+		--accent: 220 5% 96.25%;
+		--accent-foreground: 220 7% 12.5%;
+	
+		--destructive: 0 84.2% 60.2%;
+		--destructive-foreground: 0 0% 98%;
+	
+		--ring: 220 100% 25%;
+	
+		--radius: 0.5rem;
+
+		--alert-primary: green;
+		--alert-secondary: darkblue;
+	}	
+ 
+	.dark {
+		/* Name: custom color palette
+			Author: Ilias Ism
+			URL: https://gradient.page */
+
+		/* CSS: .bg-gradient { background: var(--gradient) } */
+		--gradient: #485563;
+
+		--background: 224 10.4% 2.72%;
+		--foreground: 224 1.6% 96.7%;
+
+		--muted: 224 8% 10.200000000000001%;
+		--muted-foreground: 224 1.6% 53.4%;
+
+		--popover: 224 61.8% 4.42%;
+		--popover-foreground: 224 1.6% 96.7%;
+
+		--card: 224 61.8% 4.42%;
+		--card-foreground: 224 1.6% 96.7%;
+
+		--border: 224 8% 10.200000000000001%;
+		--input: 224 8% 10.200000000000001%;
+
+		--primary: 224 16% 34%;
+		--primary-foreground: 224 1.6% 96.7%;
+
+		--secondary: 224 8% 10.200000000000001%;
+		--secondary-foreground: 224 1.6% 96.7%;
+
+		--accent: 224 8% 10.200000000000001%;
+		--accent-foreground: 224 1.6% 96.7%;
+
+		--destructive: 0 62.8% 30.6%;
+		--destructive-foreground: 224 1.6% 96.7%;
+
+		--ring: 224 16% 34%;
+
+		--alert-primary: lightgreen;
+		--alert-secondary: lightblue;
+	}
+}
+ 
+@layer base {
+	* {
+		@apply border-border;
+	}
+	body {
+		@apply bg-background text-foreground;
+	}
+}
+
+tbody > tr:nth-child(odd) {
+	background-color: hsl(var(--secondary));
+}
